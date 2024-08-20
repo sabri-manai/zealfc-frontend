@@ -1,0 +1,90 @@
+{
+  "auth": {
+    "zealfcfrontend16e33e9d": {
+      "customAuth": false,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "zealfcfrontend16e33e9dCustomMessage",
+          "triggerProvider": "Cognito"
+        }
+      ],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 8
+        },
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL",
+          "PHONE_NUMBER"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito"
+    }
+  },
+  "function": {
+    "zealfcfrontend16e33e9dCustomMessage": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_zealfcfrontend16e33e9dCustomMessage_EMAILMESSAGE": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "zealfcfrontend16e33e9dCustomMessage"
+        }
+      ]
+    },
+    "AMPLIFY_function_zealfcfrontend16e33e9dCustomMessage_EMAILSUBJECT": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "zealfcfrontend16e33e9dCustomMessage"
+        }
+      ]
+    },
+    "AMPLIFY_function_zealfcfrontend16e33e9dCustomMessage_REDIRECTURL": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "zealfcfrontend16e33e9dCustomMessage"
+        }
+      ]
+    },
+    "AMPLIFY_function_zealfcfrontend16e33e9dCustomMessage_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "zealfcfrontend16e33e9dCustomMessage"
+        }
+      ]
+    },
+    "AMPLIFY_function_zealfcfrontend16e33e9dCustomMessage_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "zealfcfrontend16e33e9dCustomMessage"
+        }
+      ]
+    }
+  }
+}

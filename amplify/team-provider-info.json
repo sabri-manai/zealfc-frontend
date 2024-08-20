@@ -1,0 +1,30 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-zealfcfrontend-dev-6ba68-authRole",
+      "UnauthRoleArn": "arn:aws:iam::058264440022:role/amplify-zealfcfrontend-dev-6ba68-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::058264440022:role/amplify-zealfcfrontend-dev-6ba68-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-zealfcfrontend-dev-6ba68-deployment",
+      "UnauthRoleName": "amplify-zealfcfrontend-dev-6ba68-unauthRole",
+      "StackName": "amplify-zealfcfrontend-dev-6ba68",
+      "StackId": "arn:aws:cloudformation:us-east-1:058264440022:stack/amplify-zealfcfrontend-dev-6ba68/c28c4130-543b-11ef-9113-12a82b11ec9b",
+      "AmplifyAppId": "d36jl3px8m05xc",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-zealfcfrontend-dev-6ba68-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "auth": {
+        "zealfcfrontend16e33e9d": {}
+      },
+      "function": {
+        "zealfcfrontend16e33e9dCustomMessage": {
+          "REDIRECTURL": "",
+          "EMAILSUBJECT": "Zealfc Email Confirmation",
+          "EMAILMESSAGE": "Please confirm your email by pressing on this link: ",
+          "deploymentBucketName": "amplify-zealfcfrontend-dev-6ba68-deployment",
+          "s3Key": "amplify-builds/zealfcfrontend16e33e9dCustomMessage-497a31546c547a6b4c67-build.zip"
+        }
+      }
+    }
+  }
+}
