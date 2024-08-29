@@ -1,38 +1,33 @@
-.App {
-  text-align: center;
+@font-face {
+  font-family: 'Nyxerin';
+  src: url('./assets/fonts/NYXERIN.woff') format('woff'),
+       url('./assets/fonts/NYXERIN.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@font-face {
+  font-family: 'Tomorrow';
+  src: url('./assets/fonts/Tomorrow-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  font-family: var(--font-primary);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* Specific classes for each font */
+.nyxerin-text {
+  font-family: 'Nyxerin', sans-serif;
 }
 
-.App-link {
-  color: #61dafb;
+.tomorrow-text {
+  font-family: 'Tomorrow', sans-serif;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Define CSS variables or set fonts globally */
+:root {
+  --font-primary: 'Tomorrow', sans-serif;
+  --font-secondary: 'Nyxerin', sans-serif;
 }
