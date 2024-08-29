@@ -1,0 +1,61 @@
+.button-container {
+    position: relative;
+    width: 270px; /* Matches the SVG width */
+    height: 153px; /* Matches the SVG height */
+    display: flex;
+    align-items: center; /* Centers the text vertically */
+    justify-content: center; /* Centers the text horizontally */
+    cursor: pointer;
+    margin-bottom: 20px; /* Space between buttons */
+    transition: all 0.1s ease-in-out; /* Smooth transition for click effect */
+}
+
+.button-polygon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Ensure the polygon stays behind the text */
+}
+
+.button-text {
+    color: #1bc429; /* Green text */
+    font-family: 'Nyxerin', sans-serif; /* Apply Nyxerin font */
+    font-size: 22px; /* Adjusted font size for better fit */
+    letter-spacing: 0px; /* Adjusted letter spacing for better alignment */
+    font-weight: 400;
+    text-align: center;
+    margin-top: 3px; /* Small adjustment to nudge text down */
+    white-space: nowrap; /* Prevent text wrapping */
+    line-height: 1; /* Ensure text is vertically centered */
+    padding: 0; /* Remove padding to prevent offsetting */
+    z-index: 1; /* Ensure the text is above the polygon */
+    box-sizing: border-box; /* Include padding in the element's width */
+}
+
+/* Default State */
+.button-container.default .button-polygon path {
+    stroke: #1bc429; /* Green border */
+    fill: transparent; /* No fill by default */
+}
+
+/* Hover State */
+.button-container:hover .button-polygon path {
+    stroke: #0F6216; /* Change border color on hover */
+    fill: #0F6216; /* No fill on hover */
+}
+
+.button-container:hover .button-text {
+    color: #0f0326; /* Change text color on hover */
+}
+
+/* Active State (on click) */
+.button-container:active .button-polygon path {
+    stroke: #1bc429; /* Darken border color on click */
+    fill: #1bc429; /* Fill the inside of the button with green when clicked */
+}
+
+.button-container:active .button-text {
+    color: #0f0326; /* Text color changes to dark when clicked */
+}

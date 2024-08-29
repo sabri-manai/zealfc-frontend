@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Profile from "./components/Profile";
 import { AboutUs } from "./components/AboutUs";
+import './App.css';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -39,6 +40,9 @@ function App() {
           <Route path="/about" element={<AboutUs />} />
           {isAuthenticated && <Route path="/profile" element={<Profile />} />}
         </Routes>
+        <h1 className="nyxerin-text">This is Nyxerin Font</h1>
+        <h1 className="tomorrow-text">THIS IS TOMORROW FONT</h1>
+
       </div>
     </Router>
   );
