@@ -1,0 +1,63 @@
+.carousel-container {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-y: visible; /* Allow vertical overflow so the card can lift up */
+    display: flex;
+    justify-content: flex-start; /* Align items from the start */
+    align-items: center;
+    width: 100%;
+    padding: 20px 0;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    white-space: nowrap; /* Prevent wrapping */
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 20px; /* Consistent gap between cards */
+    transition: transform 0.3s ease-in-out;
+}
+
+.carousel-container::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for aesthetics */
+}
+
+
+.game-card-container {
+    flex: 0 0 calc(20% - 20px); /* Adjust card width calculation to account for padding */
+    max-width: 236px;
+    min-width: 236px;
+    scroll-snap-align: center;
+    padding: 0px; /* Remove padding around each card */
+    box-sizing: border-box; /* Ensure box-sizing includes borders and padding */
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.game-card-container:hover {
+    transform: scale(1.05);
+}
+
+@media (max-width: 1024px) {
+    .game-card-container {
+        flex: 0 0 calc(25% - 20px); /* 4 cards visible with padding */
+    }
+}
+
+@media (max-width: 768px) {
+    .game-card-container {
+        flex: 0 0 calc(33.33% - 20px); /* 3 cards visible with padding */
+    }
+}
+
+@media (max-width: 480px) {
+    .game-card-container {
+        flex: 0 0 calc(50% - 20px); /* 2 cards visible with padding */
+    }
+}
+
+@media (max-width: 360px) {
+    .game-card-container {
+        flex: 0 0 calc(100% - 20px); /* 1 card visible with padding */
+    }
+}
