@@ -13,10 +13,6 @@
   font-style: normal;
 }
 
-body {
-  font-family: var(--font-primary);
-}
-
 /* Specific classes for each font */
 .nyxerin-text {
   font-family: 'Nyxerin', sans-serif;
@@ -30,4 +26,32 @@ body {
 :root {
   --font-primary: 'Tomorrow', sans-serif;
   --font-secondary: 'Nyxerin', sans-serif;
+}
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-primary);
+  min-height: 100vh;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure the App container covers the full height */
+}
+
+.main-content {
+  flex-grow: 1; /* This makes the content take up the remaining space */
+}
+
+.App > * {
+  flex-shrink: 0; /* Prevents components from shrinking and creating extra space */
 }

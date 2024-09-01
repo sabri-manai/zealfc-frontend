@@ -1,0 +1,16 @@
+/* Home.css */
+
+.home-container {
+  margin: 0; /* Ensure no margin */
+  padding: 0; /* Ensure no padding */
+  background-color: #000d1c; /* Dark background */
+
+}
+
+.home-container h2, .home-container p {
+  margin: 0 0 20px 0; /* Add bottom margin only if needed */
+}
+
+.home-container p:last-child {
+  margin-bottom: 0; /* Ensure the last paragraph has no bottom margin */
+}

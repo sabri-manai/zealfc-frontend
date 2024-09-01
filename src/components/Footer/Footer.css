@@ -1,0 +1,140 @@
+/* src/components/Footer.css */
+
+/* Footer Container */
+/* src/components/Footer.css */
+
+/* Footer Container */
+/* src/components/Footer.css */
+
+/* Footer Container */
+.footer {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgb(0, 13, 28) 0%,
+    rgb(13.5, 104.5, 34.5) 50%,
+    rgb(27, 196, 41) 100%
+  );
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../assets/images/noise-footer.png'); /* Path to the noise texture */
+  opacity: 0.12; /* Adjust opacity to control the grain visibility */
+  pointer-events: none; /* Ensure the overlay doesn't interfere with interaction */
+}
+
+
+
+/* Overlap Group */
+.footer .overlap-group {
+  height: 559px;
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+/* Rectangle Background */
+.footer .rectangle {
+  height: 552px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* Noise Effect */
+.footer .noiseeffect {
+  background-blend-mode: color-burn;
+  height: 535px;
+  width: 100%; /* Set to 100% to match the container width */
+  position: absolute;
+  top: 0;
+  left: 0; /* Remove the offset to align properly */
+  margin: 0;
+  padding: 0;
+}
+
+/* Text Wrapper for "ZEAL" */
+.footer .text-wrapper {
+  color: #000c1b;
+  font-family: 'Nyxerin', sans-serif;
+  font-size: 90px;
+  font-weight: 400;
+  position: absolute;
+  top: 363px;
+  left: 60px; /* Adjust position as needed */
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  line-height: 0.7; /* Adjust the line-height to reduce space between lines */
+}
+
+/* Flex Container for Address and Contact */
+.footer .flexcontainer {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 169px;
+  width: 383px;
+  position: absolute;
+  top: 365px;
+  left: 255px;
+  align-items: flex-start;
+  margin: 0;
+  padding: 0;
+}
+
+.footer .text-i {
+  color: #000c1b;
+  font-family: 'Tomorrow', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 24px;
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+/* Flex Container for Social Media Links */
+.footer .flexcontainer-i {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 169px;
+  width: 383px;
+  position: absolute;
+  top: 390px;
+  right: 60px; /* Add right margin of 60px */
+  align-items: flex-end; /* Align content to the right */
+  margin: 0;
+  padding: 0;
+}
+
+
+.footer .span-wrapper {
+  color: #000c1b;
+  font-family: 'Tomorrow', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 24px;
+  position: relative;
+  text-align: right;
+  margin: 0;
+  padding: 0;
+}

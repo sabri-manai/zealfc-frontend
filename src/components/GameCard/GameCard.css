@@ -1,0 +1,98 @@
+.game-card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 236px;
+    margin-bottom: 20px;
+}
+
+.game-card {
+    width: 100%;
+    aspect-ratio: 236 / 196; /* Maintain the aspect ratio for responsiveness */
+    border-radius: 40px; /* Apply radius to all corners */
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow for distinction */
+    transition: background 0.3s ease;
+}
+
+.game-card-container:hover {
+    transform: translateY(-20px); /* Move the card up by 30px on hover */
+}
+
+.image-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit; /* Match the card's border radius */
+    overflow: hidden;
+    position: relative;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the whole area */
+    border-radius: inherit; /* Respect the card's border radius */
+    display: block;
+}
+
+.overlay-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(28, 189, 42, 0.8), rgba(0, 0, 0, 0));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    border-radius: inherit; /* Match the card's border radius */
+}
+
+.game-card:hover .overlay-gradient {
+    opacity: 1; /* Show gradient on hover */
+}
+
+.overlay-content {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    z-index: 1;
+    transition: color 0.3s ease; /* Smooth transition for text color */
+}
+
+.game-card:hover .game-name,
+.game-card:hover .game-subtitle{
+    color: #0F0326; /* Change text color on hover */
+}
+
+.game-name {
+    font-family: 'Tomorrow', sans-serif;
+    font-size: 30pt; /* Adjusted for responsiveness */
+    font-weight: 400;
+    color: #FFF1E1;
+    text-transform: uppercase;
+}
+
+.game-subtitle {
+    font-family: 'Tomorrow', sans-serif;
+    font-size: 11pt; /* Adjusted for responsiveness */
+    font-weight: 400;
+    color: #FFF1E1;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.game-day {
+    font-family: 'Tomorrow', sans-serif;
+    font-size: 16pt; /* Adjusted for responsiveness */
+    font-weight: 400;
+    color: #1bc429;
+    text-align: center;
+    margin-top: 10px;
+    transition: color 0.3s ease; /* Ensure transition for game-day */
+}
