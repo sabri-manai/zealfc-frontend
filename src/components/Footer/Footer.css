@@ -1,18 +1,9 @@
 /* src/components/Footer.css */
-
-/* Footer Container */
-/* src/components/Footer.css */
-
-/* Footer Container */
-/* src/components/Footer.css */
-
 /* Footer Container */
 .footer {
   margin: 0;
   padding: 0;
   width: 100%;
-  position: relative;
-  bottom: 0;
   background: linear-gradient(
     180deg,
     rgb(0, 13, 28) 0%,
@@ -21,6 +12,8 @@
   );
   background-size: cover;
   background-repeat: no-repeat;
+  position: relative; /* Position relative to the page flow */
+  bottom: 0;
 }
 
 .footer::before {
@@ -30,10 +23,31 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../../assets/images/noise-footer.png'); /* Path to the noise texture */
-  opacity: 0.12; /* Adjust opacity to control the grain visibility */
-  pointer-events: none; /* Ensure the overlay doesn't interfere with interaction */
+  background-image: url('../../assets/images/noise-footer.png');
+  opacity: 0.12;
+  pointer-events: none;
 }
+
+/* Footer should always stay at the bottom of the page */
+.App > .footer {
+  margin-top: auto; /* Ensure it stays at the bottom if the page content is less */
+}
+
+/* Ensure the footer has a fixed height */
+.footer .overlap-group {
+  height: 559px;
+}
+
+.footer .noiseeffect {
+  background-blend-mode: color-burn;
+  height: 100%;
+  width: 100%; /* Set to 100% to match the container width */
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
 
 
 
@@ -52,18 +66,6 @@
   position: absolute;
   top: 0;
   left: 0;
-  margin: 0;
-  padding: 0;
-}
-
-/* Noise Effect */
-.footer .noiseeffect {
-  background-blend-mode: color-burn;
-  height: 535px;
-  width: 100%; /* Set to 100% to match the container width */
-  position: absolute;
-  top: 0;
-  left: 0; /* Remove the offset to align properly */
   margin: 0;
   padding: 0;
 }

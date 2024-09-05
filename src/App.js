@@ -1,14 +1,8 @@
-// src/App.js
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Home from "./screens/Home/Home";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import Profile from "./components/Profile";
+import { BrowserRouter as Router } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
-
-import { AboutUs } from "./components/AboutUs";
+import AppRoutes from "./routes/AppRoutes";
 import './App.css';
 
 function App() {
@@ -34,16 +28,13 @@ function App() {
   return (
     <Router>
       <div className="App">
+        {/* Pass isAuthenticated and handleLogout to the Navbar */}
         <Navbar isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login onLogin={handleLogin} />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/about" element={<AboutUs />} />
-          {isAuthenticated && <Route path="/profile" element={<Profile />} />}
-        </Routes>
-        <Footer />  {/* Add Footer component here */}
-
+        
+        {/* Pass isAuthenticated and handleLogin to AppRoutes */}
+        <AppRoutes isAuthenticated={isAuthenticated} onLogin={handleLogin} />
+        
+        <Footer />  {/* Add Footer component */}
       </div>
     </Router>
   );
