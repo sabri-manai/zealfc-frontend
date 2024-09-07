@@ -1,0 +1,48 @@
+.game-filter-container {
+    padding: 40px 20px; /* Adjust the padding to give more space around the component */
+    text-align: center;
+    color: #1EB62D;
+}
+
+.filter-title {
+    font-family: 'Tomorrow', sans-serif;
+    font-size: 36px;
+    margin-bottom: 30px; /* More space between title and filter buttons */
+    font-weight: normal;
+
+}
+
+.filter-options {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Increase the gap between filter buttons */
+    margin-bottom: 50px; /* More space between buttons and game cards */
+}
+
+.filter-options button {
+    background-color: transparent;
+    color: #1EB62D;
+    font-family: 'Nyxerin', sans-serif;
+    font-size: 20px;
+    padding: 10px 40px; /* Wider buttons */
+    border: 2px solid #1EB62D;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.filter-options button.active-filter {
+    background-color: #1EB62D;
+    color: #000;
+}
+
+.filter-options button:hover {
+    background-color: #1EB62D;
+    color: #000;
+}
+
+.filtered-games {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Ensure responsiveness */
+    gap: 40px; /* Increase the gap between game cards */
+    justify-items: center;
+}

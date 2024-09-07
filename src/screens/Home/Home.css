@@ -34,21 +34,28 @@
   font-family: 'Nyxerin', sans-serif;
   text-align: center;
   top: 55%; /* Adjust this value to move the text lower */
-  transform: translateY(30%); /* Centers the text vertically after adjusting top */
+  transform: translateY(35%); /* Centers the text vertically after adjusting top */
 }
 
 .hero-text h1 {
-  font-size: 84px;
-  margin-bottom: 10px;
+  font-size: 150px;
+  font-family: 'Nyxerin', sans-serif;
+  font-weight: normal;
+  margin-bottom: 0px;
 }
 
 .hero-text p {
-  font-size: 24px;
+  font-size: 32px;
+  font-family: 'Tomorrow', sans-serif;
+  margin-top: 0px;
+  margin-bottom: 0px;
+
+
 }
 
 /* Add styling for upcoming games section */
 .upcoming-games {
-  margin-top: 20px;
+  padding-top: 50px;
   text-align: center;
   color: #1bc429;
 }

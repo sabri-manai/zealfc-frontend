@@ -1,6 +1,7 @@
 import React from "react";
 import './Home.css';  // Import the CSS file
 import { Frame } from "../../components/Frame/Frame"; // Adjust if the path is different
+import { GameFilter } from "../../components/GameFilter/GameFilter";
 
 function Home() {
   return (
@@ -16,9 +17,10 @@ function Home() {
 
       {/* Upcoming Games Section */}
       <div className="upcoming-games">
-        <h2>Upcoming Games</h2>
         <Frame />
       </div>
+      <GameFilter />
+
     </div>
   );
 }

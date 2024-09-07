@@ -27,6 +27,8 @@
 
 .carousel-nav:hover {
     color: #00ff00; /* Slightly lighter green on hover */
+    text-decoration: none; /* Ensure no underline */
+
 }
 
 .carousel-title {
