@@ -22,7 +22,13 @@
           "EMAILSUBJECT": "Zealfc Email Confirmation",
           "EMAILMESSAGE": "Please confirm your email by pressing on this link: ",
           "deploymentBucketName": "amplify-zealfcfrontend-dev-6ba68-deployment",
-          "s3Key": "amplify-builds/zealfcfrontend16e33e9dCustomMessage-497a31546c547a6b4c67-build.zip"
+          "s3Key": "amplify-builds/zealfcfrontend16e33e9dCustomMessage-4e514a644c3567355634-build.zip"
+        }
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d36jl3px8m05xc",
+          "type": "cicd"
         }
       }
     }
