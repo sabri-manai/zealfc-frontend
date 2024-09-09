@@ -20,7 +20,7 @@ function Login({ onLogin }) {
 
     setLoading(true);
     try {
-      const response = await axios.post("https://zealfc-backend-c25dff1896a1.herokuapp.com/login", {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/login`, {
         username,
         password,
       });
