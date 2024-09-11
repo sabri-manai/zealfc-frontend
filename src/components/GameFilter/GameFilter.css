@@ -1,36 +1,62 @@
+/* Container for the entire filter section */
 .game-filter-container {
-    padding: 40px 20px; /* Adjust the padding to give more space around the component */
+    padding: 20px; /* Reduced padding */
     text-align: center;
     color: #1EB62D;
 }
 
-.filter-title {
-    font-family: 'Tomorrow', sans-serif;
-    font-size: 36px;
-    margin-bottom: 30px; /* More space between title and filter buttons */
-    font-weight: normal;
-
-}
-
-.filter-options {
+/* Styles for the filter type buttons (DATE, LEVEL, PLACE) */
+.filter-titles {
     display: flex;
     justify-content: center;
-    gap: 30px; /* Increase the gap between filter buttons */
-    margin-bottom: 50px; /* More space between buttons and game cards */
+    gap: 20px; /* Reduced gap */
+    margin-bottom: 10px; /* Reduced margin */
 }
 
-.filter-options button {
-    background-color: transparent;
-    color: #1EB62D;
-    font-family: 'Nyxerin', sans-serif;
-    font-size: 20px;
-    padding: 10px 40px; /* Wider buttons */
-    border: 2px solid #1EB62D;
+.filter-titles span {
+    font-family: 'Tomorrow', sans-serif;
+    font-size: 24px;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.filter-options button.active-filter {
+/* Ensure the filter options are properly centered */
+.filter-options-container {
+    display: flex;
+    flex-direction: column; /* Stack the options and the carousel-header */
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px; /* Reduced margin */
+    position: relative;
+}
+
+/* Adjusting carousel track for button alignment */
+.carousel-track {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    align-items: center;
+    width: 100%; /* Ensure full width for centering */
+    gap: 20px; /* Reduced space between buttons */
+    padding: 10px 0; /* Reduced vertical padding */
+}
+
+/* Filter option styling */
+.filter-option {
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+/* Adjust button sizes */
+.filter-options button {
+    min-width: 140px; /* Reduced button width */
+    padding: 10px 20px; /* Reduced padding */
+    font-size: 18px; /* Reduced font size */
+    text-align: center;
+    flex-shrink: 0;
+    display: block; /* Ensure buttons take up the available space */
+}
+
+.filter-options button.active {
     background-color: #1EB62D;
     color: #000;
 }
@@ -40,9 +66,61 @@
     color: #000;
 }
 
+/* Styles for the carousel buttons */
+.carousel-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Full width */
+    margin-top: 15px; /* Reduced space above */
+    text-align: center;
+    gap: 10px;
+}
+
+.carousel-title {
+    color: #1EB62D;
+    font-size: 20px; /* Reduced title font size */
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.carousel-nav {
+    background: transparent;
+    color: #1EB62D;
+    font-size: 22px; /* Adjusted button size */
+    cursor: pointer;
+    border: none;
+}
+
+.carousel-nav.left {
+    left: 10px;
+}
+
+.carousel-nav.right {
+    right: 10px;
+}
+
+/* Styles for the filtered game cards */
 .filtered-games {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Ensure responsiveness */
-    gap: 40px; /* Increase the gap between game cards */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted size */
     justify-items: center;
+    gap: 30px; /* Reduced gap between game cards */
+}
+
+/* Mobile view adjustments */
+@media (max-width: 768px) {
+    .filter-titles {
+        flex-direction: column;
+        gap: 10px; /* Reduced gap for mobile */
+    }
+
+    .carousel-track {
+        gap: 10px;
+    }
+
+    .filter-options button {
+        min-width: 100px;
+        padding: 8px 15px;
+    }
 }
