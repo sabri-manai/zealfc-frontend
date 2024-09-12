@@ -30,7 +30,7 @@ function ConfirmAccount({ onLogin }) {
     setLoading(true);
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/confirm`, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/confirm`, {
         email,
         confirmationCode,
         password,

@@ -20,16 +20,28 @@ function Login({ onLogin }) {
 
     setLoading(true);
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/login`, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, {
         email,
         password,
       });
 
       if (response.data) {
-        const { idToken } = response.data;
+        // Extract idToken, accessToken, and refreshToken from response
+        const { idToken, accessToken, refreshToken } = response.data;
+
+        // Save tokens in localStorage
+        localStorage.setItem("idToken", idToken);
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+
+        // Set success message
         setMessage("User logged in successfully");
-        onLogin(idToken); // Call the onLogin function passed down from App
-        navigate("/"); // Redirect to the home page
+
+        // Call onLogin to mark the user as authenticated in the parent component
+        onLogin(idToken);
+
+        // Redirect to the home page
+        navigate("/");
       } else {
         setMessage("Login failed: no data in response");
       }
