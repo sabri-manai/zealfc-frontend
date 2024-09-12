@@ -1,13 +1,15 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import Login from '../screens/Login/Login'; // Adjust the path based on your folder structure
-import Register from '../screens/Register/Register'; // Adjust the path based on your folder structure
+import { Routes, Route } from 'react-router-dom';
+import Login from '../screens/Login/Login';
+import Register from '../screens/Register/Register';
+import ConfirmAccount from '../screens/Login/ConfirmAccount'; // Make sure this is correct
 
 function LoginRoutes({ onLogin }) {
   return (
     <Routes>
       <Route path="/login" element={<Login onLogin={onLogin} />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/confirm" element={<ConfirmAccount onLogin={onLogin} />} /> {/* Ensure onLogin is passed here */}
     </Routes>
   );
 }

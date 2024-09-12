@@ -1,20 +1,26 @@
 {
   "auth": {
-    "zealfcfrontend16e33e9d": {
-      "customAuth": false,
+    "userPoolGroups": {
       "dependsOn": [
         {
           "attributes": [
-            "Arn",
-            "Name"
+            "UserPoolId",
+            "AppClientIDWeb",
+            "AppClientID",
+            "IdentityPoolId"
           ],
-          "category": "function",
-          "resourceName": "zealfcfrontend16e33e9dCustomMessage",
-          "triggerProvider": "Cognito"
+          "category": "auth",
+          "resourceName": "zealfc"
         }
       ],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito-UserPool-Groups"
+    },
+    "zealfc": {
+      "customAuth": false,
+      "dependsOn": [],
       "frontendAuthConfig": {
-        "mfaConfiguration": "OFF",
+        "mfaConfiguration": "OPTIONAL",
         "mfaTypes": [
           "SMS"
         ],
@@ -23,12 +29,14 @@
           "passwordPolicyMinLength": 8
         },
         "signupAttributes": [
-          "EMAIL"
+          "EMAIL",
+          "FAMILY_NAME",
+          "GIVEN_NAME",
+          "PHONE_NUMBER"
         ],
         "socialProviders": [],
         "usernameAttributes": [
-          "EMAIL",
-          "PHONE_NUMBER"
+          "EMAIL"
         ],
         "verificationMechanisms": [
           "EMAIL"
@@ -38,74 +46,20 @@
       "service": "Cognito"
     }
   },
-  "function": {
-    "zealfcfrontend16e33e9dCustomMessage": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    }
-  },
-  "hosting": {
-    "amplifyhosting": {
-      "lastPushTimeStamp": "2024-09-07T23:14:39.256Z",
-      "service": "amplifyhosting",
-      "type": "cicd"
-    }
-  },
   "parameters": {
-    "AMPLIFY_function_zealfcfrontend16e33e9dCustomMessage_EMAILMESSAGE": {
+    "AMPLIFY_auth_zealfc_facebookAppId": {
       "usedBy": [
         {
-          "category": "function",
-          "resourceName": "zealfcfrontend16e33e9dCustomMessage"
+          "category": "auth",
+          "resourceName": "zealfc"
         }
       ]
     },
-    "AMPLIFY_function_zealfcfrontend16e33e9dCustomMessage_EMAILSUBJECT": {
+    "AMPLIFY_auth_zealfc_googleClientId": {
       "usedBy": [
         {
-          "category": "function",
-          "resourceName": "zealfcfrontend16e33e9dCustomMessage"
-        }
-      ]
-    },
-    "AMPLIFY_function_zealfcfrontend16e33e9dCustomMessage_REDIRECTURL": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "zealfcfrontend16e33e9dCustomMessage"
-        }
-      ]
-    },
-    "AMPLIFY_function_zealfcfrontend16e33e9dCustomMessage_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "zealfcfrontend16e33e9dCustomMessage"
-        }
-      ]
-    },
-    "AMPLIFY_function_zealfcfrontend16e33e9dCustomMessage_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "zealfcfrontend16e33e9dCustomMessage"
-        }
-      ]
-    },
-    "AMPLIFY_hosting_amplifyhosting_appId": {
-      "usedBy": [
-        {
-          "category": "hosting",
-          "resourceName": "amplifyhosting"
-        }
-      ]
-    },
-    "AMPLIFY_hosting_amplifyhosting_type": {
-      "usedBy": [
-        {
-          "category": "hosting",
-          "resourceName": "amplifyhosting"
+          "category": "auth",
+          "resourceName": "zealfc"
         }
       ]
     }

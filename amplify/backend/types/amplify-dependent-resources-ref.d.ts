@@ -1,22 +1,19 @@
 export type AmplifyDependentResourcesAttributes = {
   "auth": {
-    "zealfcfrontend16e33e9d": {
+    "userPoolGroups": {
+      "zealfcGroupRole": "string"
+    },
+    "zealfc": {
       "AppClientID": "string",
       "AppClientIDWeb": "string",
+      "CreatedSNSRole": "string",
+      "FacebookWebClient": "string",
+      "GoogleWebClient": "string",
       "IdentityPoolId": "string",
       "IdentityPoolName": "string",
       "UserPoolArn": "string",
       "UserPoolId": "string",
       "UserPoolName": "string"
-    }
-  },
-  "function": {
-    "zealfcfrontend16e33e9dCustomMessage": {
-      "Arn": "string",
-      "LambdaExecutionRole": "string",
-      "LambdaExecutionRoleArn": "string",
-      "Name": "string",
-      "Region": "string"
     }
   }
 }

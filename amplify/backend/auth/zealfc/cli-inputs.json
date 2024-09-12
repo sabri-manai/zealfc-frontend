@@ -1,14 +1,14 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "zealfcfrontend16e33e9d_identitypool_16e33e9d",
+    "identityPoolName": "zealfc",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "zealfc16e33e9d",
-    "userPoolName": "zealfcfrontend16e33e9d_userpool_16e33e9d",
+    "resourceNameTruncated": "zealfc9b00e73f",
+    "userPoolName": "zealfc",
     "autoVerifiedAttributes": [
       "email"
     ],
-    "mfaConfiguration": "OFF",
+    "mfaConfiguration": "OPTIONAL",
     "mfaTypes": [
       "SMS Text Message"
     ],
@@ -16,11 +16,14 @@
     "smsVerificationMessage": "Your verification code is {####}",
     "emailVerificationSubject": "Your verification code",
     "emailVerificationMessage": "Your verification code is {####}",
-    "defaultPasswordPolicy": false,
+    "defaultPasswordPolicy": true,
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-      "email"
+      "email",
+      "family_name",
+      "given_name",
+      "phone_number"
     ],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
@@ -31,23 +34,28 @@
     "userpoolClientReadAttributes": [
       "email"
     ],
-    "userpoolClientLambdaRole": "zealfc16e33e9d_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "zealfc9b00e73f_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "16e33e9d",
-    "resourceName": "zealfcfrontend16e33e9d",
+    "sharedId": "9b00e73f",
+    "resourceName": "zealfc",
     "authSelections": "identityPoolAndUserPool",
-    "useDefault": "default",
-    "usernameAttributes": [
-      "email, phone_number"
+    "useDefault": "manual",
+    "thirdPartyAuth": true,
+    "authProviders": [
+      "graph.facebook.com",
+      "accounts.google.com"
     ],
-    "triggers": {
-      "CustomMessage": [
-        "verification-link"
-      ]
-    },
-    "userPoolGroupList": [],
+    "usernameAttributes": [
+      "email"
+    ],
+    "userPoolGroups": true,
+    "adminQueries": false,
+    "triggers": {},
+    "hostedUI": false,
+    "userPoolGroupList": [
+      "zealfc"
+    ],
     "serviceName": "Cognito",
-    "verificationBucketName": "zealfcfrontend16e33e9dverificationbucket",
     "usernameCaseSensitive": false,
     "useEnabledMfas": true
   }

@@ -1,0 +1,98 @@
+/* Container for the confirmation page */
+.confirm-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Confirmation box styling */
+.confirm-box {
+    background-color: #0e141a;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Styling for heading */
+h2 {
+    color: #1bc429;
+    font-family: 'Nyxerin', sans-serif;
+    margin-bottom: 20px;
+}
+
+/* Container for inputs */
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* Input field styling */
+.input-field {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #1bc429;
+    border-radius: 5px;
+    background-color: #0f0326;
+    color: white;
+}
+
+/* Placeholder styling */
+.input-field::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Message styling */
+.message {
+    margin-top: 20px;
+    font-family: 'Nyxerin', sans-serif;
+}
+
+.message.success {
+    color: #1bc429;
+}
+
+.message.error {
+    color: #ff4b4b;
+}
+
+/* Button container styling */
+.button-container {
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Switch authentication (e.g., redirect to login) */
+.switch-auth {
+    margin-top: 20px;
+    font-family: 'Nyxerin', sans-serif;
+    color: #1bc429;
+}
+
+.switch-auth a {
+    color: #1bc429;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.switch-auth a:hover {
+    color: #0F6216;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .confirm-box {
+        width: 300px;
+    }
+
+    .input-field {
+        font-size: 14px;
+    }
+}

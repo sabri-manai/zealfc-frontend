@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom"; // Import useNavigate and Link for redirection
+import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
 import Button from "../../components/Button/Button"; // Assuming you have a Button component
 import "./Login.css"; // Import the CSS file
 
 function Login({ onLogin }) {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState(""); // Changed from username to email
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -13,7 +13,7 @@ function Login({ onLogin }) {
   const navigate = useNavigate(); // Initialize the useNavigate hook
 
   const handleLogin = async () => {
-    if (!username || !password) {
+    if (!email || !password) {
       setMessage("Please fill in both fields.");
       return;
     }
@@ -21,10 +21,10 @@ function Login({ onLogin }) {
     setLoading(true);
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/login`, {
-        username,
+        email,
         password,
       });
-      
+
       if (response.data) {
         const { idToken } = response.data;
         setMessage("User logged in successfully");
@@ -34,9 +34,15 @@ function Login({ onLogin }) {
         setMessage("Login failed: no data in response");
       }
     } catch (error) {
-      setMessage(error.response?.data?.error || "Login failed");
+      if (error.response?.data?.error === "UserNotConfirmedException") {
+        setMessage("Please confirm your account first.");
+        navigate("/confirm", { state: { email } }); // Redirect to the confirmation page and pass the email
+      } else {
+        setMessage(error.response?.data?.message || "Login failed");
+      }
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -45,10 +51,10 @@ function Login({ onLogin }) {
         <h2>Login</h2>
         <div className="input-container">
           <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            type="email" // Changed to email
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="input-field"
           />
           <input
@@ -67,12 +73,10 @@ function Login({ onLogin }) {
         <p className={`message ${message.includes("failed") ? "error" : "success"}`}>
           {message}
         </p>
-        {/* Link to the Register screen */}
         <div className="message-container">
-        <p>Don't have an account?</p>
+          <p>Don't have an account?</p>
           <a href="/register">Register</a>
         </div>
-
       </div>
     </div>
   );

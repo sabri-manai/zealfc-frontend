@@ -15,13 +15,22 @@ function App() {
     }
   }, []);
 
-  const handleLogin = (idToken) => {
+  // Modified handleLogin to store all tokens
+  const handleLogin = (idToken, accessToken, refreshToken) => {
+    // Store all tokens in localStorage
     localStorage.setItem("idToken", idToken);
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
+    
+    // Mark user as authenticated
     setIsAuthenticated(true);
   };
 
+  // Logout handler, clears all tokens
   const handleLogout = () => {
     localStorage.removeItem("idToken");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     setIsAuthenticated(false);
   };
 
