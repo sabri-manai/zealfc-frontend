@@ -20,7 +20,7 @@ function Profile() {
       }
   
       try {
-        const response = await fetch("http://localhost:5000/profile/user-profile", {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/profile/user-profile`, {
           method: "GET",
           headers: {
             "Authorization": `Bearer ${idToken}`, // Ensure token is correctly formatted
@@ -43,10 +43,6 @@ function Profile() {
   
     fetchUserData();
   }, []);
-  
-  
-  
-  
 
   
   if (loading) {

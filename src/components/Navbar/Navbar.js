@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 import icon from "../../assets/icons/icon.png";
-import line from "../../assets/images/line.png"; // Make sure the path is correct
+import line from "../../assets/images/line.png"; // Make sure to adjust the path
 
 function Navbar({ isAuthenticated, handleLogout }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -13,16 +13,16 @@ function Navbar({ isAuthenticated, handleLogout }) {
 
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
-  const buttonRef = useRef(null);
+  const buttonRef = useRef(null); // Reference to the button
 
   const toggleDropdown = (event) => {
-    event.stopPropagation(); // Prevent event bubbling
-    setIsExpanded((prev) => !prev);
+    event.stopPropagation(); // Prevent the event from bubbling up to the document
+    setIsExpanded((prev) => !prev); // Toggle the dropdown state
   };
 
   const handleItemClick = (path) => {
-    setIsExpanded(false); // Collapse the navbar
-    navigate(path); // Navigate to the selected path
+    setIsExpanded(false); // Collapse the navbar when an item is clicked
+    navigate(path); // Navigate to the clicked path
   };
 
   const handleClickOutside = (event) => {
@@ -31,16 +31,9 @@ function Navbar({ isAuthenticated, handleLogout }) {
       !dropdownRef.current.contains(event.target) &&
       !buttonRef.current.contains(event.target)
     ) {
-      setIsExpanded(false); // Close dropdown if clicked outside
+      setIsExpanded(false); // Close dropdown if clicked outside and not on the button
     }
   };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -55,7 +48,7 @@ function Navbar({ isAuthenticated, handleLogout }) {
         const response = await fetch("http://localhost:5000/profile/user-profile", {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${idToken}`,
+            Authorization: `Bearer ${idToken}`, // Ensure token is correctly formatted
             "Content-Type": "application/json",
           },
         });
@@ -73,10 +66,13 @@ function Navbar({ isAuthenticated, handleLogout }) {
       }
     };
 
-    if (isAuthenticated) {
-      fetchUserData();
-    }
-  }, [isAuthenticated]);
+    fetchUserData();
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -93,19 +89,17 @@ function Navbar({ isAuthenticated, handleLogout }) {
               alt="Icon"
               className="nav-icon"
               onClick={toggleDropdown}
-              ref={buttonRef}
-              style={{ cursor: "pointer" }}
+              ref={buttonRef} // Attach the reference to the button
+              style={{ cursor: "pointer" }} // Add cursor pointer to indicate it's clickable
             />
           </div>
           <div className="nav-right">
-            {loading ? (
-              <div className="nav-item">Loading...</div>
-            ) : error ? (
-              <div className="nav-item">Error: {error}</div>
-            ) : isAuthenticated && userData ? (
-              <div className="nav-item" onClick={() => navigate("/profile")}>
-                {userData.first_name}
-              </div>
+            {isAuthenticated ? (
+              <>
+                <div className="nav-item" onClick={() => navigate("/profile")}>
+                  {userData ? userData.first_name : "User"}
+                </div>
+              </>
             ) : (
               <>
                 <div className="nav-item">
@@ -119,16 +113,15 @@ function Navbar({ isAuthenticated, handleLogout }) {
           </div>
         </div>
       </nav>
-
       {isExpanded && (
         <div
           className="dropdown-overlay"
           ref={dropdownRef}
-          onClick={() => setIsExpanded(false)}
+          onClick={() => setIsExpanded(false)} // Close dropdown if overlay is clicked
         >
           <div
             className="expanded-menu"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()} // Prevent the dropdown from closing when clicking inside
           >
             <div className="line">
               <img src={line} alt="Line" className="line-img" />
