@@ -1,16 +1,32 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useRef, useEffect, useCallback, useState } from "react";
+import axios from "axios"; // Import axios for API calls
 import { Carousel } from "../Carousel/Carousel";
 import { GameCard } from "../GameCard/GameCard";
 import "./Frame.css";
 
-// Import the images
+// Placeholder images
 import TuriaImage from "../../assets/images/turia.png";
 import CarmenImage from "../../assets/images/carmen.png";
 import BeteroImage from "../../assets/images/betero.png";
 
 export const Frame = () => {
+    const [games, setGames] = useState([]); // State to hold the fetched games
     const carouselRef = useRef(null);
     const scrollIntervalRef = useRef(null);
+
+    // Fetch games from the backend
+    useEffect(() => {
+        const fetchGames = async () => {
+            try {
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/games`); // Adjust API endpoint
+                setGames(response.data); // Assuming the response is an array of games
+            } catch (error) {
+                console.error("Error fetching games:", error);
+            }
+        };
+
+        fetchGames();
+    }, []);
 
     const startAutoScroll = useCallback(() => {
         stopAutoScroll(); // Stop any existing interval
@@ -82,61 +98,19 @@ export const Frame = () => {
                 <button className="carousel-nav right" onClick={scrollRight}>{">"}</button>
             </div>
             <Carousel ref={carouselRef}>
-                {/* Your GameCard components go here */}
-                <GameCard 
-                    imageSrc={TuriaImage}
-                    gameName="TURIA 1"
-                    gameSubtitle="CHAMPIONS"
-                    gameDay="Tuesday, 19:30"
-                />
-                <GameCard 
-                    imageSrc={CarmenImage}
-                    gameName="CARMEN 2"
-                    gameSubtitle="BEGINNERS"
-                    gameDay="Tuesday, 17:30"
-                />
-                <GameCard 
-                    imageSrc={BeteroImage}
-                    gameName="BETERO 3"
-                    gameSubtitle="RISING"
-                    gameDay="Wednesday, 11:30"
-                />
-                <GameCard 
-                    imageSrc={TuriaImage}
-                    gameName="TURIA 4"
-                    gameSubtitle="CHAMPIONS"
-                    gameDay="Tuesday, 19:30"
-                />
-                <GameCard 
-                    imageSrc={CarmenImage}
-                    gameName="CARMEN 5"
-                    gameSubtitle="BEGINNERS"
-                    gameDay="Tuesday, 17:30"
-                />
-                <GameCard 
-                    imageSrc={TuriaImage}
-                    gameName="TURIA 6"
-                    gameSubtitle="CHAMPIONS"
-                    gameDay="Tuesday, 19:30"
-                />
-                <GameCard 
-                    imageSrc={CarmenImage}
-                    gameName="CARMEN 7"
-                    gameSubtitle="BEGINNERS"
-                    gameDay="Tuesday, 17:30"
-                />
-                <GameCard 
-                    imageSrc={TuriaImage}
-                    gameName="TURIA 8"
-                    gameSubtitle="CHAMPIONS"
-                    gameDay="Tuesday, 19:30"
-                />
-                <GameCard 
-                    imageSrc={CarmenImage}
-                    gameName="CARMEN 9"
-                    gameSubtitle="BEGINNERS"
-                    gameDay="Tuesday, 17:30"
-                />
+                {games.length > 0 ? (
+                    games.map((game, index) => (
+                        <GameCard
+                            key={game._id} // Assuming each game has a unique _id
+                            imageSrc={index % 2 === 0 ? TuriaImage : CarmenImage} // Placeholder: Alternate images
+                            gameName={game.stadium} // Display the stadium or game name
+                            gameSubtitle={game.type} // Display the game type
+                            gameDay={new Date(game.date).toLocaleString()} // Format the game date
+                        />
+                    ))
+                ) : (
+                    <p>No upcoming games available.</p>
+                )}
             </Carousel>
         </div>
     );
