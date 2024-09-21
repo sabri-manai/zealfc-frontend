@@ -28,6 +28,33 @@ export const Frame = () => {
         fetchGames();
     }, []);
 
+    // Handle signup when user clicks the "Signup" button
+    const handleSignup = async (gameId) => {
+        const idToken = localStorage.getItem("idToken");
+      
+        if (!idToken) {
+          alert("Please log in to sign up for this game.");
+          return;
+        }
+      
+        try {
+          const response = await axios.post(
+            `${process.env.REACT_APP_API_URL}/games/signup/${gameId}`,
+            {}, // No body needed
+            {
+              headers: {
+                Authorization: `Bearer ${idToken}`, // Include the token in the request headers
+              },
+            }
+          );
+          alert("Signed up successfully for the game!");
+        } catch (error) {
+          console.error("Error signing up for the game:", error);
+          alert("Error signing up for the game.");
+        }
+      };      
+    
+
     const startAutoScroll = useCallback(() => {
         stopAutoScroll(); // Stop any existing interval
         scrollIntervalRef.current = setInterval(() => {
@@ -101,11 +128,12 @@ export const Frame = () => {
                 {games.length > 0 ? (
                     games.map((game, index) => (
                         <GameCard
-                            key={game._id} // Assuming each game has a unique _id
-                            imageSrc={index % 2 === 0 ? TuriaImage : CarmenImage} // Placeholder: Alternate images
-                            gameName={game.stadium} // Display the stadium or game name
-                            gameSubtitle={game.type} // Display the game type
-                            gameDay={new Date(game.date).toLocaleString()} // Format the game date
+                        key={game._id} // Ensure game._id is used here
+                        imageSrc={index % 2 === 0 ? TuriaImage : CarmenImage}
+                        gameName={game.stadium}
+                        gameSubtitle={game.type}
+                        gameDay={new Date(game.date).toLocaleString()}
+                        onSignup={() => handleSignup(game._id)} // Pass the game ID to handleSignup
                         />
                     ))
                 ) : (

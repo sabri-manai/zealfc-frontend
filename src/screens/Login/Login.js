@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
-import Button from "../../components/Button/Button"; // Assuming you have a Button component
-import "./Login.css"; // Import the CSS file
+import { useNavigate } from "react-router-dom"; 
+import Button from "../../components/Button/Button"; 
+import "./Login.css"; 
 
 function Login({ onLogin }) {
-  const [email, setEmail] = useState(""); // Changed from username to email
+  const [email, setEmail] = useState(""); 
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate(); // Initialize the useNavigate hook
+  const navigate = useNavigate(); 
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -26,13 +26,15 @@ function Login({ onLogin }) {
       });
 
       if (response.data) {
-        // Extract idToken, accessToken, and refreshToken from response
-        const { idToken, accessToken, refreshToken } = response.data;
+        // Extract idToken, accessToken, refreshToken, and possibly user details
+        const { idToken, accessToken, refreshToken, userId, firstName } = response.data;
 
-        // Save tokens in localStorage
+        // Save tokens and user info in localStorage
         localStorage.setItem("idToken", idToken);
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
+        localStorage.setItem("userId", userId);  // Save userId
+        localStorage.setItem("firstName", firstName);  // Save firstName
 
         // Set success message
         setMessage("User logged in successfully");
@@ -48,9 +50,11 @@ function Login({ onLogin }) {
     } catch (error) {
       if (error.response?.data?.error === "UserNotConfirmedException") {
         setMessage("Please confirm your account first.");
-        navigate("/confirm", { state: { email } }); // Redirect to the confirmation page and pass the email
+        navigate("/confirm", { state: { email } }); // Redirect to confirmation page with email
+      } else if (error.response?.data?.message) {
+        setMessage(error.response.data.message);
       } else {
-        setMessage(error.response?.data?.message || "Login failed");
+        setMessage("Login failed. Please try again.");
       }
     } finally {
       setLoading(false);
@@ -63,11 +67,12 @@ function Login({ onLogin }) {
         <h2>Login</h2>
         <div className="input-container">
           <input
-            type="email" // Changed to email
+            type="email" 
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="input-field"
+            aria-label="Email"
           />
           <input
             type="password"
@@ -75,10 +80,11 @@ function Login({ onLogin }) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="input-field"
+            aria-label="Password"
           />
         </div>
         <Button
-          text={loading ? "Logging in..." : "Login"} // Button text changes when loading
+          text={loading ? "Logging in..." : "Login"} 
           onClick={handleLogin}
           styleType="default"
         />
@@ -95,3 +101,4 @@ function Login({ onLogin }) {
 }
 
 export default Login;
+  

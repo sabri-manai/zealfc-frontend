@@ -30,16 +30,6 @@
     position: relative;
 }
 
-/* Adjusting carousel track for button alignment */
-.carousel-track {
-    display: flex;
-    justify-content: center; /* Center the buttons horizontally */
-    align-items: center;
-    width: 100%; /* Ensure full width for centering */
-    gap: 20px; /* Reduced space between buttons */
-    padding: 10px 0; /* Reduced vertical padding */
-}
-
 /* Filter option styling */
 .filter-option {
     display: inline-block;
@@ -66,38 +56,9 @@
     color: #000;
 }
 
-/* Styles for the carousel buttons */
-.carousel-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%; /* Full width */
-    margin-top: 15px; /* Reduced space above */
-    text-align: center;
-    gap: 10px;
-}
-
-.carousel-title {
-    color: #1EB62D;
-    font-size: 20px; /* Reduced title font size */
-    text-transform: uppercase;
-    margin: 0;
-}
-
-.carousel-nav {
-    background: transparent;
-    color: #1EB62D;
-    font-size: 22px; /* Adjusted button size */
-    cursor: pointer;
-    border: none;
-}
-
-.carousel-nav.left {
-    left: 10px;
-}
-
-.carousel-nav.right {
-    right: 10px;
+/* Remove the date under each day button */
+.filter-date {
+    display: none;
 }
 
 /* Styles for the filtered game cards */
@@ -113,10 +74,6 @@
     .filter-titles {
         flex-direction: column;
         gap: 10px; /* Reduced gap for mobile */
-    }
-
-    .carousel-track {
-        gap: 10px;
     }
 
     .filter-options button {

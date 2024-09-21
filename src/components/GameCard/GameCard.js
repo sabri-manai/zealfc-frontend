@@ -1,7 +1,7 @@
 import React from "react";
 import "./GameCard.css";
 
-export const GameCard = ({ imageSrc, gameName, gameSubtitle, gameDay }) => {
+export const GameCard = ({ imageSrc, gameName, gameSubtitle, gameDay, onSignup }) => {
   return (
     <div className="game-card-container">
       <div className="game-card">
@@ -15,6 +15,13 @@ export const GameCard = ({ imageSrc, gameName, gameSubtitle, gameDay }) => {
         </div>
       </div>
       <div className="game-day">{gameDay}</div>
+      
+      {/* Signup Button */}
+      <div className="signup-container">
+        <button className="signup-button" onClick={onSignup}>
+          Signup
+        </button>
+      </div>
     </div>
   );
 };

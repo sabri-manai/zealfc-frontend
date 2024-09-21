@@ -1,6 +1,7 @@
+/* Main Carousel Container */
 .carousel-container {
     overflow-x: auto; /* Enable horizontal scrolling */
-    overflow-y: visible; /* Allow vertical overflow so the card can lift up */
+    overflow-y: visible; /* Allow vertical overflow */
     display: flex;
     justify-content: flex-start; /* Align items from the start */
     align-items: center;
@@ -22,7 +23,7 @@
     display: none; /* Hide scrollbar for aesthetics */
 }
 
-
+/* Game Card Container */
 .game-card-container {
     flex: 0 0 calc(20% - 20px); /* Adjust card width calculation to account for padding */
     max-width: 236px;
@@ -38,6 +39,7 @@
     transform: scale(1.05);
 }
 
+/* Carousel Header */
 .carousel-header {
     display: flex;
     justify-content: center;
@@ -51,7 +53,7 @@
     background-color: transparent; /* Transparent background */
     color: #1EB62D; /* Green color matching the title */
     border: none;
-    font-size: 40px; /* Adjust to match the size of the arrows in your image */
+    font-size: 40px; /* Adjust to match the size of the arrows */
     cursor: pointer;
     z-index: 10;
     display: flex;
@@ -63,7 +65,6 @@
 .carousel-nav:hover {
     color: #00ff00; /* Slightly lighter green on hover */
     text-decoration: none; /* Ensure no underline */
-
 }
 
 .carousel-title {
@@ -76,7 +77,7 @@
     text-transform: uppercase; /* Ensure the title is in uppercase */
 }
 
-
+/* Game Card Container - Responsive Breakpoints */
 @media (max-width: 1024px) {
     .game-card-container {
         flex: 0 0 calc(25% - 20px); /* 4 cards visible with padding */

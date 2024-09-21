@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
-
 import icon from "../../assets/icons/icon.png";
-import line from "../../assets/images/line.png"; // Make sure to adjust the path
+import line from "../../assets/images/line.png";
 
-function Navbar({ isAuthenticated, handleLogout }) {
+function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -13,16 +12,16 @@ function Navbar({ isAuthenticated, handleLogout }) {
 
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
-  const buttonRef = useRef(null); // Reference to the button
+  const buttonRef = useRef(null);
 
   const toggleDropdown = (event) => {
-    event.stopPropagation(); // Prevent the event from bubbling up to the document
-    setIsExpanded((prev) => !prev); // Toggle the dropdown state
+    event.stopPropagation();
+    setIsExpanded((prev) => !prev);
   };
 
   const handleItemClick = (path) => {
-    setIsExpanded(false); // Collapse the navbar when an item is clicked
-    navigate(path); // Navigate to the clicked path
+    setIsExpanded(false);
+    navigate(path);
   };
 
   const handleClickOutside = (event) => {
@@ -31,13 +30,13 @@ function Navbar({ isAuthenticated, handleLogout }) {
       !dropdownRef.current.contains(event.target) &&
       !buttonRef.current.contains(event.target)
     ) {
-      setIsExpanded(false); // Close dropdown if clicked outside and not on the button
+      setIsExpanded(false);
     }
   };
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const idToken = localStorage.getItem("idToken");
+      let idToken = localStorage.getItem("idToken");
       if (!idToken) {
         setError("No token found, please log in.");
         setLoading(false);
@@ -48,17 +47,42 @@ function Navbar({ isAuthenticated, handleLogout }) {
         const response = await fetch(`${process.env.REACT_APP_API_URL}/profile/user-profile`, {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${idToken}`, // Ensure token is correctly formatted
+            Authorization: `Bearer ${idToken}`,
             "Content-Type": "application/json",
           },
         });
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch user data");
+        // Check if token is expired
+        if (response.status === 401) {
+          const tokenRefreshed = await refreshTokens();
+          if (tokenRefreshed) {
+            // Retry fetching user data with the new token
+            idToken = localStorage.getItem("idToken");
+            const retryResponse = await fetch(`${process.env.REACT_APP_API_URL}/profile/user-profile`, {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${idToken}`,
+                "Content-Type": "application/json",
+              },
+            });
+            if (!retryResponse.ok) {
+              throw new Error("Failed to fetch user data after token refresh");
+            }
+            const data = await retryResponse.json();
+            setUserData(data);
+            if (onUserFetch) {
+              onUserFetch(data); // Callback to pass user data back to parent component
+            }
+          } else {
+            handleLogout(); // Logout if refresh token fails
+          }
+        } else {
+          const data = await response.json();
+          setUserData(data);
+          if (onUserFetch) {
+            onUserFetch(data); // Callback to pass user data back to parent component
+          }
         }
-
-        const data = await response.json();
-        setUserData(data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -66,13 +90,15 @@ function Navbar({ isAuthenticated, handleLogout }) {
       }
     };
 
-    fetchUserData();
+    if (isAuthenticated) {
+      fetchUserData();
+    }
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [isAuthenticated, onUserFetch, refreshTokens]); // Added refreshTokens as a dependency
 
   return (
     <>
@@ -89,15 +115,15 @@ function Navbar({ isAuthenticated, handleLogout }) {
               alt="Icon"
               className="nav-icon"
               onClick={toggleDropdown}
-              ref={buttonRef} // Attach the reference to the button
-              style={{ cursor: "pointer" }} // Add cursor pointer to indicate it's clickable
+              ref={buttonRef}
+              style={{ cursor: "pointer" }}
             />
           </div>
           <div className="nav-right">
             {isAuthenticated ? (
               <>
                 <div className="nav-item" onClick={() => navigate("/profile")}>
-                  {userData ? userData.first_name : "User"}
+                  {userData ? userData.first_name : "Loading..."} {/* Show Loading if userData is not yet available */}
                 </div>
               </>
             ) : (
@@ -114,36 +140,20 @@ function Navbar({ isAuthenticated, handleLogout }) {
         </div>
       </nav>
       {isExpanded && (
-        <div
-          className="dropdown-overlay"
-          ref={dropdownRef}
-          onClick={() => setIsExpanded(false)} // Close dropdown if overlay is clicked
-        >
-          <div
-            className="expanded-menu"
-            onClick={(e) => e.stopPropagation()} // Prevent the dropdown from closing when clicking inside
-          >
+        <div className="dropdown-overlay" ref={dropdownRef} onClick={() => setIsExpanded(false)}>
+          <div className="expanded-menu" onClick={(e) => e.stopPropagation()}>
             <div className="line">
               <img src={line} alt="Line" className="line-img" />
             </div>
-            <div
-              className="dropdown-item"
-              onClick={() => handleItemClick("/about")}
-            >
+            <div className="dropdown-item" onClick={() => handleItemClick("/about")}>
               ABOUT US
             </div>
-            <div
-              className="dropdown-item"
-              onClick={() => handleItemClick("/choose-game")}
-            >
+            <div className="dropdown-item" onClick={() => handleItemClick("/choose-game")}>
               CHOOSE A GAME
             </div>
             {isAuthenticated && (
               <>
-                <div
-                  className="dropdown-item"
-                  onClick={() => handleItemClick("/profile")}
-                >
+                <div className="dropdown-item" onClick={() => handleItemClick("/profile")}>
                   PROFILE
                 </div>
                 <div className="dropdown-item" onClick={handleLogout}>

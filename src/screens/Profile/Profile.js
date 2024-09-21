@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './Profile.css';
 
-function Profile() {
+function Profile({ refreshTokens, handleLogout }) { // Added refreshTokens and handleLogout props
   // State to store user data
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -10,7 +10,7 @@ function Profile() {
   // Fetch user data securely using the idToken
   useEffect(() => {
     const fetchUserData = async () => {
-      const idToken = localStorage.getItem("idToken");
+      let idToken = localStorage.getItem("idToken");
       console.log("ID Token:", idToken); // Log the token for debugging
   
       if (!idToken) {
@@ -28,12 +28,32 @@ function Profile() {
           },
         });
   
-        if (!response.ok) {
+        if (response.status === 401) { // Token is expired or invalid
+          const tokenRefreshed = await refreshTokens(); // Try to refresh the token
+          if (tokenRefreshed) {
+            // Retry fetching user data with the new token
+            idToken = localStorage.getItem("idToken");
+            const retryResponse = await fetch(`${process.env.REACT_APP_API_URL}/profile/user-profile`, {
+              method: "GET",
+              headers: {
+                "Authorization": `Bearer ${idToken}`, // Use the new token
+                "Content-Type": "application/json",
+              },
+            });
+            if (!retryResponse.ok) {
+              throw new Error("Failed to fetch user data after token refresh");
+            }
+            const data = await retryResponse.json();
+            setUserData(data);
+          } else {
+            handleLogout(); // Logout if refresh token fails
+          }
+        } else if (!response.ok) {
           throw new Error("Failed to fetch user data");
+        } else {
+          const data = await response.json();
+          setUserData(data);
         }
-  
-        const data = await response.json();
-        setUserData(data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -42,9 +62,8 @@ function Profile() {
     };
   
     fetchUserData();
-  }, []);
+  }, [refreshTokens, handleLogout]); // Added refreshTokens and handleLogout as dependencies
 
-  
   if (loading) {
     return <div>Loading...</div>;
   }
