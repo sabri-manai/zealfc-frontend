@@ -1,6 +1,6 @@
-
+/* Navbar Styles */
 .navbar {
-  position: fixed; /* Make the navbar fixed to the top */
+  position: fixed;
   top: 0;
   width: 100%;
   height: 124px;
@@ -8,16 +8,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background: rgba(0, 0, 0, 0.1);  */
   background: linear-gradient(180deg, #000d1c 0%, rgba(0, 13, 28, 0) 100%);
-
   overflow: hidden;
+  transition: height 0.3s ease;
 }
 
 .navbar.expanded {
   background: #000d1c !important;
 }
 
+/* Navbar Container */
 .navbar-container {
   display: flex;
   width: 100%;
@@ -25,26 +25,40 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+  box-sizing: border-box;
 }
 
-.nav-left, .nav-center, .nav-right {
+/* Navbar Sections */
+.nav-left,
+.nav-center,
+.nav-right {
   display: flex;
   align-items: center;
 }
 
 .nav-left {
   flex: 1;
-  display: flex;
   justify-content: flex-start;
   padding-left: 60px;
 }
 
 .nav-center {
   flex: 1;
-  display: flex;
   justify-content: center;
   position: relative;
   z-index: 1;
+}
+
+.nav-right {
+  flex: 1;
+  justify-content: flex-end;
+  padding-right: 60px;
+}
+
+/* Nav Items */
+.nav-items {
+  display: flex; /* Ensure items are aligned horizontally */
+  align-items: center;
 }
 
 .nav-item {
@@ -54,35 +68,41 @@
   text-align: center;
   cursor: pointer;
   z-index: 2;
+  margin-left: 20px; /* Add space between items */
 }
 
-.nav-right {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 60px;
-}
-
-.nav-right .nav-item {
-  margin-left: 20px;
+.nav-right .nav-item:first-child {
+  margin-left: 0; /* Remove left margin for the first item */
 }
 
 .nav-icon {
-  height: 22px; /* Adjust the height as needed */
-  width: auto;  /* Ensure the width scales proportionally */
+  height: 22px;
+  width: auto;
+  cursor: pointer;
 }
 
+/* Hide hamburger menu icon on larger screens */
+.nav-menu-icon {
+  display: none;
+}
+
+/* Dropdown Overlay */
 .dropdown-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, rgba(0, 13, 28, 1) 0%, rgba(0, 13, 28, 1) 60%, rgba(0, 13, 28, 0.5) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 13, 28, 1) 0%,
+    rgba(0, 13, 28, 1) 60%,
+    rgba(0, 13, 28, 0.5) 100%
+  );
   z-index: 999;
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Start aligning items at the top */
+  align-items: flex-start;
   padding: 0px;
   box-sizing: border-box;
 }
@@ -95,85 +115,101 @@
   max-width: 600px;
   margin: 0 auto;
   box-sizing: border-box;
-  margin-top: 10%; /* Adjust this value to move the menu higher */
+  margin-top: 10%;
 }
 
 .line {
-  width: 100%; /* Ensures the line spans the full width of its container */
+  width: 100%;
   text-align: center;
-  margin: 0px 0; /* Adds some spacing around the line */
+  margin: 0px 0;
 }
 
 .line-img {
-  width: 100%; /* Full width for the line */
-  height: 5px; /* Increase this value to make the line thicker */
-  object-fit: cover; /* Ensure the image scales to fit the width */
+  width: 100%;
+  height: 5px;
+  object-fit: cover;
 }
 
 .dropdown-item {
   color: #1bc429;
   font-family: 'Nyxerin', sans-serif;
   font-size: 35px;
-  margin: 20px 0; /* Increase spacing between items */
+  margin: 20px 0;
   cursor: pointer;
   text-align: center;
   width: 100%;
 }
 
 .dropdown-item:hover {
-  color: #00ff00; /* Match the green color */
-
+  color: #00ff00;
 }
 
 /* Reset the default Link styles */
 .nav-item a {
-  text-decoration: none; /* Remove underline */
-  color: inherit; /* Inherit the color from the parent element */
-  font-family: 'Nyxerin', sans-serif; /* Ensure consistent font */
-  font-size: 35px; /* Ensure it matches your other nav-item text */
+  text-decoration: none;
+  color: inherit;
+  font-family: 'Nyxerin', sans-serif;
+  font-size: inherit; /* Inherit font size from parent */
 }
 
-/* Optional: Add hover effect if you want */
 .nav-item a:hover {
-  /* text-decoration: underline; */
-  color: #00ff00; /* Match the green color */
-}
-
-
-button {
-  background-color: transparent;
-  border: none;
-  color: #1bc429;
-  font-family: 'NYXERIN-Regular', Helvetica, sans-serif;
-  cursor: pointer;
-}
-
-button:hover {
-  text-decoration: underline;
+  color: #00ff00;
 }
 
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
+  .navbar {
+    height: 80px;
+    padding: 0 10px;
+  }
+
+  .nav-left {
+    padding-left: 10px;
+  }
+
+  .nav-right {
+    padding-right: 10px;
+  }
+
   .nav-item {
     font-size: 25px;
+    margin-left: 15px;
   }
 
-  .dropdown-overlay {
-    padding: 15px;
+  .nav-icon {
+    height: 20px;
   }
 
-  .dropdown-item {
-    font-size: 24px;
+  .navbar-container {
+    flex-wrap: nowrap;
+  }
+
+  /* Hide nav-right items on small screens */
+  .nav-right .nav-items {
+    display: none;
+  }
+
+  /* Show hamburger menu icon on small screens */
+  .nav-menu-icon {
+    display: block;
+    cursor: pointer;
+    font-size: 30px;
+    color: #1bc429;
   }
 }
 
 @media (max-width: 480px) {
-  .nav-item {
-    font-size: 20px;
+  .navbar {
+    height: 60px;
   }
 
-  .dropdown-overlay {
-    padding: 10px;
+  .nav-item {
+    font-size: 20px;
+    margin-left: 10px;
+  }
+
+  .nav-icon {
+    height: 18px;
   }
 
   .dropdown-item {

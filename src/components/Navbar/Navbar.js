@@ -7,8 +7,6 @@ import line from "../../assets/images/line.png";
 function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
@@ -38,19 +36,20 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
     const fetchUserData = async () => {
       let idToken = localStorage.getItem("idToken");
       if (!idToken) {
-        setError("No token found, please log in.");
-        setLoading(false);
         return;
       }
 
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/profile/user-profile`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${idToken}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/profile/user-profile`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${idToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         // Check if token is expired
         if (response.status === 401) {
@@ -58,35 +57,36 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
           if (tokenRefreshed) {
             // Retry fetching user data with the new token
             idToken = localStorage.getItem("idToken");
-            const retryResponse = await fetch(`${process.env.REACT_APP_API_URL}/profile/user-profile`, {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${idToken}`,
-                "Content-Type": "application/json",
-              },
-            });
+            const retryResponse = await fetch(
+              `${process.env.REACT_APP_API_URL}/profile/user-profile`,
+              {
+                method: "GET",
+                headers: {
+                  Authorization: `Bearer ${idToken}`,
+                  "Content-Type": "application/json",
+                },
+              }
+            );
             if (!retryResponse.ok) {
               throw new Error("Failed to fetch user data after token refresh");
             }
             const data = await retryResponse.json();
             setUserData(data);
             if (onUserFetch) {
-              onUserFetch(data); // Callback to pass user data back to parent component
+              onUserFetch(data);
             }
           } else {
-            handleLogout(); // Logout if refresh token fails
+            handleLogout();
           }
         } else {
           const data = await response.json();
           setUserData(data);
           if (onUserFetch) {
-            onUserFetch(data); // Callback to pass user data back to parent component
+            onUserFetch(data);
           }
         }
       } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+        console.error(err.message);
       }
     };
 
@@ -98,7 +98,7 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isAuthenticated, onUserFetch, refreshTokens]); // Added refreshTokens as a dependency
+  }, [isAuthenticated, onUserFetch, refreshTokens, handleLogout]);
 
   return (
     <>
@@ -109,6 +109,7 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
               ZEAL
             </div>
           </div>
+
           <div className="nav-center">
             <img
               src={icon}
@@ -116,48 +117,86 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
               className="nav-icon"
               onClick={toggleDropdown}
               ref={buttonRef}
-              style={{ cursor: "pointer" }}
             />
           </div>
+
           <div className="nav-right">
-            {isAuthenticated ? (
-              <>
-                <div className="nav-item" onClick={() => navigate("/profile")}>
-                  {userData ? userData.first_name : "Loading..."} {/* Show Loading if userData is not yet available */}
+            {/* Display nav items on larger screens */}
+            <div className="nav-items">
+              {isAuthenticated ? (
+                <div
+                  className="nav-item"
+                  onClick={() => navigate("/profile")}
+                >
+                  {userData ? userData.first_name : "Loading..."}
                 </div>
-              </>
-            ) : (
-              <>
-                <div className="nav-item">
-                  <Link to="/login">Login</Link>
-                </div>
-                <div className="nav-item">
-                  <Link to="/register">Register</Link>
-                </div>
-              </>
-            )}
+              ) : (
+                <>
+                  <div className="nav-item">
+                    <Link to="/login">Login</Link>
+                  </div>
+                  <div className="nav-item">
+                    <Link to="/register">Register</Link>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Hamburger Menu Icon for Mobile */}
+            <div className="nav-menu-icon" onClick={toggleDropdown}>
+              &#9776; {/* Unicode character for hamburger menu */}
+            </div>
           </div>
         </div>
       </nav>
+
       {isExpanded && (
-        <div className="dropdown-overlay" ref={dropdownRef} onClick={() => setIsExpanded(false)}>
+        <div
+          className="dropdown-overlay"
+          ref={dropdownRef}
+          onClick={() => setIsExpanded(false)}
+        >
           <div className="expanded-menu" onClick={(e) => e.stopPropagation()}>
             <div className="line">
               <img src={line} alt="Line" className="line-img" />
             </div>
-            <div className="dropdown-item" onClick={() => handleItemClick("/about")}>
+            <div
+              className="dropdown-item"
+              onClick={() => handleItemClick("/about")}
+            >
               ABOUT US
             </div>
-            <div className="dropdown-item" onClick={() => handleItemClick("/choose-game")}>
+            <div
+              className="dropdown-item"
+              onClick={() => handleItemClick("/choose-game")}
+            >
               CHOOSE A GAME
             </div>
-            {isAuthenticated && (
+            {isAuthenticated ? (
               <>
-                <div className="dropdown-item" onClick={() => handleItemClick("/profile")}>
+                <div
+                  className="dropdown-item"
+                  onClick={() => handleItemClick("/profile")}
+                >
                   PROFILE
                 </div>
                 <div className="dropdown-item" onClick={handleLogout}>
                   LOG OUT
+                </div>
+              </>
+            ) : (
+              <>
+                <div
+                  className="dropdown-item"
+                  onClick={() => handleItemClick("/login")}
+                >
+                  LOGIN
+                </div>
+                <div
+                  className="dropdown-item"
+                  onClick={() => handleItemClick("/register")}
+                >
+                  REGISTER
                 </div>
               </>
             )}
