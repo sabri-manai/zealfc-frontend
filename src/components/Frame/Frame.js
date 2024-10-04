@@ -134,6 +134,8 @@ export const Frame = () => {
                         gameSubtitle={game.type}
                         gameDay={new Date(game.date).toLocaleString()}
                         onSignup={() => handleSignup(game._id)} // Pass the game ID to handleSignup
+                        gameId={game._id} // Pass the gameId to GameCard
+
                         />
                     ))
                 ) : (

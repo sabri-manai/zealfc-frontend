@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from '../screens/Home/Home';
 import Profile from '../screens/Profile/Profile';
 import AboutUs from '../components/AboutUs';
+import GameDetails from '../screens/GameDetails/GameDetails';
 import LoginRoutes from './LoginRoutes';
 
 function AppRoutes({ isAuthenticated, onLogin, refreshTokens, handleLogout }) {
@@ -10,6 +11,7 @@ function AppRoutes({ isAuthenticated, onLogin, refreshTokens, handleLogout }) {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<AboutUs />} />
+      <Route path="/games/:gameId" element={<GameDetails />} /> {/* Add the GameDetails route */}
       <Route path="/*" element={<LoginRoutes onLogin={onLogin} />} />
       
       {/* Render Profile only when authenticated */}

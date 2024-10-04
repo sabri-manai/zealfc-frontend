@@ -1,9 +1,17 @@
+// src/components/GameCard/GameCard.js
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./GameCard.css";
 
-export const GameCard = ({ imageSrc, gameName, gameSubtitle, gameDay, onSignup }) => {
+export const GameCard = ({ imageSrc, gameName, gameSubtitle, gameDay, gameId }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/games/${gameId}`); // Navigate to the game details screen with the game ID
+  };
+
   return (
-    <div className="game-card-container">
+    <div className="game-card-container" onClick={handleClick}>
       <div className="game-card">
         <div className="image-wrapper">
           <img src={imageSrc} alt={`${gameName} Background`} className="card-image" />
@@ -15,13 +23,6 @@ export const GameCard = ({ imageSrc, gameName, gameSubtitle, gameDay, onSignup }
         </div>
       </div>
       <div className="game-day">{gameDay}</div>
-      
-      {/* Signup Button */}
-      <div className="signup-container">
-        <button className="signup-button" onClick={onSignup}>
-          Signup
-        </button>
-      </div>
     </div>
   );
 };

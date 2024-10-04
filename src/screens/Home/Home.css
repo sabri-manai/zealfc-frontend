@@ -17,7 +17,7 @@
       rgba(0, 0, 0, 0) 60%, /* This makes the gradient start transparent */
       rgba(0, 13, 28, 1) 100% /* This is the end color that matches your background */
     ),
-    url('../../assets/images/home_background.png'); /* Replace with your actual path to the background image */
+    url('../../assets/images/home_background.png');
   background-size: cover;
   background-position: center;
   display: flex;

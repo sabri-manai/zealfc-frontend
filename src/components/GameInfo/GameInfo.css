@@ -1,0 +1,157 @@
+/* GameInfo container: split into two halves */
+.game-info-container {
+    display: flex;
+    flex-direction: row; /* Keep the text and image side-by-side */
+    justify-content: space-between;
+    color: #00FF00; /* Neon green */
+    font-family: 'Tomorrow', sans-serif;
+    background-color: #000d1c;
+    height: 100vh; /* Full viewport height */
+    width: 100%; /* Full width */
+    padding: 0; /* Remove padding to eliminate unwanted space */
+    box-sizing: border-box;
+    position: relative;
+  }
+  
+  /* Left side (text): takes 50% of the width */
+  .game-info {
+    width: 50%; /* Left half for text */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Align text lower down */
+    align-items: flex-start; /* Align text to the left */
+    padding: 100pt 20px 20px 20px; /* Add padding to the left side */
+    box-sizing: border-box; /* Include padding in width calculation */
+    z-index: 4; /* Ensure the text is above all background effects */
+  }
+  
+  /* Right side (image): takes 50% of the width */
+  .game-image-container {
+    width: 50%; /* Right half for the image */
+    position: relative; /* Necessary for absolute positioning of children */
+    height: 100%; /* Ensure it fills the container vertically */
+    overflow: hidden; /* Hide any overflow */
+    margin: 0; /* Remove any margins */
+    padding: 0; /* Remove any padding */
+  }
+  
+  /* The image fills the container completely */
+  .game-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cover the container without distorting the image */
+    z-index: 1; /* Base layer */
+  }
+  
+  /* Stronger gradient overlay using ::before pseudo-element */
+  .game-image-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        
+      to right, /* Direction of the gradient */
+      rgba(0, 13, 28, 1) 0%,  /* Start with black at left */
+      rgba(0, 0, 0, 0) 40%    /* Transition to transparent at 40% */
+    );
+    z-index: 2; /* Above the image */
+    pointer-events: none; /* Ensure it doesn't interfere with interactions */
+  }
+  
+  /* Noise effect overlay */
+  .noiseeffect {
+    position: absolute; /* Positioned over the image and gradient */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3; /* Above the gradient */
+    background-image: url('../../assets/images/noise_home_background.png'); /* Use your noise image */
+    background-size: cover;
+    background-position: center;
+    opacity: 0.5; /* Adjust the opacity for subtlety */
+    pointer-events: none; /* Prevent interaction interference */
+  }
+  
+  /* Time and date styling */
+  .game-time, .game-date {
+    font-size: 36px; /* Larger font size */
+  }
+  
+  .game-date {
+    font-size: 24px; /* Increased font size */
+    margin-bottom: 10px;
+  }
+  
+  /* Large game name */
+  .game-game-name {
+    font-size: 72px; /* Larger game name */
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  
+  /* Tournament type */
+  .game-tournament {
+    font-size: 36px; /* Increased font size for tournament */
+    margin-bottom: 10px;
+  }
+  
+  /* Display number of places left */
+  .game-places-left {
+    font-size: 24px; /* Larger font */
+    margin-top: 20px;
+  }
+  
+  /* Sign-up button */
+  .sign-up-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  }
+  
+  .sign-up-button {
+    background-color: transparent;
+    border: 2px solid #00FF00;
+    color: #00FF00;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .sign-up-button:hover {
+    background-color: #00FF00;
+    color: #000;
+  }
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    .game-info-container {
+      flex-direction: column; /* Stack text and image vertically on mobile */
+      height: auto; /* Adjust height for mobile */
+    }
+  
+    .game-info, .game-image-container {
+      width: 100%; /* Both sides take full width on mobile */
+      height: auto; /* Adjust height */
+    }
+  
+    .game-image {
+      height: 30vh; /* Reduce image height on mobile */
+      position: relative; /* Change positioning for mobile */
+    }
+  
+    .game-time, .game-game-name, .game-tournament {
+      font-size: 18px; /* Smaller font sizes for mobile */
+    }
+  }
+  

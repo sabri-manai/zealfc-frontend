@@ -83,7 +83,7 @@ export const GameFilter = () => {
     stopAutoScroll(); // Clear any existing intervals
     scrollIntervalRef.current = setInterval(() => {
       scrollRight();
-    }, 1000); // Scroll every 3 seconds
+    }, 1500); // Scroll every 3 seconds
   }, []);
 
   const stopAutoScroll = () => {
@@ -104,7 +104,7 @@ export const GameFilter = () => {
         carousel.scrollTo({ left: maxScrollLeft, behavior: "smooth" });
         setTimeout(() => {
           carousel.scrollTo({ left: 0, behavior: "smooth" });
-        }, 1000); // Adjust delay as needed
+        }, 1500); // Adjust delay as needed
       }
     }
   };
@@ -180,6 +180,8 @@ export const GameFilter = () => {
               gameName={game.stadium}
               gameSubtitle={game.type}
               gameDay={new Date(game.date).toLocaleString()}
+              gameId={game._id} // Pass the gameId to GameCard
+
             />
           ))
         ) : (
