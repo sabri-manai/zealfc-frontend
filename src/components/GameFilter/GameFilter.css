@@ -1,63 +1,175 @@
-/* Container for the entire filter section */
-.game-filter-container {
-    padding: 20px; /* Reduced padding */
-    text-align: center;
-    color: #1EB62D;
-}
-
-/* Styles for the filter type buttons (DATE, LEVEL, PLACE) */
-.filter-titles {
+/* GameInfo container: split into two halves */
+.game-info-container {
     display: flex;
-    justify-content: center;
-    gap: 20px; /* Reduced gap */
-    margin-bottom: 10px; /* Reduced margin */
-}
-
-.filter-titles span {
+    flex-direction: row;
+    justify-content: space-between;
+    color: #00FF00; /* Neon green */
     font-family: 'Tomorrow', sans-serif;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-/* Ensure the filter options are properly centered */
-.filter-options-container {
-    display: flex;
-    flex-direction: column; /* Stack the options and the carousel-header */
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 20px; /* Reduced margin */
+    background-color: #000d1c;
+    height: 100vh; /* Full viewport height */
+    width: 100vw; /* Full width, no horizontal scroll */
+    padding: 0;
+    box-sizing: border-box;
     position: relative;
+    overflow: hidden;
 }
 
-/* Filter option styling */
-.filter-option {
-    display: inline-block;
-    flex-shrink: 0;
+/* Left side (text): takes 40% of the width */
+.game-info {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding-left: 5%;
+    padding-right: 5%;
+    box-sizing: border-box;
+    z-index: 4;
 }
 
-/* Remove the date under each day button */
-.filter-date {
-    display: none;
+.game-info-sub1 {
+    padding-left: 60%;
+    white-space: nowrap; /* Prevent the date from breaking into two lines */
 }
 
-/* Styles for the filtered game cards */
-.filtered-games {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted size */
-    justify-items: center;
-    gap: 30px; /* Reduced gap between game cards */
+.game-info-sub2 {
+    padding-left: 20%;
+    margin-top: 20px;
 }
 
-/* Mobile view adjustments */
+/* Right side (image): takes 60% of the width */
+.game-image-container {
+    width: 60%;
+    height: 100%; /* Ensure it fills the container vertically */
+    position: relative;
+    overflow: hidden; /* Hide any overflow */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Image covers full width and height while maintaining aspect ratio */
+.game-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Maintain aspect ratio, cover the container */
+    z-index: 1;
+}
+
+/* Stronger gradient overlay using ::before pseudo-element */
+.game-image-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(0, 13, 28, 1) 0%,
+        rgba(0, 0, 0, 0) 40%
+    );
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Noise effect overlay */
+.noiseeffect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    background-image: url('../../assets/images/noise_home_background.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Time and date styling */
+.game-time, .game-date {
+    font-size: 36px;
+}
+
+.game-date {
+    font-size: 24px;
+    margin-bottom: 10px;
+    white-space: nowrap;
+}
+
+/* Large game name */
+.game-game-name {
+    font-size: 72px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+/* Tournament type */
+.game-tournament {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+/* Display number of places left */
+.game-places-left {
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+/* Sign-up button */
+.sign-up-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    padding-left: 100%;
+}
+
+/* Responsive design for smaller screens */
 @media (max-width: 768px) {
-    .filter-titles {
+    .game-info-container {
         flex-direction: column;
-        gap: 10px; /* Reduced gap for mobile */
+        height: auto;
+        width: 100vw;
     }
 
-    .filter-options button {
-        min-width: 100px;
-        padding: 8px 15px;
+    .game-info {
+        width: 100%;
+        align-items: center;
+        padding: 20px;
+        padding-top: 60px;
+    }
+
+    .game-info-sub1, .game-info-sub2 {
+        padding-left: 0;
+        text-align: center;
+    }
+
+    .game-image-container {
+        width: 100%;
+        height: 50vh; /* Set a fixed height for smaller screens */
+    }
+
+    .game-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* Show the entire image without cropping */
+    }
+
+    .game-time, .game-game-name, .game-tournament, .game-places-left {
+        font-size: 1.5rem;
+    }
+
+    .sign-up-button-container {
+        padding-left: 0;
+        margin-top: 20px;
+    }
+
+    .sign-up-button {
+        width: 100%;
+        padding: 12px;
     }
 }

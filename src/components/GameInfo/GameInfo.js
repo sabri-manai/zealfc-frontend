@@ -8,12 +8,16 @@ const GameInfo = ({ time, date, gameName, tournament, placesLeft, onSignUp }) =>
     <div className="game-info-container">
       {/* Left side for text */}
       <div className="game-info">
-        <div className="game-time">{time}</div>
-        <div className="game-date">{date}</div>
+        <div className="game-info-sub1">
+            <div className="game-time">{time}</div>
+            <div className="game-date">{date}</div>
+        </div>
+        <div className="game-info-sub2">
         <div className="game-game-name">{gameName}</div>
-        <div className="game-tournament">{tournament}</div>
-        <div className="game-places-left">
-          {placesLeft} places left <br /> Sign up with a teammate!
+            <div className="game-tournament">{tournament}</div>
+            <div className="game-places-left">
+            {placesLeft} places left <br /> Sign up with a teammate!
+            </div>
         </div>
         <div className="sign-up-button-container">
           {/* Use the custom Button component instead of a regular button */}

@@ -1,58 +1,186 @@
-/* Frame.css */
-
-.frame {
+/* GameInfo container: split into two halves */
+.game-info-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: #00FF00;
+    font-family: 'Tomorrow', sans-serif;
+    background-color: #000d1c;
+    height: 100vh; /* Full viewport height */
+    width: 100vw; /* Full viewport width */
+    padding: 0;
+    box-sizing: border-box;
     position: relative;
-    padding: 20px 0;
     overflow: hidden;
 }
 
-.carousel-header {
+/* Left side (text): takes 40% of the width */
+.game-info {
+    width: 40vw; /* Left half for text */
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
-    margin-bottom: 16px;
+    align-items: flex-start;
+    padding:2vw; /* Proportional padding */
+    z-index: 4;
+    box-sizing: border-box;
 }
 
-.carousel-nav {
-    background: none;
-    border: none;
-    color: #1bc429;
-    font-size: 24px;
+/* Text layout on the left side */
+.game-info-sub1 {
+    padding-left: 20%;
+}
+
+.game-info-sub2 {
+    padding-left: 10%;
+}
+
+/* Right side (image): takes 60% of the width */
+.game-image-container {
+    width: 60vw;
+    position: relative;
+    height: 100%; /* Ensure it fills the container vertically */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* The image fills the container completely */
+.game-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+}
+
+/* Stronger gradient overlay using ::before pseudo-element */
+.game-image-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(0, 13, 28, 1) 0%, 
+        rgba(0, 0, 0, 0) 40%
+    );
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Noise effect overlay */
+.noiseeffect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    background-image: url('../../assets/images/noise_home_background.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* Time and date styling */
+.game-time, .game-date {
+    font-size: 2vw;
+}
+
+.game-date {
+    font-size: 1.5vw;
+    margin-bottom: 10px;
+    white-space: nowrap;
+}
+
+/* Large game name */
+.game-game-name {
+    font-size: 4vw;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+/* Tournament type */
+.game-tournament {
+    font-size: 2.5vw;
+    margin-bottom: 10px;
+}
+
+/* Display number of places left */
+.game-places-left {
+    font-size: 2vw;
+    margin-top: 20px;
+}
+
+/* Sign-up button */
+.sign-up-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.sign-up-button {
+    background-color: transparent;
+    border: 2px solid #00FF00;
+    color: #00FF00;
+    padding: 10px 20px;
+    font-size: 1.2vw;
     cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.carousel-title {
-    margin: 0 16px;
-    font-size: 24px;
-    color: #1bc429;
+.sign-up-button:hover {
+    background-color: #00FF00;
+    color: #000;
 }
 
-/* Remove any absolute positioning from .carousel-nav */
-
-/* Responsive styles */
-
-@media screen and (max-width: 768px) {
-    .frame {
-        padding: 16px 0;
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .game-info-container {
+        flex-direction: column;
+        height: auto; /* Adjust height for mobile */
     }
-    .carousel-title,
-    .carousel-nav {
-        font-size: 20px;
+
+    .game-info, .game-image-container {
+        width: 100%; /* Both sides take full width on mobile */
+        height: auto;
     }
-    .carousel-title {
-        margin: 0 12px;
+
+    .game-image {
+        height: 40vh; /* Adjust image height for mobile */
+        object-fit: contain; /* Ensure the image is fully visible */
+    }
+
+    .game-time, .game-game-name, .game-tournament, .game-places-left {
+        font-size: 4vw;
+    }
+
+    .sign-up-button-container {
+        margin-top: 20px;
     }
 }
 
-@media screen and (max-width: 480px) {
-    .frame {
-        padding: 12px 0;
+@media (max-width: 480px) {
+    .game-info-container {
+        padding-top: 20px;
     }
-    .carousel-title,
-    .carousel-nav {
-        font-size: 18px;
+
+    .game-info {
+        padding: 10px;
     }
-    .carousel-title {
-        margin: 0 8px;
+
+    .game-time, .game-game-name, .game-tournament, .game-places-left {
+        font-size: 5vw;
+    }
+
+    .game-image {
+        height: 40vh; /* Ensure image is properly sized */
+        object-fit: contain;
     }
 }
