@@ -83,7 +83,7 @@ export const GameFilter = () => {
     stopAutoScroll(); // Clear any existing intervals
     scrollIntervalRef.current = setInterval(() => {
       scrollRight();
-    }, 1500); // Scroll every 3 seconds
+    }, 3000); // Scroll every 3 seconds
   }, []);
 
   const stopAutoScroll = () => {
@@ -104,7 +104,7 @@ export const GameFilter = () => {
         carousel.scrollTo({ left: maxScrollLeft, behavior: "smooth" });
         setTimeout(() => {
           carousel.scrollTo({ left: 0, behavior: "smooth" });
-        }, 1500); // Adjust delay as needed
+        }, 3000); // Adjust delay as needed
       }
     }
   };
@@ -130,7 +130,7 @@ export const GameFilter = () => {
   }, [startAutoScroll]);
 
   return (
-    <div className="game-filter-container" onMouseEnter={stopAutoScroll} onMouseLeave={startAutoScroll}>
+    <div className="game-filter-container">
       <div className="filter-titles">
         <span onClick={() => setFilterType("date")}>DATE</span>
         <span onClick={() => setFilterType("level")}>LEVEL</span>
@@ -161,6 +161,8 @@ export const GameFilter = () => {
                     text={`${dayInfo.dayName}\n${dayInfo.dateNumber}`}
                     onClick={() => handleFilterClick("date", dayInfo.fullDate)}
                     styleType={activeFilters.date === dayInfo.fullDate ? "active" : "inactive"}
+                    onMouseEnter={stopAutoScroll}
+                    onMouseLeave={startAutoScroll}
                   />
                 </div>
               ))}
@@ -180,8 +182,7 @@ export const GameFilter = () => {
               gameName={game.stadium}
               gameSubtitle={game.type}
               gameDay={new Date(game.date).toLocaleString()}
-              gameId={game._id} // Pass the gameId to GameCard
-
+              gameId={game._id}
             />
           ))
         ) : (

@@ -1,8 +1,11 @@
-/* src/components/Footer.css */
-/* Footer Container */
-.footer {
+/* Reset default margins and padding for paragraphs */
+p {
   margin: 0;
   padding: 0;
+}
+
+/* Footer Container */
+.footer {
   width: 100%;
   background: linear-gradient(
     180deg,
@@ -12,10 +15,16 @@
   );
   background-size: cover;
   background-repeat: no-repeat;
-  position: relative; /* Position relative to the page flow */
-  bottom: 0;
+  position: relative;
+  padding: 150px 20px 50px 20px; /* Adjusted top padding */
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
 }
 
+/* Noise Effect covering the entire footer */
 .footer::before {
   content: '';
   position: absolute;
@@ -26,117 +35,118 @@
   background-image: url('../../assets/images/noise-footer.png');
   opacity: 0.12;
   pointer-events: none;
+  z-index: 1;
 }
 
-/* Footer should always stay at the bottom of the page */
-.App > .footer {
-  margin-top: auto; /* Ensure it stays at the bottom if the page content is less */
-}
-
-/* Ensure the footer has a fixed height */
-.footer .overlap-group {
-  height: 559px;
-}
-
-.footer .noiseeffect {
-  background-blend-mode: color-burn;
-  height: 100%;
-  width: 100%; /* Set to 100% to match the container width */
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-}
-
-
-
-
-/* Overlap Group */
-.footer .overlap-group {
-  height: 559px;
-  position: relative;
-  margin: 0;
-  padding: 0;
-}
-
-/* Rectangle Background */
-.footer .rectangle {
-  height: 552px;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin: 0;
-  padding: 0;
-}
-
-/* Text Wrapper for "ZEAL" */
-.footer .text-wrapper {
+/* Left Container */
+.left-container {
   color: #000c1b;
+  margin-left: 20px;
+  z-index: 2;
+}
+
+/* New Flex Container for ZEAL and Address Info */
+.zeal-address-container {
+  display: flex;
+  align-items: center;
+}
+
+/* "ZEAL" Text */
+.text-wrapper {
   font-family: 'Nyxerin', sans-serif;
   font-size: 90px;
   font-weight: 400;
-  position: absolute;
-  top: 363px;
-  left: 60px; /* Adjust position as needed */
-  text-align: left;
+  line-height: 0.8;
   margin: 0;
-  padding: 0;
-  line-height: 0.7; /* Adjust the line-height to reduce space between lines */
+  margin-right: 20px; /* Space between ZEAL and address */
 }
 
-/* Flex Container for Address and Contact */
-.footer .flexcontainer {
+/* Address Info */
+.address-info {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  height: 169px;
-  width: 383px;
-  position: absolute;
-  top: 365px;
-  left: 255px;
-  align-items: flex-start;
-  margin: 0;
-  padding: 0;
 }
 
-.footer .text-i {
-  color: #000c1b;
+.text-i {
   font-family: 'Tomorrow', sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 24px;
-  position: relative;
-  margin: 0;
-  padding: 0;
+  font-size: 22px;
+  line-height: 0.8;
+  margin: 7px 0;
 }
 
-/* Flex Container for Social Media Links */
-.footer .flexcontainer-i {
+/* Right Container: Social Media Links */
+.right-container {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  height: 169px;
-  width: 383px;
-  position: absolute;
-  top: 390px;
-  right: 60px; /* Add right margin of 60px */
-  align-items: flex-end; /* Align content to the right */
-  margin: 0;
-  padding: 0;
-}
-
-
-.footer .span-wrapper {
-  color: #000c1b;
-  font-family: 'Tomorrow', sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 24px;
-  position: relative;
+  align-items: flex-end;
   text-align: right;
-  margin: 0;
-  padding: 0;
+  color: #000c1b;
+  margin-right: 20px;
+  z-index: 2;
+}
+
+/* Social Media Links */
+.span-wrapper {
+  font-family: 'Tomorrow', sans-serif;
+  font-size: 22px;
+  line-height: 0.8;
+  margin: 7px 0;
+  cursor: pointer;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .footer {
+    padding: 80px 15px 30px 15px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .zeal-address-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .left-container,
+  .right-container {
+    margin: 20px 0;
+  }
+
+  .left-container {
+    margin-left: 0;
+  }
+
+  .right-container {
+    margin-right: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .text-wrapper {
+    font-size: 70px;
+  }
+
+  .text-i,
+  .span-wrapper {
+    font-size: 20px;
+    line-height: 0.8;
+    margin: 5px 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .footer {
+    padding: 60px 10px 20px 10px;
+  }
+
+  .text-wrapper {
+    font-size: 50px;
+  }
+
+  .text-i,
+  .span-wrapper {
+    font-size: 16px;
+    line-height: 0.8;
+  }
 }

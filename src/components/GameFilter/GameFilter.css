@@ -36,26 +36,6 @@
     flex-shrink: 0;
 }
 
-/* Adjust button sizes */
-.filter-options button {
-    min-width: 140px; /* Reduced button width */
-    padding: 10px 20px; /* Reduced padding */
-    font-size: 18px; /* Reduced font size */
-    text-align: center;
-    flex-shrink: 0;
-    display: block; /* Ensure buttons take up the available space */
-}
-
-.filter-options button.active {
-    background-color: #1EB62D;
-    color: #000;
-}
-
-.filter-options button:hover {
-    background-color: #1EB62D;
-    color: #000;
-}
-
 /* Remove the date under each day button */
 .filter-date {
     display: none;

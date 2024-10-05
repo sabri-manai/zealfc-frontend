@@ -5,36 +5,37 @@
     width: 100%;
     max-width: 236px;
     margin-bottom: 20px;
+    transition: transform 0.3s ease;
 }
 
 .game-card {
     width: 100%;
-    aspect-ratio: 236 / 196; /* Maintain the aspect ratio for responsiveness */
-    border-radius: 40px; /* Apply radius to all corners */
+    padding-top: 83%; /* Maintain aspect ratio */
+    border-radius: 40px;
     overflow: hidden;
     position: relative;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow for distinction */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: background 0.3s ease;
 }
 
 .game-card-container:hover {
-    transform: translateY(-20px); /* Move the card up by 30px on hover */
+    transform: translateY(-10px); /* Subtle lift on hover */
 }
 
 .image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    border-radius: inherit; /* Match the card's border radius */
-    overflow: hidden;
-    position: relative;
 }
 
 .card-image {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensure the image covers the whole area */
-    border-radius: inherit; /* Respect the card's border radius */
+    object-fit: cover;
+    border-radius: inherit;
     display: block;
 }
 
@@ -48,11 +49,11 @@
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
-    border-radius: inherit; /* Match the card's border radius */
+    border-radius: inherit;
 }
 
 .game-card:hover .overlay-gradient {
-    opacity: 1; /* Show gradient on hover */
+    opacity: 1;
 }
 
 .overlay-content {
@@ -62,17 +63,17 @@
     text-align: center;
     color: white;
     z-index: 1;
-    transition: color 0.3s ease; /* Smooth transition for text color */
+    transition: color 0.3s ease;
 }
 
 .game-card:hover .game-name,
-.game-card:hover .game-subtitle{
-    color: #0F0326; /* Change text color on hover */
+.game-card:hover .game-subtitle {
+    color: #0F0326;
 }
 
 .game-name {
     font-family: 'Tomorrow', sans-serif;
-    font-size: 30pt; /* Adjusted for responsiveness */
+    font-size: 1.875rem;
     font-weight: 400;
     color: #FFF1E1;
     text-transform: uppercase;
@@ -80,7 +81,7 @@
 
 .game-subtitle {
     font-family: 'Tomorrow', sans-serif;
-    font-size: 11pt; /* Adjusted for responsiveness */
+    font-size: 0.6875rem;
     font-weight: 400;
     color: #FFF1E1;
     text-transform: uppercase;
@@ -89,10 +90,65 @@
 
 .game-day {
     font-family: 'Tomorrow', sans-serif;
-    font-size: 16pt; /* Adjusted for responsiveness */
+    font-size: 1rem;
     font-weight: 400;
     color: #1bc429;
     text-align: center;
     margin-top: 10px;
-    transition: color 0.3s ease; /* Ensure transition for game-day */
+    transition: color 0.3s ease;
+}
+
+/* Mobile Devices */
+@media screen and (max-width: 480px) {
+    .game-card-container {
+        max-width: 160px;
+        margin-bottom: 15px;
+    }
+
+    .game-name {
+        font-size: 1.5rem;
+    }
+
+    .game-subtitle {
+        font-size: 0.625rem;
+    }
+
+    .game-day {
+        font-size: 0.875rem;
+    }
+
+    .game-card-container:hover {
+        transform: none;
+    }
+}
+
+/* Tablets */
+@media screen and (max-width: 768px) {
+    .game-card-container {
+        max-width: 200px;
+        margin-bottom: 18px;
+    }
+
+    .game-name {
+        font-size: 1.75rem;
+    }
+
+    .game-subtitle {
+        font-size: 0.6875rem;
+    }
+
+    .game-day {
+        font-size: 0.9375rem;
+    }
+
+    .game-card-container:hover {
+        transform: none;
+    }
+}
+
+/* Disable hover effects on touch devices */
+@media (hover: none) {
+    .game-card-container:hover {
+        transform: none;
+    }
 }

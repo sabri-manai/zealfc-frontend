@@ -2,39 +2,63 @@
   margin: 0;
   padding: 0;
   background-color: #000d1c;
-  position: relative; /* Ensure the container can position children absolutely */
-  text-align: center; /* Center the text inside the container */
+  text-align: center;
 }
 
-/* Add styles for the hero section (image and text) */
-/* Hero section with a gradient overlay */
+/* Hero section with background image */
 .hero-section {
   position: relative;
   width: 100%;
   height: 600px;
-  background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0) 60%, /* This makes the gradient start transparent */
-      rgba(0, 13, 28, 1) 100% /* This is the end color that matches your background */
-    ),
-    url('../../assets/images/home_background.png');
+  background-image: url('../../assets/images/home_background.png');
   background-size: cover;
   background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin-bottom: 80px;
-
+  display: flex;
+  align-items: flex-end; /* Align items to the bottom */
+  justify-content: center;
 }
 
-.hero-text {
+/* Gradient overlay using ::before pseudo-element */
+.hero-section::before {
+  content: '';
   position: absolute;
-  z-index: 2; /* Make sure the text is on top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Adjusted gradient for smoothness */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 13, 28, 1) 90%
+  );
+  z-index: 1;
+}
+
+/* Noise effect overlay */
+.noiseeffect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background-image: url('../../assets/images/noise_home_background.png');
+  background-size: cover;
+  background-position: center;
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* Hero text */
+.hero-text {
+  z-index: 3;
   color: #1bc429;
   font-family: 'Nyxerin', sans-serif;
   text-align: center;
-  top: 55%; /* Adjust this value to move the text lower */
-  transform: translateY(35%); /* Centers the text vertically after adjusting top */
+  margin-bottom: 0px; 
 }
 
 .hero-text h1 {
@@ -49,28 +73,60 @@
   font-family: 'Tomorrow', sans-serif;
   margin-top: 0px;
   margin-bottom: 0px;
-
-
 }
 
-/* Add styling for upcoming games section */
+/* Upcoming games section */
 .upcoming-games {
-  padding-top: 50px;
   text-align: center;
   color: #1bc429;
 }
 
-/* Noise effect background */
-.noiseeffect {
-  position: absolute; /* Ensure it's positioned over the hero section */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1; /* Layer the noise effect below the text */
-  background-image: url('../../assets/images/noise_home_background.png'); /* Use your noise image */
-  background-size: cover;
-  background-position: center;
-  opacity: 1; /* Adjust the opacity of the noise to make it subtle */
-  pointer-events: none; /* Prevent it from interfering with any interactions */
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .hero-section {
+    height: 400px;
+  }
+
+  .hero-text h1 {
+    font-size: 80px;
+  }
+
+  .hero-text p {
+    font-size: 24px;
+  }
+
+  /* Adjust gradient stops for smaller screens if necessary */
+  .hero-section::before {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) 60%,
+      rgba(0, 13, 28, 1) 90%
+    );
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .hero-section {
+    height: 300px;
+  }
+
+  .hero-text h1 {
+    font-size: 50px;
+  }
+
+  .hero-text p {
+    font-size: 18px;
+  }
+
+
+  /* Adjust gradient stops for smaller screens if necessary */
+  .hero-section::before {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0) 60%,
+      rgba(0, 13, 28, 1) 90%
+    );
+  }
 }

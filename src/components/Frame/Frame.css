@@ -1,4 +1,58 @@
+/* Frame.css */
+
 .frame {
     position: relative;
-    padding: 20px 0; /* Adjust as needed */
+    padding: 20px 0;
+    overflow: hidden;
+}
+
+.carousel-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.carousel-nav {
+    background: none;
+    border: none;
+    color: #1bc429;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.carousel-title {
+    margin: 0 16px;
+    font-size: 24px;
+    color: #1bc429;
+}
+
+/* Remove any absolute positioning from .carousel-nav */
+
+/* Responsive styles */
+
+@media screen and (max-width: 768px) {
+    .frame {
+        padding: 16px 0;
+    }
+    .carousel-title,
+    .carousel-nav {
+        font-size: 20px;
+    }
+    .carousel-title {
+        margin: 0 12px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .frame {
+        padding: 12px 0;
+    }
+    .carousel-title,
+    .carousel-nav {
+        font-size: 18px;
+    }
+    .carousel-title {
+        margin: 0 8px;
+    }
 }
