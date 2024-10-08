@@ -1,0 +1,91 @@
+.host-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px 100px;
+    color: #1EB62D;
+    background-color: #000d1c;
+}
+
+.host-info {
+    max-width: 50%;
+    text-align: left;
+}
+
+.host-info h1 {
+    font-size: 96px;
+    font-family: 'Nyxerin', sans-serif;
+    margin: 0;
+}
+
+.host-info h2 {
+    font-size: 48px;
+    margin: 0;
+    font-family: 'Tomorrow', sans-serif;
+}
+
+.host-info p {
+    font-size: 20px;
+    margin: 20px 0;
+    line-height: 1.5;
+}
+
+/* Add a class for specific button in the host, avoid using generic 'button' */
+.host-info .contact-button {
+    font-family: 'Tomorrow', sans-serif;
+    font-size: 24px;
+    padding: 10px 30px;
+    border: 2px solid #1EB62D;
+    background-color: transparent;
+    color: #1EB62D;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.host-info .contact-button:hover {
+    background-color: #1EB62D;
+    color: #000;
+}
+
+.host-image {
+    max-width: 40%;
+    position: relative;
+}
+
+.host-image img {
+    width: 100%;
+    height: auto;
+    clip-path: url(#clip-path); /* Custom clip-path */
+}
+
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .host-container {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .host-info {
+        max-width: 100%;
+    }
+
+    .host-image {
+        max-width: 80%;
+        margin-top: 20px;
+    }
+
+    .host-info h1 {
+        font-size: 72px;
+    }
+
+    .host-info h2 {
+        font-size: 36px;
+    }
+
+    .host-info .contact-button {
+        font-size: 20px;
+        padding: 10px 20px;
+    }
+}

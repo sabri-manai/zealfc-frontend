@@ -1,0 +1,89 @@
+.map-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 70px; /* Space between the image and the text */
+    text-align: left;
+    color: #1EB62D;
+    padding: 100px 0; /* Add padding for spacing */
+}
+
+.map-image {
+    width: 400px; /* Default size */
+    height: auto;
+}
+
+.map-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.map-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.map-info h3, .map-info p, .map-info a {
+    margin: 0;
+}
+
+.map-info a {
+    margin-top: 10px;
+    text-decoration: none;
+    color: #1EB62D;
+    font-size: 24px;
+}
+
+.map-info a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .map-container {
+        gap: 50px; /* Reduce the gap between map and text */
+        padding: 80px 20px; /* Adjust padding */
+    }
+
+    .map-image {
+        width: 350px; /* Decrease the map size */
+    }
+
+    .map-info a {
+        font-size: 20px; /* Adjust font size */
+    }
+}
+
+@media (max-width: 768px) {
+    .map-container {
+        flex-direction: column; /* Stack the image and info vertically */
+        align-items: flex-start; /* Align items to the left */
+        gap: 30px; /* Reduce the gap for smaller screens */
+        padding: 60px 20px; /* Adjust padding for mobile */
+    }
+
+    .map-image {
+        width: 100%; /* Full width on smaller screens */
+        max-width: 500px; /* Limit max width */
+    }
+
+    .map-info a {
+        font-size: 18px; /* Adjust font size */
+    }
+}
+
+@media (max-width: 480px) {
+    .map-container {
+        padding: 40px 10px; /* Further reduce padding on small screens */
+        gap: 20px; /* Smaller gap between map and info */
+    }
+
+    .map-image {
+        width: 100%; /* Full width on very small screens */
+    }
+
+    .map-info a {
+        font-size: 16px; /* Smaller font size */
+    }
+}

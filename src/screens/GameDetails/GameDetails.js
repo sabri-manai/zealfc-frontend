@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import GameInfo from "../../components/GameInfo/GameInfo"; // Import the new GameInfo component
+import Map from "../../components/Map/Map"
+import Host from "../../components/Host/Host"
 
 import "./GameDetails.css";
 
@@ -87,6 +89,8 @@ const GameDetails = () => {
         placesLeft={4} // You can pass the actual dynamic value for places left
         onSignUp={handleSignup} // Use the signup logic from the Frame component
       />
+      <Map/>
+      <Host/>
     </div>
   );
 };
