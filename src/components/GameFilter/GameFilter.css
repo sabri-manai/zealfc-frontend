@@ -127,6 +127,14 @@
     margin-top: 30px;
     padding-left: 100%;
 }
+  /* Filtered Games Container */
+  .filtered-games {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 6 games per row */
+    gap: 20px; /* Space between cards */
+    padding: 3rem;
+    justify-items: center; /* Center the game cards horizontally */
+  }
 
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
@@ -135,6 +143,13 @@
         height: auto;
         width: 100vw;
     }
+    .filtered-games {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr); /* 6 games per row */
+        gap: 10px; /* Space between cards */
+        padding: 3rem;
+        justify-items: center; /* Center the game cards horizontally */
+      }
 
     .game-info {
         width: 100%;

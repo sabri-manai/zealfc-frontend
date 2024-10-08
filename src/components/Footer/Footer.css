@@ -1,7 +1,13 @@
-/* Reset default margins and padding for paragraphs */
-p {
-  margin: 0;
-  padding: 0;
+/* Apply to the main container of the page */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure it takes the full height of the viewport */
+}
+
+/* Content before footer */
+.content {
+  flex: 1; /* This ensures that the content takes up remaining space */
 }
 
 /* Footer Container */
@@ -22,6 +28,7 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  margin-top: auto; /* Push footer to the bottom */
 }
 
 /* Noise Effect covering the entire footer */
