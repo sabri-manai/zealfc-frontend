@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./GameCard.css";
 
-export const GameCard = ({ imageSrc, gameName, gameSubtitle, gameDay, gameId }) => {
+export const GameCard = ({ imageSrc, gameName, gameSubtitle, gameDay, gameId, className  }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -11,7 +11,7 @@ export const GameCard = ({ imageSrc, gameName, gameSubtitle, gameDay, gameId }) 
   };
 
   return (
-    <div className="game-card-container" onClick={handleClick}>
+    <div className={`game-card-container ${className}`} onClick={handleClick}>
       <div className="game-card">
         <div className="image-wrapper">
           <img src={imageSrc} alt={`${gameName} Background`} className="card-image" />

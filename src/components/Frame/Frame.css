@@ -140,6 +140,37 @@
     color: #000;
 }
 
+/* Signup Status Messages */
+.signup-status {
+    margin: 10px auto;
+    padding: 10px 20px;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.signup-status.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.signup-status.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* No Games Message */
+.no-games-message {
+    text-align: center;
+    color: #888;
+    font-size: 1.2em;
+    margin-top: 20px;
+}
+
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
     .game-info-container {

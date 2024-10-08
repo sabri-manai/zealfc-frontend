@@ -1,3 +1,5 @@
+/* src/components/Carousel/Carousel.css */
+
 /* Main Carousel Container */
 .carousel-container {
     overflow-x: auto; /* Enable horizontal scrolling */
@@ -7,20 +9,30 @@
     align-items: center;
     width: 100%;
     padding: 20px 0;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory; /* Snapping to the center of each card */
+    scroll-behavior: smooth; /* Smooth scrolling effect */
     white-space: nowrap; /* Prevent wrapping */
     position: relative;
+    transition: justify-content 0.3s ease; /* Smooth transition for centering */
 }
 
+/* Center the items when 'centered' class is applied */
+.carousel-container.centered {
+    justify-content: center; /* Center the items */
+    scroll-snap-type: none; /* Disable scroll snapping when centered */
+}
+
+/* Track that holds the game cards */
 .carousel-track {
     display: flex;
     gap: 20px; /* Consistent gap between cards */
     transition: transform 0.3s ease-in-out;
+    /* When centered, no need for a separate track */
 }
 
+/* Hide scrollbar for aesthetics */
 .carousel-container::-webkit-scrollbar {
-    display: none; /* Hide scrollbar for aesthetics */
+    display: none;
 }
 
 /* Game Card Container */
@@ -28,15 +40,17 @@
     flex: 0 0 calc(20% - 20px); /* Adjust card width calculation to account for padding */
     max-width: 236px;
     min-width: 236px;
-    scroll-snap-align: center;
-    padding: 0px; /* Remove padding around each card */
-    box-sizing: border-box; /* Ensure box-sizing includes borders and padding */
-    transition: transform 0.3s ease;
-    display: inline-block;
+    scroll-snap-align: center; /* Ensure cards align to the center when scrolled */
+    padding: 0; /* Remove padding around each card */
+    box-sizing: border-box; /* Include padding and borders in width and height calculations */
+    transition: transform 0.3s ease; /* Smooth transform effect for hover */
+    display: inline-block; /* Make each card inline */
 }
 
+
+
 .game-card-container:hover {
-    transform: scale(1.05);
+    transform: scale(1.05); /* Slight zoom effect on hover */
 }
 
 /* Carousel Header */
@@ -49,11 +63,12 @@
     gap: 20px; /* Space between the buttons and the title */
 }
 
+/* Navigation buttons */
 .carousel-nav {
     background-color: transparent; /* Transparent background */
     color: #1EB62D; /* Green color matching the title */
     border: none;
-    font-size: 40px; /* Adjust to match the size of the arrows */
+    font-size: 40px; /* Large arrow buttons */
     cursor: pointer;
     z-index: 10;
     display: flex;
@@ -63,10 +78,11 @@
 }
 
 .carousel-nav:hover {
-    color: #00ff00; /* Slightly lighter green on hover */
-    text-decoration: none; /* Ensure no underline */
+    color: #00ff00; /* Lighter green on hover */
+    text-decoration: none; /* No underline for buttons */
 }
 
+/* Carousel title */
 .carousel-title {
     font-family: 'Tomorrow', sans-serif;
     font-size: 30pt;
@@ -74,30 +90,35 @@
     text-align: center;
     font-weight: 400;
     margin: 0; /* Remove any default margin */
-    text-transform: uppercase; /* Ensure the title is in uppercase */
+    text-transform: uppercase; /* Ensure title is uppercase */
 }
 
-/* Game Card Container - Responsive Breakpoints */
+/* Responsive Breakpoints for Game Cards */
+
+/* 4 cards visible with padding */
 @media (max-width: 1024px) {
     .game-card-container {
-        flex: 0 0 calc(25% - 20px); /* 4 cards visible with padding */
+        flex: 0 0 calc(25% - 20px);
     }
 }
 
+/* 3 cards visible with padding */
 @media (max-width: 768px) {
     .game-card-container {
-        flex: 0 0 calc(33.33% - 20px); /* 3 cards visible with padding */
+        flex: 0 0 calc(33.33% - 20px);
     }
 }
 
+/* 2 cards visible with padding */
 @media (max-width: 480px) {
     .game-card-container {
-        flex: 0 0 calc(50% - 20px); /* 2 cards visible with padding */
+        flex: 0 0 calc(50% - 20px);
     }
 }
 
+/* 1 card visible with padding */
 @media (max-width: 360px) {
     .game-card-container {
-        flex: 0 0 calc(100% - 20px); /* 1 card visible with padding */
+        flex: 0 0 calc(100% - 20px);
     }
 }

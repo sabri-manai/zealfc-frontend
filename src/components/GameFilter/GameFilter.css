@@ -1,3 +1,5 @@
+/* GameFilter.css */
+
 /* GameInfo container: split into two halves */
 .game-info-container {
     display: flex;
@@ -127,14 +129,22 @@
     margin-top: 30px;
     padding-left: 100%;
 }
-  /* Filtered Games Container */
-  .filtered-games {
+
+/* Filtered Games Container */
+.filtered-games {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 6 games per row */
+    grid-template-columns: repeat(5, 1fr); /* 5 games per row */
     gap: 20px; /* Space between cards */
     padding: 3rem;
     justify-items: center; /* Center the game cards horizontally */
-  }
+    transition: all 0.3s ease; /* Smooth transition for layout changes */
+}
+
+/* Center the grid when there are five or fewer games */
+.filtered-games.centered {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    justify-content: center; /* Center the grid within the container */
+}
 
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
@@ -145,11 +155,11 @@
     }
     .filtered-games {
         display: grid;
-        grid-template-columns: repeat(1, 1fr); /* 6 games per row */
+        grid-template-columns: repeat(1, 1fr); /* 1 game per row */
         gap: 10px; /* Space between cards */
         padding: 3rem;
         justify-items: center; /* Center the game cards horizontally */
-      }
+    }
 
     .game-info {
         width: 100%;

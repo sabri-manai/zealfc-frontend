@@ -162,7 +162,7 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
             </div>
             <div
               className="dropdown-item"
-              onClick={() => handleItemClick("/about")}
+              onClick={() => handleItemClick("/")}
             >
               ABOUT US
             </div>

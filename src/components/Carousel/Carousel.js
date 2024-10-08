@@ -1,12 +1,11 @@
-import React, { forwardRef } from "react";
+// src/components/Carousel/Carousel.js
+import React from "react";
 import "./Carousel.css";
 
-export const Carousel = forwardRef(({ children }, ref) => {
-  return (
-    <div className="carousel-container" ref={ref}>
-      <div className="carousel-track">
-        {children}
-      </div>
+export const Carousel = React.forwardRef(({ children, className }, ref) => (
+  <div className={`carousel-container ${className}`} ref={ref}>
+    <div className="carousel-track">
+      {children}
     </div>
-  );
-});
+  </div>
+));

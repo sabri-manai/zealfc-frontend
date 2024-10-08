@@ -120,7 +120,10 @@ export const Frame = () => {
         </button>
       </div>
       {games.length > 0 ? (
-        <Carousel ref={carouselRef}>
+        <Carousel
+          ref={carouselRef}
+          className={games.length <= 5 ? "centered" : ""}
+        >
           {games.map((game, index) => (
             <GameCard
               key={game._id}
@@ -130,6 +133,7 @@ export const Frame = () => {
               gameDay={new Date(game.date).toLocaleString()}
               onSignup={() => handleSignup(game._id)}
               gameId={game._id}
+              className="game-card-container" // Pass className
             />
           ))}
         </Carousel>
@@ -139,3 +143,5 @@ export const Frame = () => {
     </div>
   );
 };
+
+export default Frame;

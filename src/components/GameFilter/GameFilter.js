@@ -129,6 +129,11 @@ export const GameFilter = () => {
     };
   }, [startAutoScroll]);
 
+  // Debugging: Log the number of filtered games
+  useEffect(() => {
+    console.log(`Number of filtered games: ${filteredGames.length}`);
+  }, [filteredGames]);
+
   return (
     <div className="game-filter-container">
       <div className="filter-titles">
@@ -171,9 +176,51 @@ export const GameFilter = () => {
         )}
 
         {/* Add more filter options for level or place as needed */}
+        {filterType === "level" && (
+          <div className="filter-options">
+            {/* Example Level Filters */}
+            <Button
+              text="Beginner"
+              onClick={() => handleFilterClick("level", "Beginner")}
+              styleType={activeFilters.level === "Beginner" ? "active" : "inactive"}
+            />
+            <Button
+              text="Intermediate"
+              onClick={() => handleFilterClick("level", "Intermediate")}
+              styleType={activeFilters.level === "Intermediate" ? "active" : "inactive"}
+            />
+            <Button
+              text="Advanced"
+              onClick={() => handleFilterClick("level", "Advanced")}
+              styleType={activeFilters.level === "Advanced" ? "active" : "inactive"}
+            />
+          </div>
+        )}
+
+        {filterType === "place" && (
+          <div className="filter-options">
+            {/* Example Place Filters */}
+            <Button
+              text="Stadium A"
+              onClick={() => handleFilterClick("gameName", "Stadium A")}
+              styleType={activeFilters.gameName === "Stadium A" ? "active" : "inactive"}
+            />
+            <Button
+              text="Stadium B"
+              onClick={() => handleFilterClick("gameName", "Stadium B")}
+              styleType={activeFilters.gameName === "Stadium B" ? "active" : "inactive"}
+            />
+            <Button
+              text="Stadium C"
+              onClick={() => handleFilterClick("gameName", "Stadium C")}
+              styleType={activeFilters.gameName === "Stadium C" ? "active" : "inactive"}
+            />
+          </div>
+        )}
       </div>
 
-      <div className="filtered-games">
+      {/* Conditionally apply 'centered' class based on the number of filtered games */}
+      <div className={`filtered-games ${filteredGames.length <= 5 ? 'centered' : ''}`}>
         {filteredGames.length > 0 ? (
           filteredGames.map((game, index) => (
             <GameCard
@@ -186,7 +233,7 @@ export const GameFilter = () => {
             />
           ))
         ) : (
-          <p>No upcoming games available for the selected filters.</p>
+          <p className="no-games-message">No upcoming games available for the selected filters.</p>
         )}
       </div>
     </div>
