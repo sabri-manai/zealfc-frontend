@@ -15,14 +15,15 @@ const Host = () => {
           sportsmanship, and most importantly, have fun out there!"
         </p>
         <Button 
-          text="CONTACT" // Use Button's props like text
-          styleType="default" // Assuming your Button component accepts this prop for styles
+          text="CONTACT"
+          styleType="default"
           onClick={() => console.log('Contact button clicked!')} // Define the action for the button
         />
       </div>
       <div className="host-image">
         <img src={HostImage} alt="Host Inka" />
       </div>
+      
     </div>
   );
 };

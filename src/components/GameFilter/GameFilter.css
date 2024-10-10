@@ -1,200 +1,130 @@
-/* GameFilter.css */
-
-/* GameInfo container: split into two halves */
-.game-info-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    color: #00FF00; /* Neon green */
-    font-family: 'Tomorrow', sans-serif;
-    background-color: #000d1c;
-    height: 100vh; /* Full viewport height */
-    width: 100vw; /* Full width, no horizontal scroll */
-    padding: 0;
-    box-sizing: border-box;
-    position: relative;
-    overflow: hidden;
+/* Container for the entire filter section */
+.game-filter-container {
+    padding: 20px; /* Reduced padding */
+    text-align: center;
+    color: #1EB62D;
 }
 
-/* Left side (text): takes 40% of the width */
-.game-info {
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-start;
-    padding-left: 5%;
-    padding-right: 5%;
-    box-sizing: border-box;
-    z-index: 4;
-}
-
-.game-info-sub1 {
-    padding-left: 60%;
-    white-space: nowrap; /* Prevent the date from breaking into two lines */
-}
-
-.game-info-sub2 {
-    padding-left: 20%;
-    margin-top: 20px;
-}
-
-/* Right side (image): takes 60% of the width */
-.game-image-container {
-    width: 60%;
-    height: 100%; /* Ensure it fills the container vertically */
-    position: relative;
-    overflow: hidden; /* Hide any overflow */
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Image covers full width and height while maintaining aspect ratio */
-.game-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Maintain aspect ratio, cover the container */
-    z-index: 1;
-}
-
-/* Stronger gradient overlay using ::before pseudo-element */
-.game-image-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        to right,
-        rgba(0, 13, 28, 1) 0%,
-        rgba(0, 0, 0, 0) 40%
-    );
-    z-index: 2;
-    pointer-events: none;
-}
-
-/* Noise effect overlay */
-.noiseeffect {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 3;
-    background-image: url('../../assets/images/noise_home_background.png');
-    background-size: cover;
-    background-position: center;
-    opacity: 0.5;
-    pointer-events: none;
-}
-
-/* Time and date styling */
-.game-time, .game-date {
-    font-size: 36px;
-}
-
-.game-date {
-    font-size: 24px;
-    margin-bottom: 10px;
-    white-space: nowrap;
-}
-
-/* Large game name */
-.game-game-name {
-    font-size: 72px;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-}
-
-/* Tournament type */
-.game-tournament {
-    font-size: 36px;
-    margin-bottom: 10px;
-}
-
-/* Display number of places left */
-.game-places-left {
-    font-size: 24px;
-    margin-top: 20px;
-}
-
-/* Sign-up button */
-.sign-up-button-container {
+/* Styles for the filter type buttons (DATE, LEVEL, PLACE) */
+.filter-titles {
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-top: 30px;
-    padding-left: 100%;
+    gap: 20px; /* Reduced gap */
+    margin-bottom: 10px; /* Reduced margin */
 }
 
-/* Filtered Games Container */
+.filter-titles span {
+    font-family: 'Tomorrow', sans-serif;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.filter-option {
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+}
+
+/* Ensure the filter options are properly centered */
+.filter-options-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Carousel Header Styling */
+.carousel-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.carousel-title {
+    font-size: 20px;
+    margin: 0 15px;
+}
+
+/* Navigation Buttons */
+.carousel-nav {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #1EB62D;
+    transition: color 0.3s;
+}
+
+.carousel-nav:hover {
+    color: #148124;
+}
+
+/* Adjust button sizes and centering */
+.filter-options button {
+    min-width: 140px; /* Reduced button width */
+    padding: 10px 20px; /* Reduced padding */
+    font-size: 18px; /* Reduced font size */
+    text-align: center;
+    display: flex; /* Changed from block to flex */
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #1EB62D; /* Added border for better visibility */
+    border-radius: 5px; /* Rounded corners */
+    background-color: transparent; /* Transparent background */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+}
+
+.filter-options button.active {
+    background-color: #1EB62D;
+    color: #000;
+}
+
+.filter-options button:hover {
+    background-color: #1EB62D;
+    color: #000;
+}
+
+/* Remove the date under each day button */
+.filter-date {
+    display: none;
+}
+
+/* Styles for the filtered game cards */
 .filtered-games {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 games per row */
-    gap: 20px; /* Space between cards */
-    padding: 3rem;
-    justify-items: center; /* Center the game cards horizontally */
-    transition: all 0.3s ease; /* Smooth transition for layout changes */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted size */
+    justify-items: center;
+    gap: 30px; /* Reduced gap between game cards */
 }
 
-/* Center the grid when there are five or fewer games */
+/* Center the filtered games when there are few */
 .filtered-games.centered {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    justify-content: center; /* Center the grid within the container */
+    justify-content: center;
 }
 
-/* Responsive design for smaller screens */
+/* Mobile view adjustments */
 @media (max-width: 768px) {
-    .game-info-container {
-        flex-direction: column;
-        height: auto;
-        width: 100vw;
+    .filter-titles {
+        /* Remove flex-direction: column; */
+        gap: 10px; /* Reduced gap for mobile */
     }
-    .filtered-games {
-        display: grid;
-        grid-template-columns: repeat(1, 1fr); /* 1 game per row */
-        gap: 10px; /* Space between cards */
-        padding: 3rem;
-        justify-items: center; /* Center the game cards horizontally */
+    /* Adjust button sizes */
+    .filter-options button {
+        min-width: 100px;
+        padding: 8px 15px;
+        font-size: 16px;
     }
-
-    .game-info {
-        width: 100%;
-        align-items: center;
-        padding: 20px;
-        padding-top: 60px;
+    .carousel-title {
+        font-size: 18px;
     }
-
-    .game-info-sub1, .game-info-sub2 {
-        padding-left: 0;
-        text-align: center;
-    }
-
-    .game-image-container {
-        width: 100%;
-        height: 50vh; /* Set a fixed height for smaller screens */
-    }
-
-    .game-image {
-        width: 100%;
-        height: 100%;
-        object-fit: contain; /* Show the entire image without cropping */
-    }
-
-    .game-time, .game-game-name, .game-tournament, .game-places-left {
-        font-size: 1.5rem;
-    }
-
-    .sign-up-button-container {
-        padding-left: 0;
-        margin-top: 20px;
-    }
-
-    .sign-up-button {
-        width: 100%;
-        padding: 12px;
+    .carousel-nav {
+        font-size: 20px;
     }
 }

@@ -5,6 +5,7 @@
     padding: 50px 100px;
     color: #1EB62D;
     background-color: #000d1c;
+    margin:  20px 150px;
 }
 
 .host-info {
@@ -30,25 +31,8 @@
     line-height: 1.5;
 }
 
-/* Add a class for specific button in the host, avoid using generic 'button' */
-.host-info .contact-button {
-    font-family: 'Tomorrow', sans-serif;
-    font-size: 24px;
-    padding: 10px 30px;
-    border: 2px solid #1EB62D;
-    background-color: transparent;
-    color: #1EB62D;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.host-info .contact-button:hover {
-    background-color: #1EB62D;
-    color: #000;
-}
-
 .host-image {
-    max-width: 40%;
+    max-width: 50%;
     position: relative;
 }
 
@@ -84,8 +68,4 @@
         font-size: 36px;
     }
 
-    .host-info .contact-button {
-        font-size: 20px;
-        padding: 10px 20px;
-    }
 }

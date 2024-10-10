@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import ProfileInfo from "../../components/ProfileInfo/ProfileInfo"; // Import ProfileInfo component
 import './Profile.css';
 
-function Profile({ refreshTokens, handleLogout }) { // Added refreshTokens and handleLogout props
+function Profile({ refreshTokens, handleLogout }) {
   // State to store user data
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -62,7 +63,7 @@ function Profile({ refreshTokens, handleLogout }) { // Added refreshTokens and h
     };
   
     fetchUserData();
-  }, [refreshTokens, handleLogout]); // Added refreshTokens and handleLogout as dependencies
+  }, [refreshTokens, handleLogout]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -75,11 +76,7 @@ function Profile({ refreshTokens, handleLogout }) { // Added refreshTokens and h
   return (
     <div className="profile-container">
       {userData ? (
-        <>
-          <h1>Welcome, {userData.first_name} {userData.last_name}</h1>
-          <p>Email: {userData.email}</p>
-          <p>Phone: {userData.phone_number}</p>
-        </>
+        <ProfileInfo userData={userData} /> // Pass user data to ProfileInfo
       ) : (
         <p>No user data available</p>
       )}

@@ -22,7 +22,7 @@ const GameInfo = ({ time, date, gameName, tournament, placesLeft, onSignUp }) =>
         <div className="sign-up-button-container">
           {/* Use the custom Button component instead of a regular button */}
           <Button 
-            text="SIGN UP" 
+            text="JOIN" 
             onClick={onSignUp} 
             styleType="default" // You can customize styleType if needed
           />

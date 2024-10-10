@@ -26,6 +26,10 @@ export const GameFilter = () => {
 
   const [games, setGames] = useState([]); // State to hold the fetched games
 
+  // Define level and place options
+  const levelOptions = ["Beginner", "Intermediate", "Advanced"];
+  const placeOptions = ["Stadium A", "Stadium B", "Stadium C"];
+
   // Fetch games from the backend
   useEffect(() => {
     const fetchGames = async () => {
@@ -72,7 +76,9 @@ export const GameFilter = () => {
   // Filter the games based on the selected filters
   const filteredGames = games.filter((game) => {
     const levelMatches = !activeFilters.level || game.level === activeFilters.level;
-    const dateMatches = !activeFilters.date || moment(game.date).format("dddd, DD.MM.YYYY") === activeFilters.date;
+    const dateMatches =
+      !activeFilters.date ||
+      moment(game.date).format("dddd, DD.MM.YYYY") === activeFilters.date;
     const placeMatches = !activeFilters.gameName || game.stadium === activeFilters.gameName;
 
     return levelMatches && dateMatches && placeMatches;
@@ -134,16 +140,11 @@ export const GameFilter = () => {
     console.log(`Number of filtered games: ${filteredGames.length}`);
   }, [filteredGames]);
 
-  return (
-    <div className="game-filter-container">
-      <div className="filter-titles">
-        <span onClick={() => setFilterType("date")}>DATE</span>
-        <span onClick={() => setFilterType("level")}>LEVEL</span>
-        <span onClick={() => setFilterType("place")}>PLACE</span>
-      </div>
-
-      <div className="filter-options-container">
-        {filterType === "date" && (
+  // Function to render filter options based on filter type
+  const renderFilterOptions = () => {
+    switch (filterType) {
+      case "date":
+        return (
           <>
             {/* Week navigation */}
             <div className="carousel-header">
@@ -173,50 +174,81 @@ export const GameFilter = () => {
               ))}
             </Carousel>
           </>
-        )}
+        );
+      case "level":
+        return (
+          <>
+            <div className="carousel-header">
+              <h4 className="carousel-title">Select Level</h4>
+            </div>
 
-        {/* Add more filter options for level or place as needed */}
-        {filterType === "level" && (
-          <div className="filter-options">
-            {/* Example Level Filters */}
-            <Button
-              text="Beginner"
-              onClick={() => handleFilterClick("level", "Beginner")}
-              styleType={activeFilters.level === "Beginner" ? "active" : "inactive"}
-            />
-            <Button
-              text="Intermediate"
-              onClick={() => handleFilterClick("level", "Intermediate")}
-              styleType={activeFilters.level === "Intermediate" ? "active" : "inactive"}
-            />
-            <Button
-              text="Advanced"
-              onClick={() => handleFilterClick("level", "Advanced")}
-              styleType={activeFilters.level === "Advanced" ? "active" : "inactive"}
-            />
-          </div>
-        )}
+            <Carousel ref={carouselRef} centerItems>
+              {levelOptions.map((level, index) => (
+                <div key={index} className="filter-option">
+                  <Button
+                    text={level}
+                    onClick={() => handleFilterClick("level", level)}
+                    styleType={activeFilters.level === level ? "active" : "inactive"}
+                    onMouseEnter={stopAutoScroll}
+                    onMouseLeave={startAutoScroll}
+                  />
+                </div>
+              ))}
+            </Carousel>
+          </>
+        );
+      case "place":
+        return (
+          <>
+            <div className="carousel-header">
+              <h4 className="carousel-title">Select Place</h4>
+            </div>
 
-        {filterType === "place" && (
-          <div className="filter-options">
-            {/* Example Place Filters */}
-            <Button
-              text="Stadium A"
-              onClick={() => handleFilterClick("gameName", "Stadium A")}
-              styleType={activeFilters.gameName === "Stadium A" ? "active" : "inactive"}
-            />
-            <Button
-              text="Stadium B"
-              onClick={() => handleFilterClick("gameName", "Stadium B")}
-              styleType={activeFilters.gameName === "Stadium B" ? "active" : "inactive"}
-            />
-            <Button
-              text="Stadium C"
-              onClick={() => handleFilterClick("gameName", "Stadium C")}
-              styleType={activeFilters.gameName === "Stadium C" ? "active" : "inactive"}
-            />
-          </div>
-        )}
+            <Carousel ref={carouselRef} centerItems>
+              {placeOptions.map((place, index) => (
+                <div key={index} className="filter-option">
+                  <Button
+                    text={place}
+                    onClick={() => handleFilterClick("gameName", place)}
+                    styleType={activeFilters.gameName === place ? "active" : "inactive"}
+                    onMouseEnter={stopAutoScroll}
+                    onMouseLeave={startAutoScroll}
+                  />
+                </div>
+              ))}
+            </Carousel>
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="game-filter-container">
+      <div className="filter-titles">
+        <span
+          className={filterType === "date" ? "active" : ""}
+          onClick={() => setFilterType("date")}
+        >
+          DATE
+        </span>
+        <span
+          className={filterType === "level" ? "active" : ""}
+          onClick={() => setFilterType("level")}
+        >
+          LEVEL
+        </span>
+        <span
+          className={filterType === "place" ? "active" : ""}
+          onClick={() => setFilterType("place")}
+        >
+          PLACE
+        </span>
+      </div>
+
+      <div className="filter-options-container">
+        {renderFilterOptions()}
       </div>
 
       {/* Conditionally apply 'centered' class based on the number of filtered games */}

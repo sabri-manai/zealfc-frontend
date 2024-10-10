@@ -9,7 +9,7 @@
 }
 
 .map-image {
-    width: 400px; /* Default size */
+    width: 500px; /* Default size */
     height: auto;
 }
 
@@ -25,14 +25,16 @@
 }
 
 .map-info h3, .map-info p, .map-info a {
-    margin: 0;
+    margin: 5px;
+    font-size: 29px;
+
 }
 
 .map-info a {
-    margin-top: 10px;
+    margin-top: 20px;
     text-decoration: none;
     color: #1EB62D;
-    font-size: 24px;
+    font-size: 28px;
 }
 
 .map-info a:hover {

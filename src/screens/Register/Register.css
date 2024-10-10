@@ -15,13 +15,6 @@
     text-align: center;
   }
   
-  .button-container {
-    margin: 20px auto; /* Centers the button horizontally and adds some margin */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
   .switch-auth {
     margin-top: 20px;
     font-family: 'Nyxerin', sans-serif;

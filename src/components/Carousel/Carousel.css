@@ -2,32 +2,30 @@
 
 /* Main Carousel Container */
 .carousel-container {
-    overflow-x: auto; /* Enable horizontal scrolling */
-    overflow-y: visible; /* Allow vertical overflow */
+    overflow-x: auto;
+    overflow-y: hidden;
     display: flex;
-    justify-content: flex-start; /* Align items from the start */
+    flex-wrap: nowrap;
+    justify-content: center;
     align-items: center;
     width: 100%;
     padding: 20px 0;
-    scroll-snap-type: x mandatory; /* Snapping to the center of each card */
-    scroll-behavior: smooth; /* Smooth scrolling effect */
-    white-space: nowrap; /* Prevent wrapping */
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
     position: relative;
-    transition: justify-content 0.3s ease; /* Smooth transition for centering */
 }
 
-/* Center the items when 'centered' class is applied */
 .carousel-container.centered {
-    justify-content: center; /* Center the items */
-    scroll-snap-type: none; /* Disable scroll snapping when centered */
+    justify-content: center;
+    scroll-snap-type: none;
+    overflow-x: auto;
 }
 
-/* Track that holds the game cards */
 .carousel-track {
     display: flex;
-    gap: 20px; /* Consistent gap between cards */
+    gap: 20px;
     transition: transform 0.3s ease-in-out;
-    /* When centered, no need for a separate track */
+    flex-wrap: nowrap;
 }
 
 /* Hide scrollbar for aesthetics */
@@ -46,8 +44,6 @@
     transition: transform 0.3s ease; /* Smooth transform effect for hover */
     display: inline-block; /* Make each card inline */
 }
-
-
 
 .game-card-container:hover {
     transform: scale(1.05); /* Slight zoom effect on hover */
@@ -91,6 +87,12 @@
     font-weight: 400;
     margin: 0; /* Remove any default margin */
     text-transform: uppercase; /* Ensure title is uppercase */
+}
+
+.carousel-container.centered {
+    justify-content: center; /* Center the items */
+    scroll-snap-type: none; /* Disable scroll snapping when centered */
+    overflow-x: visible; /* Disable horizontal scrolling when centered */
 }
 
 /* Responsive Breakpoints for Game Cards */

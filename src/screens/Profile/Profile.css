@@ -6,37 +6,6 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh; /* Ensure the container takes up the full viewport height */
-  padding: 20px; /* Add padding to the container */
-  background-color: #000d1c; /* Dark background */
-  color: #ffffff; /* Set text color to white for better contrast */
-  font-family: 'Arial', sans-serif; /* Use a clean font */
-  text-align: center; /* Center align all text */
-}
-
-.profile-container h1 {
-  font-size: 2.5rem; /* Make the welcome message larger */
-  margin-bottom: 20px; /* Add some space below the heading */
-  color: #00aaff; /* Add a blue color to the heading for emphasis */
-}
-
-.profile-container p {
-  font-size: 1.2rem; /* Increase paragraph font size for readability */
-  margin-bottom: 10px; /* Add some space below each paragraph */
-  color: #e0e0e0; /* Lighter gray for the text */
-}
-
-.profile-container p:last-child {
-  margin-bottom: 0; /* Ensure the last paragraph has no bottom margin */
-}
-
-.profile-container .error {
-  color: #ff4d4d; /* Red color for error messages */
-  font-size: 1.2rem; /* Ensure error messages are legible */
-}
-
-.loading {
-  color: #00aaff; /* Loading message color */
-  font-size: 1.5rem; /* Larger font for loading message */
-  text-align: center; /* Center align the loading text */
-  margin-top: 20px; /* Add margin to push the text away from the top */
+  background-color: #000d1c;
+  color: #ffffff;
 }

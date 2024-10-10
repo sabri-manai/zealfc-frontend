@@ -90,7 +90,9 @@ const GameDetails = () => {
         onSignUp={handleSignup} // Use the signup logic from the Frame component
       />
       <Map/>
-      <Host/>
+      <Host
+      onSignUp={handleSignup} // Use the signup logic from the Frame component
+      />
     </div>
   );
 };
