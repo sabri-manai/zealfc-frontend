@@ -1,0 +1,27 @@
+.game-history-container {
+    padding: 20px;
+    color: #1EB62D;
+    text-align: center;
+  }
+  
+  .filter-titles {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+  
+  .filter-titles span {
+    font-family: 'Tomorrow', sans-serif;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .filter-titles span.active {
+    color: #1EB62D;
+  }
+  
+  .carousel-container {
+    margin-top: 20px;
+  }
+  

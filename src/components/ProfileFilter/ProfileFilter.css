@@ -1,0 +1,95 @@
+.profile-filter-container {
+    text-align: center;
+    color: #1EB62D;
+    padding: 20px 0;
+    background-color: #000d1c;
+  }
+  
+  .tab-menu {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    font-family: 'Tomorrow', sans-serif;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .tab-menu span {
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .tab-menu .active {
+    color: #1EB62D;
+  }
+  
+  .tab-menu span:not(.active) {
+    color: rgba(30, 182, 45, 0.3);
+  }
+  
+  .tab-content h2 {
+    font-size: 48px;
+    font-family: 'Tomorrow', sans-serif;
+    color: #1EB62D;
+    margin-bottom: 10px;
+  }
+  
+  .tab-content p {
+    font-size: 18px;
+    color: rgba(30, 182, 45, 0.8);
+    margin: 5px 0;
+  }
+  
+  .tab-content .price {
+    font-size: 28px;
+    font-family: 'Tomorrow', sans-serif;
+    color: #FFFFFF;
+  }
+  
+  .game-filters {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .game-filters button {
+    font-size: 24px;
+    padding: 10px 20px;
+    border: 2px solid #1EB62D;
+    background-color: transparent;
+    color: #1EB62D;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .game-filters button.active {
+    background-color: #1EB62D;
+    color: #000D1C;
+  }
+  
+  .game-filters button:hover {
+    background-color: #1EB62D;
+    color: #000D1C;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .tab-menu {
+      gap: 15px;
+      font-size: 20px;
+    }
+  
+    .tab-content h2 {
+      font-size: 36px;
+    }
+  
+    .game-filters {
+      flex-direction: column;
+      gap: 15px;
+    }
+  
+    .game-filters button {
+      font-size: 20px;
+      padding: 8px 15px;
+    }
+  }
+  

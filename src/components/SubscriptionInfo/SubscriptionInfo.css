@@ -1,0 +1,57 @@
+.subscription-info-container {
+    text-align: center;
+    color: #1EB62D;
+    margin-top: 20px;
+  }
+  
+  .subscription-info-container h2 {
+    font-size: 48px;
+    font-family: 'Tomorrow', sans-serif;
+  }
+  
+  .subscription-info-container p {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: rgba(30, 182, 45, 0.8);
+  }
+  
+  .price-container {
+    margin-bottom: 20px;
+  }
+  
+  .price-container .price {
+    font-size: 48px;
+    font-family: 'Tomorrow', sans-serif;
+    color: #ffffff;
+  }
+  
+  .price-container .status {
+    font-size: 24px;
+    font-family: 'Tomorrow', sans-serif;
+    color: rgba(30, 182, 45, 0.8);
+  }
+  
+  .subscription-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .subscription-actions button {
+    min-width: 140px;
+    font-size: 20px;
+    padding: 10px 20px;
+    border: 2px solid #1EB62D;
+    border-radius: 8px;
+    color: #1EB62D;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .subscription-actions button:hover {
+    background-color: #1EB62D;
+    color: #000d1c;
+  }
+  
