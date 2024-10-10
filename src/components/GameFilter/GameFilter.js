@@ -260,7 +260,7 @@ export const GameFilter = () => {
               imageSrc={index % 2 === 0 ? TuriaImage : CarmenImage}
               gameName={game.stadium}
               gameSubtitle={game.type}
-              gameDay={new Date(game.date).toLocaleString()}
+              gameDay={game.date}
               gameId={game._id}
             />
           ))

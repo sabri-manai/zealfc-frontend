@@ -5,6 +5,7 @@ import SubscriptionInfo from '../SubscriptionInfo/SubscriptionInfo'; // The Subs
 import GameHistory from '../GameHistory/GameHistory'; // Import the GameHistory component
 
 const ProfileFilter = ({ games }) => {
+
   const [activeTab, setActiveTab] = useState('games');
 
   const handleTabClick = (tab) => {

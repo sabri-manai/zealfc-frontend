@@ -3,46 +3,15 @@ import ProfileInfo from "../../components/ProfileInfo/ProfileInfo"; // Import Pr
 import ProfileFilter from "../../components/ProfileFilter/ProfileFilter"; // Import ProfileFilter component
 import './Profile.css';
 
-// Import the images
-import CarmenImage from "../../assets/images/carmen.png";
-import BeteroImage from "../../assets/images/betero.png"; 
-
-const gamesData = [
-  {
-    id: 1,
-    name: 'Carmen',
-    result: 'won',
-    date: '12/03/2024 14:30:00', // Use the expected date format
-    score: '2:3',
-    imageSrc: BeteroImage, // Use the imported image
-    gameSubtitle: 'Friendly Match', // Added 'gameSubtitle' property
-    gameDay: '12/03/2024 14:30:00', // Added 'gameDay' property
-    gameId: 1,                     // Added 'gameId' property
-    className: '',                 // Optional, can be left empty
-  },
-  {
-    id: 2,
-    name: 'Betero',
-    result: 'lost',
-    date: '10/03/2024 16:00:00',
-    score: '3:1',
-    imageSrc: BeteroImage, // Use the imported image
-    gameSubtitle: 'League Game',
-    gameDay: '10/03/2024 16:00:00',
-    gameId: 2,
-    className: '',
-  },
-  // Add more game objects as needed...
-];
-
 function Profile({ refreshTokens, handleLogout }) {
   const [userData, setUserData] = useState(null);
+  const [userGames, setUserGames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch user data securely using the idToken
+  // Fetch user data and games securely using the idToken
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchUserDataAndGames = async () => {
       let idToken = localStorage.getItem("idToken");
       console.log("ID Token:", idToken); // Log the token for debugging
   
@@ -51,40 +20,57 @@ function Profile({ refreshTokens, handleLogout }) {
         setLoading(false);
         return;
       }
-  
+
       try {
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/profile/user-profile`, {
+        // Fetch user profile
+        const profileResponse = await fetch(`${process.env.REACT_APP_API_URL}/profile/user-profile`, {
           method: "GET",
           headers: {
             "Authorization": `Bearer ${idToken}`,
             "Content-Type": "application/json",
           },
         });
-  
-        if (response.status === 401) {
+
+        if (profileResponse.status === 401) {
           const tokenRefreshed = await refreshTokens();
           if (tokenRefreshed) {
             idToken = localStorage.getItem("idToken");
-            const retryResponse = await fetch(`${process.env.REACT_APP_API_URL}/profile/user-profile`, {
+            const retryProfileResponse = await fetch(`${process.env.REACT_APP_API_URL}/profile/user-profile`, {
               method: "GET",
               headers: {
                 "Authorization": `Bearer ${idToken}`,
                 "Content-Type": "application/json",
               },
             });
-            if (!retryResponse.ok) {
+            if (!retryProfileResponse.ok) {
               throw new Error("Failed to fetch user data after token refresh");
             }
-            const data = await retryResponse.json();
+            const data = await retryProfileResponse.json();
             setUserData(data);
           } else {
             handleLogout(); // Logout if refresh token fails
           }
-        } else if (!response.ok) {
+        } else if (!profileResponse.ok) {
           throw new Error("Failed to fetch user data");
         } else {
-          const data = await response.json();
-          setUserData(data);
+          const userData = await profileResponse.json();
+          setUserData(userData);
+        }
+
+        // Fetch user games
+        const gamesResponse = await fetch(`${process.env.REACT_APP_API_URL}/profile/user-games`, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${idToken}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!gamesResponse.ok) {
+          throw new Error("Failed to fetch user games");
+        } else {
+          const gamesData = await gamesResponse.json();
+          setUserGames(gamesData); // Set games data
         }
       } catch (err) {
         setError(err.message);
@@ -92,8 +78,8 @@ function Profile({ refreshTokens, handleLogout }) {
         setLoading(false);
       }
     };
-  
-    fetchUserData();
+
+    fetchUserDataAndGames();
   }, [refreshTokens, handleLogout]);
 
   if (loading) {
@@ -109,7 +95,7 @@ function Profile({ refreshTokens, handleLogout }) {
       {userData ? (
         <>
           <ProfileInfo userData={userData} /> {/* Render ProfileInfo */}
-          <ProfileFilter games={gamesData} /> {/* Render ProfileFilter after ProfileInfo */}
+          <ProfileFilter games={userGames} /> {/* Pass the fetched games to ProfileFilter */}
         </>
       ) : (
         <p>No user data available</p>

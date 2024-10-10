@@ -8,7 +8,7 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [userData, setUserData] = useState(null);
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Use the useNavigate hook
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
 
@@ -30,6 +30,11 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
     ) {
       setIsExpanded(false);
     }
+  };
+
+  const handleLogoutClick = () => {
+    handleLogout(); // Clear tokens and authentication
+    navigate("/"); // Redirect to the home page after logout
   };
 
   useEffect(() => {
@@ -76,7 +81,7 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
               onUserFetch(data);
             }
           } else {
-            handleLogout();
+            handleLogoutClick();
           }
         } else {
           const data = await response.json();
@@ -98,7 +103,7 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isAuthenticated, onUserFetch, refreshTokens, handleLogout]);
+  }, [isAuthenticated, onUserFetch, refreshTokens, handleLogoutClick]);
 
   return (
     <>
@@ -121,13 +126,9 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
           </div>
 
           <div className="nav-right">
-            {/* Display nav items on larger screens */}
             <div className="nav-items">
               {isAuthenticated ? (
-                <div
-                  className="nav-item"
-                  onClick={() => navigate("/profile")}
-                >
+                <div className="nav-item" onClick={() => navigate("/profile")}>
                   {userData ? userData.first_name : "Loading..."}
                 </div>
               ) : (
@@ -141,10 +142,8 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
                 </>
               )}
             </div>
-
-            {/* Hamburger Menu Icon for Mobile */}
             <div className="nav-menu-icon" onClick={toggleDropdown}>
-              &#9776; {/* Unicode character for hamburger menu */}
+              &#9776;
             </div>
           </div>
         </div>
@@ -160,16 +159,10 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
             <div className="line">
               <img src={line} alt="Line" className="line-img" />
             </div>
-            <div
-              className="dropdown-item"
-              onClick={() => handleItemClick("/")}
-            >
+            <div className="dropdown-item" onClick={() => handleItemClick("/")}>
               ABOUT US
             </div>
-            <div
-              className="dropdown-item"
-              onClick={() => handleItemClick("/")}
-            >
+            <div className="dropdown-item" onClick={() => handleItemClick("/")}>
               CHOOSE A GAME
             </div>
             {isAuthenticated ? (
@@ -180,7 +173,7 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
                 >
                   PROFILE
                 </div>
-                <div className="dropdown-item" onClick={handleLogout}>
+                <div className="dropdown-item" onClick={handleLogoutClick}>
                   LOG OUT
                 </div>
               </>

@@ -1,6 +1,6 @@
 /* Container for the entire filter section */
 .game-filter-container {
-    padding: 20px; /* Reduced padding */
+    padding: 0 100px; /* Reduced padding */
     text-align: center;
     color: #1EB62D;
 }
@@ -96,12 +96,11 @@
     display: none;
 }
 
-/* Styles for the filtered game cards */
+/* Container for the filtered games */
 .filtered-games {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted size */
+    grid-template-columns: repeat(5, 1fr); /* 5 games per row */
     justify-items: center;
-    gap: 30px; /* Reduced gap between game cards */
 }
 
 /* Center the filtered games when there are few */
@@ -109,22 +108,21 @@
     justify-content: center;
 }
 
-/* Mobile view adjustments */
+/* Mobile view adjustments for smaller screens */
+@media (max-width: 1200px) {
+    .filtered-games {
+        grid-template-columns: repeat(4, 1fr); /* 4 games per row on medium screens */
+    }
+}
+
 @media (max-width: 768px) {
-    .filter-titles {
-        /* Remove flex-direction: column; */
-        gap: 10px; /* Reduced gap for mobile */
+    .filtered-games {
+        grid-template-columns: repeat(2, 1fr); /* 2 games per row on smaller screens */
     }
-    /* Adjust button sizes */
-    .filter-options button {
-        min-width: 100px;
-        padding: 8px 15px;
-        font-size: 16px;
-    }
-    .carousel-title {
-        font-size: 18px;
-    }
-    .carousel-nav {
-        font-size: 20px;
+}
+
+@media (max-width: 480px) {
+    .filtered-games {
+        grid-template-columns: 1fr; /* 1 game per row on very small screens */
     }
 }

@@ -2,26 +2,47 @@
     padding: 20px;
     color: #1EB62D;
     text-align: center;
+    position: relative;
   }
   
-  .filter-titles {
+  .game-filters {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 20px;
     margin-bottom: 20px;
   }
   
-  .filter-titles span {
-    font-family: 'Tomorrow', sans-serif;
-    font-size: 24px;
-    cursor: pointer;
+  .carousel-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
   }
   
-  .filter-titles span.active {
+  .carousel-nav {
+    background-color: transparent;
     color: #1EB62D;
+    border: none;
+    font-size: 40px;
+    cursor: pointer;
+    z-index: 10;
+    transition: color 0.3s ease;
   }
   
-  .carousel-container {
-    margin-top: 20px;
+  .carousel-nav:hover {
+    color: #00ff00;
   }
   
+  .carousel-title {
+    font-family: 'Tomorrow', sans-serif;
+    font-size: 30pt;
+    color: #1EB62D;
+    text-align: center;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  
+  .carousel-container.centered {
+    overflow-x: auto !important;
+}
