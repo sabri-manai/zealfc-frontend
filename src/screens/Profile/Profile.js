@@ -95,7 +95,7 @@ function Profile({ refreshTokens, handleLogout }) {
       {userData ? (
         <>
           <ProfileInfo userData={userData} /> {/* Render ProfileInfo */}
-          <ProfileFilter games={userGames} /> {/* Pass the fetched games to ProfileFilter */}
+          <ProfileFilter games={userGames}  user={userData} /> {/* Pass the fetched games to ProfileFilter */}
         </>
       ) : (
         <p>No user data available</p>

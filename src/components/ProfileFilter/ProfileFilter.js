@@ -4,7 +4,7 @@ import Stats from '../Stats/Stats'; // Your Stats component
 import SubscriptionInfo from '../SubscriptionInfo/SubscriptionInfo'; // The SubscriptionInfo component
 import GameHistory from '../GameHistory/GameHistory'; // Import the GameHistory component
 
-const ProfileFilter = ({ games }) => {
+const ProfileFilter = ({ games, user }) => {
 
   const [activeTab, setActiveTab] = useState('games');
 
@@ -39,7 +39,7 @@ const ProfileFilter = ({ games }) => {
       {/* Tab Content */}
       <div className="tab-content">
         {activeTab === 'ranking' && <Stats />}
-        {activeTab === 'subscription' && <SubscriptionInfo />}
+        {activeTab === 'subscription' && <SubscriptionInfo user={user} />}
         {activeTab === 'games' && (
           <div>
             {/* Game History */}
