@@ -54,7 +54,7 @@ function Login({ onLogin }) {
       } else if (error.response?.data?.message) {
         setMessage(error.response.data.message);
       } else {
-        setMessage("Login failed. Please try again.");
+        setMessage("Login failed Please try again.");
       }
     } finally {
       setLoading(false);
