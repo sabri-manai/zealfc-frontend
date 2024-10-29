@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./ProfileInfo.css";
-import profilePic from "../../assets/images/profile_image.png";
+import profilePic from "../../assets/images/profile_image.jpg";
 import Button from "../../components/Button/Button";
 import axios from "axios";
 
