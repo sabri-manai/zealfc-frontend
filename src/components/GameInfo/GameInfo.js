@@ -3,7 +3,7 @@ import './GameInfo.css';
 import CarmenImage from "../../assets/images/carmen.png"; // Ensure this path is correct
 import Button from '../../components/Button/Button'; // Import your Button component
 
-const GameInfo = ({ time, date, gameName, tournament, placesLeft, onSignUp }) => {
+const GameInfo = ({ time, date, gameName, tournament, placesLeft, onSignUp, isSignedUp }) => {
   return (
     <div className="game-info-container">
       {/* Left side for text */}
@@ -22,9 +22,9 @@ const GameInfo = ({ time, date, gameName, tournament, placesLeft, onSignUp }) =>
         <div className="sign-up-button-container">
           {/* Use the custom Button component instead of a regular button */}
           <Button 
-            text="JOIN" 
+            text={isSignedUp ? "CANCEL" : "JOIN"} 
             onClick={onSignUp} 
-            styleType="default" // You can customize styleType if needed
+            styleType={isSignedUp ? "cancel" : "default"}
           />
         </div>
       </div>
