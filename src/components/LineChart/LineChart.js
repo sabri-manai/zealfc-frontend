@@ -17,6 +17,7 @@ const LineChart = ({ dataPoints, dates, title }) => {
         borderWidth: 2,
         pointRadius: 5, // Dot size on each point
         pointHoverRadius: 7,
+        pointBackgroundColor: '#1EB62D', // Fill color for each point
         lineTension: 0.3, // Smooth lines
       },
     ],
@@ -77,11 +78,11 @@ const LineChart = ({ dataPoints, dates, title }) => {
             `;
           }
 
-          // Position tooltip
+          // Position tooltip above the point
           const position = context.chart.canvas.getBoundingClientRect();
           tooltipEl.style.opacity = 1;
-          tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
-          tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY - 40 + 'px';
+          tooltipEl.style.left = position.left + window.scrollX + tooltipModel.caretX - tooltipEl.clientWidth / 2 + 'px';
+          tooltipEl.style.top = position.top + window.scrollY + tooltipModel.caretY - tooltipEl.clientHeight - 10 + 'px'; // 10px offset above the point
         },
       },
     },
