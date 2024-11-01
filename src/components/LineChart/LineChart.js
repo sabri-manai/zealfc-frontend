@@ -7,7 +7,7 @@ ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip)
 
 const LineChart = ({ dataPoints, dates, title }) => {
   const data = {
-    labels: dates, // X-axis labels (Dates)
+    labels: dates,
     datasets: [
       {
         label: title,
@@ -15,75 +15,32 @@ const LineChart = ({ dataPoints, dates, title }) => {
         borderColor: '#1EB62D',
         backgroundColor: 'transparent',
         borderWidth: 2,
-        pointRadius: 5, // Dot size on each point
+        pointRadius: 5,
         pointHoverRadius: 7,
-        pointBackgroundColor: '#1EB62D', // Fill color for each point
-        lineTension: 0.3, // Smooth lines
+        pointBackgroundColor: '#1EB62D',
+        lineTension: 0.3,
       },
     ],
   };
 
   const options = {
     responsive: true,
-    maintainAspectRatio: false,
+    maintainAspectRatio: false, // Important for responsiveness
     scales: {
       x: {
-        display: false, // Hide X-axis grid lines and labels
+        display: false,
       },
       y: {
         beginAtZero: true,
-        display: false, // Hide Y-axis grid lines and labels
+        display: false,
       },
     },
     plugins: {
       legend: {
-        display: false, // Hide the legend
+        display: false,
       },
       tooltip: {
-        enabled: false, // Disable default tooltip
-        external: function(context) {
-          // Tooltip element
-          let tooltipEl = document.getElementById('custom-tooltip');
-          if (!tooltipEl) {
-            tooltipEl = document.createElement('div');
-            tooltipEl.id = 'custom-tooltip';
-            tooltipEl.style.position = 'absolute';
-            tooltipEl.style.pointerEvents = 'none';
-            tooltipEl.style.background = '#0a0a0a';
-            tooltipEl.style.color = '#1EB62D';
-            tooltipEl.style.border = '1px solid #1EB62D';
-            tooltipEl.style.padding = '8px';
-            tooltipEl.style.borderRadius = '4px';
-            tooltipEl.style.opacity = 0;
-            document.body.appendChild(tooltipEl);
-          }
-
-          // Hide if no tooltip
-          const tooltipModel = context.tooltip;
-          if (tooltipModel.opacity === 0) {
-            tooltipEl.style.opacity = 0;
-            return;
-          }
-
-          // Set tooltip text
-          if (tooltipModel.body) {
-            const points = tooltipModel.dataPoints[0].raw;
-            const date = tooltipModel.dataPoints[0].label;
-
-            tooltipEl.innerHTML = `
-              <div style="text-align: left;">
-                <div style="font-size: 14px;">${points} POINTS</div>
-                <div style="font-size: 12px;">${date}</div>
-              </div>
-            `;
-          }
-
-          // Position tooltip above the point
-          const position = context.chart.canvas.getBoundingClientRect();
-          tooltipEl.style.opacity = 1;
-          tooltipEl.style.left = position.left + window.scrollX + tooltipModel.caretX - tooltipEl.clientWidth / 2 + 'px';
-          tooltipEl.style.top = position.top + window.scrollY + tooltipModel.caretY - tooltipEl.clientHeight - 10 + 'px'; // 10px offset above the point
-        },
+        enabled: true,
       },
     },
   };

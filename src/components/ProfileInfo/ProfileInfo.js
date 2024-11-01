@@ -7,7 +7,6 @@ import axios from "axios";
 const ProfileInfo = ({ userData }) => {
   const [profileImageUrl, setProfileImageUrl] = useState(userData.profilePictureUrl || profilePic);
   const [selectedFile, setSelectedFile] = useState(null);
-  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -33,24 +32,10 @@ const ProfileInfo = ({ userData }) => {
       };
       reader.readAsDataURL(file);
 
-      // Save the selected file and show confirmation dialog
+      // Save the selected file
       setSelectedFile(file);
-      setShowConfirmation(true);
+      handleImageUpload(file); // Directly upload the image
     }
-  };
-
-  const handleConfirmUpload = async () => {
-    if (selectedFile) {
-      await handleImageUpload(selectedFile);
-      setShowConfirmation(false);
-      setSelectedFile(null);
-    }
-  };
-
-  const handleCancelUpload = () => {
-    setShowConfirmation(false);
-    setSelectedFile(null);
-    setProfileImageUrl(userData.profilePictureUrl || profilePic);
   };
 
   const handleImageUpload = async (file) => {
@@ -98,11 +83,11 @@ const ProfileInfo = ({ userData }) => {
       </div>
       <div className="profile-info">
         <div className="profile-image">
-          <label htmlFor="profilePictureInput">
-            <img src={profileImageUrl} alt={`${userData.first_name}'s profile`} />
+          <label htmlFor="profilePictureInput" className="image-label">
             <div className="overlay">
               <span>Edit</span>
             </div>
+            <img src={profileImageUrl} alt={`${userData.first_name}'s profile`} />
           </label>
           <input
             type="file"
@@ -120,15 +105,6 @@ const ProfileInfo = ({ userData }) => {
         </div>
       </div>
       <div className="noiseeffect"></div>
-      {showConfirmation && (
-        <div className="confirmation-modal">
-          <div className="confirmation-content">
-            <p>Do you want to upload this image?</p>
-            <button onClick={handleConfirmUpload}>Yes</button>
-            <button onClick={handleCancelUpload}>No</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

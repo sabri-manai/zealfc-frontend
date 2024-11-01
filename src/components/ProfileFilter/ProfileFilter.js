@@ -39,7 +39,7 @@ const ProfileFilter = ({ games, user }) => {
       {/* Tab Content */}
       <div className="tab-content">
         {activeTab === 'ranking' && <Stats />}
-        {/* {activeTab === 'subscription' && <SubscriptionInfo user={user} />} */}
+        {activeTab === 'subscription' && <SubscriptionInfo user={user} />}
         {activeTab === 'games' && (
           <div>
             {/* Game History */}
