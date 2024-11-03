@@ -16,11 +16,9 @@ const GameDetails = () => {
 
   const fetchGameDetails = async () => {
     try {
-      console.log(`Fetching game details for ID: ${gameId}`); // Debugging line
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/games/${gameId}`);
-      console.log("Game details fetched:", response.data); // Debugging line
-      setGame(response.data); // Assuming the response contains the game details
-
+      setGame(response.data);
+      
       // Check if user is signed up
       const idToken = localStorage.getItem("idToken");
 

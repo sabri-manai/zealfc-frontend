@@ -12,7 +12,6 @@ function App() {
   const refreshTokens = async () => {
     const refreshToken = localStorage.getItem("refreshToken");
     if (!refreshToken) {
-      console.log("No refresh token available");
       return false;
     }
 
@@ -34,7 +33,6 @@ function App() {
       localStorage.setItem("idToken", idToken);
       localStorage.setItem("accessToken", accessToken);
 
-      console.log("Tokens refreshed successfully");
       return true;
     } catch (error) {
       console.error("Error refreshing tokens:", error);

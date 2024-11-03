@@ -3,17 +3,10 @@ import { useNavigate } from "react-router-dom";
 import "./GameCard.css";
 
 export const GameCard = ({ imageSrc, gameName, gameSubtitle, gameDay, gameId, className }) => {
-  console.log("game card receiving")
 
-  console.log(gameId)
   const navigate = useNavigate();
-
   const handleClick = () => {
-    if (gameId && gameId !== 'Unknown ID') {
-      navigate(`/games/${gameId}`);  // Only navigate if gameId is valid
-    } else {
-      console.log('Invalid gameId, navigation prevented');
-    }
+    navigate(`/games/${gameId}`);  // Only navigate if gameId is valid
   };
 
   // Helper function to format the date

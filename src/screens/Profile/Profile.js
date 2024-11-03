@@ -13,7 +13,6 @@ function Profile({ refreshTokens, handleLogout }) {
   useEffect(() => {
     const fetchUserDataAndGames = async () => {
       let idToken = localStorage.getItem("idToken");
-      console.log("ID Token:", idToken); // Log the token for debugging
   
       if (!idToken) {
         setError("No token found, please log in.");

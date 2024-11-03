@@ -135,11 +135,6 @@ export const GameFilter = () => {
     };
   }, [startAutoScroll]);
 
-  // Debugging: Log the number of filtered games
-  useEffect(() => {
-    console.log(`Number of filtered games: ${filteredGames.length}`);
-  }, [filteredGames]);
-
   // Function to render filter options based on filter type
   const renderFilterOptions = () => {
     switch (filterType) {
