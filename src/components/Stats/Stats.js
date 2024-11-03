@@ -3,7 +3,7 @@ import './Stats.css';
 import LineChart from '../LineChart/LineChart';
 import Leaderboard from "../Leaderboard/Leaderboard";
 import Button from "../Button/Button"; // Import your custom Button component
-import profilePic from "../../assets/images/profile_image.jpg";
+import profilePic from "../../assets/images/IMG_0116.jpg";
 
 const Stats = () => {
   // Points and dates data for point progression chart
@@ -91,7 +91,11 @@ const Stats = () => {
 
       {/* First Line Chart for Point Progression */}
       <div className="point-progress-chart">
-        <LineChart dataPoints={pointsData} dates={dates} title={pointLineLabel} />
+      <LineChart
+        dataPoints={pointsData} // Array of y-axis values (points)
+        dates={dates}           // Array of x-axis values (dates)
+        title={pointLineLabel}
+      />
       </div>
 
       {/* Filter Buttons using your custom Button component */}

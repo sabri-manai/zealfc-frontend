@@ -1,48 +1,65 @@
 .game-history-container {
-    padding: 20px;
-    color: #1EB62D;
-    text-align: center;
-    position: relative;
-  }
-  
-  .game-filters {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .carousel-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-    position: relative;
-  }
-  
-  .carousel-nav {
-    background-color: transparent;
-    color: #1EB62D;
-    border: none;
-    font-size: 40px;
-    cursor: pointer;
-    z-index: 10;
-    transition: color 0.3s ease;
-  }
-  
-  .carousel-nav:hover {
-    color: #00ff00;
-  }
-  
-  .carousel-title {
-    font-family: 'Tomorrow', sans-serif;
-    font-size: 30pt;
-    color: #1EB62D;
-    text-align: center;
-    margin: 0;
-    text-transform: uppercase;
-  }
-  
-  .carousel-container.centered {
-    overflow-x: auto !important;
+  padding: 20px;
+  color: #1EB62D;
+  text-align: center;
+  position: relative;
 }
+
+.game-filters {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.carousel-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.carousel-nav {
+  background-color: transparent;
+  color: #1EB62D;
+  border: none;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 10;
+  transition: color 0.3s ease;
+}
+
+.carousel-nav:hover {
+  color: #00ff00;
+}
+
+.carousel-title {
+  font-family: 'Tomorrow', sans-serif;
+  font-size: 30pt;
+  color: #1EB62D;
+  text-align: center;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.carousel-container.centered {
+  overflow-x: auto !important;
+}
+
+.section-title {
+  font-family: 'Tomorrow', sans-serif;
+  font-size: 24pt;
+  color: #1EB62D;
+  text-align: left;
+  margin-top: 30px;
+}
+
+.registered-container,
+.waitlist-container {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  margin-top: 10px;
+}
+  

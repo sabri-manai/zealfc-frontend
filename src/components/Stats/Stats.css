@@ -136,7 +136,14 @@
 .progress-chart {
   display: flex;
   flex-direction: column;
-  height: 500px;
+  max-height: 300px;
+  min-width: 400px;
+
+}
+
+.point-progress-chart,
+.progress-chart {
+  overflow: visible;
 }
 
 .leaderboard {

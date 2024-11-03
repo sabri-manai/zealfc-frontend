@@ -6,8 +6,6 @@ import Button from '../Button/Button';
 import CarmenImage from "../../assets/images/carmen.png";
 
 const GameHistory = ({ games }) => {
-    console.log("Games data in GameHistory:", games); // Log games to ensure data is passed
-
     const [gameFilter, setGameFilter] = useState("played");
     const carouselRef = useRef(null);
     const scrollIntervalRef = useRef(null);

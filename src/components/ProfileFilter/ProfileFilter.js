@@ -3,6 +3,7 @@ import './ProfileFilter.css';
 import Stats from '../Stats/Stats'; // Your Stats component
 import SubscriptionInfo from '../SubscriptionInfo/SubscriptionInfo'; // The SubscriptionInfo component
 import GameHistory from '../GameHistory/GameHistory'; // Import the GameHistory component
+import UpcomingGames from '../UpcomingGames/UpcomingGames'; // Import the GameHistory component
 
 const ProfileFilter = ({ games, user }) => {
 
@@ -43,7 +44,13 @@ const ProfileFilter = ({ games, user }) => {
         {activeTab === 'games' && (
           <div>
             {/* Game History */}
-            <GameHistory games={games} /> {/* Pass all games */}
+            <GameHistory 
+            games={games} 
+            />
+            <UpcomingGames
+              registeredGames={games}
+              waitlistGames={games}
+            />
           </div>
         )}
       </div>

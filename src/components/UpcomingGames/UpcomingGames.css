@@ -1,0 +1,46 @@
+/* UpcomingGames.css */
+
+.upcoming-games-container {
+    text-align: center;
+    color: #1EB62D;
+    padding: 20px 0;
+    background-color: #000d1c;
+  }
+  
+  .upcoming-tab-menu {
+    display: flex;
+    justify-content: center;
+    gap: 150px;
+    font-family: 'Tomorrow', sans-serif;
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .upcoming-tab-menu span {
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .upcoming-tab-menu span.active {
+    color: #1EB62D;
+  }
+  .upcoming-tab-menu span:not(.active) {
+    color: rgba(30, 182, 45, 0.3);
+  }
+  .carousel-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  .carousel-title {
+    font-family: 'Tomorrow', sans-serif;
+    font-size: 24pt;
+    color: #1EB62D;
+    text-align: center;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  
