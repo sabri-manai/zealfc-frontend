@@ -1,3 +1,5 @@
+// GameHistory.js
+
 import React, { useState, useRef, useEffect } from "react";
 import { Carousel } from '../Carousel/Carousel';
 import { GameCard } from '../GameCard/GameCard';
@@ -11,22 +13,22 @@ const GameHistory = ({ games }) => {
     const scrollIntervalRef = useRef(null);
 
     const handleFilterClick = (filter) => {
-        // Toggle the filter off if it's already selected, or set the new filter
         setGameFilter(prevFilter => prevFilter === filter ? "played" : filter);
     };
 
-    // Transform the games data to ensure proper mapping to GameCard
+    // Transform the games data
     const transformedGames = games.map((game) => ({
         gameId: game.gameId?._id || game._id || 'Unknown ID',
         gameName: game.stadium || 'Unknown Game',
         gameSubtitle: game.gameId?.type || 'Unknown Type',
         gameDay: game.date || 'Date not available',
-        imageSrc: game.imageSrc || CarmenImage  // Placeholder image if not available
+        imageSrc: game.imageSrc || CarmenImage,
+        result: game.result || 'unknown',
     }));
 
     // Filter the games based on the selected filter
     const filteredGames = transformedGames.filter((game) => {
-        if (gameFilter === "played") return true; // Show all games when 'played' is selected or no filter is applied
+        if (gameFilter === "played") return true;
         if (gameFilter === "won") return game.result === "won";
         if (gameFilter === "lost") return game.result === "lost";
         return false;
@@ -73,14 +75,14 @@ const GameHistory = ({ games }) => {
     useEffect(() => {
         const carousel = carouselRef.current;
         if (carousel) {
-            carousel.scrollLeft = 0; // Ensure the first card is visible
+            carousel.scrollLeft = 0;
             startAutoScroll();
         }
 
         return () => {
             stopAutoScroll();
         };
-    }, [startAutoScroll]);
+    }, []);
 
     return (
         <div
@@ -107,34 +109,31 @@ const GameHistory = ({ games }) => {
                 />
             </div>
 
-            {/* Carousel Header */}
-            <div className="carousel-header">
+            {/* Carousel Wrapper with Navigation Buttons */}
+            <div className="carousel-wrapper">
                 <button className="carousel-nav left" onClick={scrollLeft}>
                     {"<"}
                 </button>
-                <h2 className="carousel-title">GAME HISTORY</h2>
+                <Carousel
+                    ref={carouselRef}
+                    className={filteredGames.length <= 5 ? "centered" : ""}
+                >
+                    {filteredGames.map((game) => (
+                        <GameCard
+                            key={game.gameId}
+                            imageSrc={game.imageSrc}
+                            gameName={game.gameName}
+                            gameSubtitle={game.gameSubtitle}
+                            gameDay={game.gameDay}
+                            gameId={game.gameId}
+                            className="game-card-container"
+                        />
+                    ))}
+                </Carousel>
                 <button className="carousel-nav right" onClick={scrollRight}>
                     {">"}
                 </button>
             </div>
-
-            {/* Carousel for game cards */}
-            <Carousel
-                ref={carouselRef}
-                className={filteredGames.length <= 5 ? "centered" : ""}
-            >
-                {filteredGames.map((game) => (
-                    <GameCard
-                        key={game.gameId}  // Ensure gameId is used as key
-                        imageSrc={game.imageSrc}
-                        gameName={game.gameName}
-                        gameSubtitle={game.gameSubtitle}
-                        gameDay={game.gameDay}
-                        gameId={game.gameId}
-                        className="game-card-container"
-                    />
-                ))}
-            </Carousel>
         </div>
     );
 };

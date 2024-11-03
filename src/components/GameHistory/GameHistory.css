@@ -1,5 +1,7 @@
+/* GameHistory.css */
+
 .game-history-container {
-  padding: 20px;
+  padding: 0px;
   color: #1EB62D;
   text-align: center;
   position: relative;
@@ -9,29 +11,7 @@
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-bottom: 20px;
-}
-
-.carousel-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
-  position: relative;
-}
-
-.carousel-nav {
-  background-color: transparent;
-  color: #1EB62D;
-  border: none;
-  font-size: 40px;
-  cursor: pointer;
-  z-index: 10;
-  transition: color 0.3s ease;
-}
-
-.carousel-nav:hover {
-  color: #00ff00;
+  margin-bottom: 0px;
 }
 
 .carousel-title {
@@ -41,6 +21,39 @@
   text-align: center;
   margin: 0;
   text-transform: uppercase;
+}
+
+.carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center;
+  margin-top: 20px; /* Adjust as needed */
+}
+
+.carousel-wrapper .carousel-nav {
+  background-color: transparent;
+  color: #1EB62D;
+  border: none;
+  font-size: 40px;
+  cursor: pointer;
+  z-index: 10;
+  transition: color 0.3s ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%); /* Center vertically */
+}
+
+.carousel-wrapper .carousel-nav.left {
+  left: 0;
+}
+
+.carousel-wrapper .carousel-nav.right {
+  right: 0;
+}
+
+.carousel-wrapper .carousel-nav:hover {
+  color: #00ff00;
 }
 
 .carousel-container.centered {
@@ -62,4 +75,3 @@
   gap: 20px;
   margin-top: 10px;
 }
-  
