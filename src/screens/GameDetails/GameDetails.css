@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     align-items: center; /* Center the content horizontally */
-    padding: 20px; /* Add padding to prevent content from touching the edges */
     min-height: 100vh; /* Set minimum height for the container */
     background-color: #000d1c;
 }

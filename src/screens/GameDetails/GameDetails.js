@@ -134,7 +134,7 @@ const GameDetails = () => {
   }
 
   // Extract relevant game information
-  const gameTime = new Date(game.date).toLocaleTimeString([], {
+  const gameTime = new Date(game.time).toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
   });
@@ -147,7 +147,7 @@ const GameDetails = () => {
   return (
     <div className="game-details-container">
       <GameInfo
-        time={gameTime}
+        time={game.time}
         date={gameDate}
         gameName={game.stadium.name}
         tournament={game.type}

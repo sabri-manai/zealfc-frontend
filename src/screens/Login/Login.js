@@ -95,6 +95,11 @@ function Login({ onLogin }) {
           <p>Don't have an account?</p>
           <a href="/register">Register</a>
         </div>
+        <div className="message-container">
+          <p>Forgot your password?</p>
+          <a href="/forgot-password">Reset Password</a>
+        </div>
+
       </div>
     </div>
   );
