@@ -79,7 +79,7 @@ export const GameFilter = () => {
     const dateMatches =
       !activeFilters.date ||
       moment(game.date).format("dddd, DD.MM.YYYY") === activeFilters.date;
-    const placeMatches = !activeFilters.gameName || game.stadium === activeFilters.gameName;
+    const placeMatches = !activeFilters.gameName || game.stadium.name === activeFilters.gameName;
 
     return levelMatches && dateMatches && placeMatches;
   });
@@ -253,7 +253,7 @@ export const GameFilter = () => {
             <GameCard
               key={game._id} // Ensure game._id is used here
               imageSrc={index % 2 === 0 ? TuriaImage : CarmenImage}
-              gameName={game.stadium}
+              gameName={game.stadium.name}
               gameSubtitle={game.type}
               gameDay={game.date}
               gameId={game._id}

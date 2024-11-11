@@ -19,7 +19,7 @@ const GameHistory = ({ games }) => {
     // Transform the games data
     const transformedGames = games.map((game) => ({
         gameId: game.gameId?._id || game._id || 'Unknown ID',
-        gameName: game.stadium || 'Unknown Game',
+        gameName: game.stadium.name || 'Unknown Game',
         gameSubtitle: game.gameId?.type || 'Unknown Type',
         gameDay: game.date || 'Date not available',
         imageSrc: game.imageSrc || CarmenImage,

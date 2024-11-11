@@ -128,7 +128,7 @@ export const Frame = () => {
             <GameCard
               key={game._id}
               imageSrc={index % 2 === 0 ? TuriaImage : CarmenImage}
-              gameName={game.stadium}
+              gameName={game.stadium.name}
               gameSubtitle={game.type}
               gameDay={game.date}
 

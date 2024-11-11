@@ -149,7 +149,7 @@ const GameDetails = () => {
       <GameInfo
         time={gameTime}
         date={gameDate}
-        gameName={game.stadium}
+        gameName={game.stadium.name}
         tournament={game.type}
         placesLeft={calculatePlacesLeft(game)}
         onSignUp={isSignedUp ? handleCancelSignup : handleSignup}
