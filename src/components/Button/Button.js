@@ -1,13 +1,20 @@
 import React from 'react';
 import './Button.css';
 
-function Button({ text, onClick, styleType = 'default', onMouseEnter, onMouseLeave }) {
+function Button({ text, onClick, styleType = 'default', disabled = false, onMouseEnter, onMouseLeave }) {
+    const handleClick = () => {
+        if (!disabled && onClick) {
+            onClick();
+        }
+    };
+
     return (
         <div
-            className={`button-container ${styleType}`}
-            onClick={onClick}
+            className={`button-container ${styleType} ${disabled ? 'disabled' : ''}`}
+            onClick={handleClick}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
+            aria-disabled={disabled} // Accessibility support
         >
             <div className="svg-container">
                 <svg

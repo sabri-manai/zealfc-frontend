@@ -13,6 +13,8 @@ const GameDetails = () => {
   const [isSignedUp, setIsSignedUp] = useState(false); // Signup status
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
+  const [onWaitlist, setOnWaitlist] = useState(false);
+  
 
   const fetchGameDetails = async () => {
     try {
@@ -49,6 +51,50 @@ const GameDetails = () => {
       setLoading(false); // Loading complete
     }
   };
+
+
+  const handleJoinWaitlist = async () => {
+    const idToken = localStorage.getItem("idToken");
+    if (!idToken) {
+      alert("Please log in to join the waitlist.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/games/waitlist/${gameId}`,
+        {},
+        { headers: { Authorization: `Bearer ${idToken}` } }
+      );
+      alert(response.data.message);
+      setOnWaitlist(true);
+      fetchGameDetails();
+    } catch (error) {
+      alert(error.response?.data?.error || "Error joining waitlist.");
+    }
+  };
+
+
+  const handleLeaveWaitlist = async () => {
+    const idToken = localStorage.getItem("idToken");
+    if (!idToken) {
+      alert("Please log in to leave the waitlist.");
+      return;
+    }
+
+    try {
+      const response = await axios.delete(
+        `${process.env.REACT_APP_API_URL}/games/waitlist/${gameId}`,
+        { headers: { Authorization: `Bearer ${idToken}` } }
+      );
+      alert(response.data.message);
+      setOnWaitlist(false);
+      fetchGameDetails();
+    } catch (error) {
+      alert(error.response?.data?.error || "Error leaving waitlist.");
+    }
+  };
+
 
   useEffect(() => {
     fetchGameDetails();
@@ -111,6 +157,7 @@ const GameDetails = () => {
   };
 
   const calculatePlacesLeft = (game) => {
+    if (!game || !game.teams) return 0;
     const totalSlots = game.teams.reduce((total, team) => total + team.length, 0);
     const occupiedSlots = game.teams.reduce(
       (total, team) => total + team.filter((player) => player !== null).length,
@@ -118,6 +165,8 @@ const GameDetails = () => {
     );
     return totalSlots - occupiedSlots;
   };
+
+  const isGameFull = game ? calculatePlacesLeft(game) === 0 : false;
 
   if (loading) {
     return <p>Loading game details...</p>;
@@ -134,10 +183,7 @@ const GameDetails = () => {
   }
 
   // Extract relevant game information
-  const gameTime = new Date(game.time).toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+
   const gameDate = new Date(game.date).toLocaleDateString("en-US", {
     weekday: "long",
     month: "long",
@@ -154,6 +200,9 @@ const GameDetails = () => {
         placesLeft={calculatePlacesLeft(game)}
         onSignUp={isSignedUp ? handleCancelSignup : handleSignup}
         isSignedUp={isSignedUp}
+        onWaitlistToggle={onWaitlist ? handleLeaveWaitlist : handleJoinWaitlist}
+        isWaitlisted={onWaitlist}
+        isGameFull={isGameFull}
       />
       <Map />
       <Host onSignUp={handleSignup} />

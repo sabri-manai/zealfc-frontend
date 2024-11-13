@@ -36,6 +36,26 @@
     box-sizing: border-box;
 }
 
+.button-container.disabled {
+    cursor: not-allowed;
+    opacity: 0.5; /* Dim the button to indicate it's inactive */
+}
+
+.button-container.disabled .button-polygon path {
+    stroke: #999; /* Gray color for disabled state */
+    fill: transparent;
+}
+
+.button-container.disabled .button-text {
+    color: #999; /* Gray text color for disabled state */
+}
+
+.button-container.disabled:hover .button-polygon path,
+.button-container.disabled:hover .button-text {
+    color: #999; /* Prevent hover effect on disabled button */
+}
+
+
 /* Default State */
 .button-container.default .button-polygon path {
     stroke: #1bc429;
