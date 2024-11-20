@@ -1,104 +1,320 @@
-import React, { useState } from 'react';
+// src/components/Stats/Stats.js
+
+import React, { useState, useEffect } from 'react';
 import './Stats.css';
 import LineChart from '../LineChart/LineChart';
 import Leaderboard from "../Leaderboard/Leaderboard";
 import Button from "../Button/Button"; // Import your custom Button component
-import profilePic from "../../assets/images/IMG_0116.jpg";
 
-const Stats = () => {
-  // Points and dates data for point progression chart
-  const pointsData = [0, 3, 3, 6, 7, 10, 13];
-  const dates = ["01.01.2024", "05.01.2024", "10.01.2024", "15.01.2024", "20.01.2024", "25.01.2024", "30.01.2024"];
-  const pointLineLabel = "Your Points Over Time";
-
-  // State for the selected filter (CITY, COUNTRY, ZEAL)
+function Stats({ refreshTokens, handleLogout }) {
+  // State variables
+  const [userProfile, setUserProfile] = useState(null);
+  const [userGames, setUserGames] = useState([]);
+  const [loadingProfile, setLoadingProfile] = useState(true);
+  const [loadingGames, setLoadingGames] = useState(true);
+  const [pointsData, setPointsData] = useState([]);
+  const [dates, setDates] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState('CITY');
+  const [leaderboardData, setLeaderboardData] = useState([]);
+  const [loadingLeaderboard, setLoadingLeaderboard] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Data for ranking progression based on the selected filter
-  const rankingProgressData = {
-    CITY: {
-      points: [5, 5, 5, 8, 8],
-      dates: ["01.01.2024", "05.01.2024", "10.01.2024", "15.01.2024", "20.01.2024"],
-    },
-    COUNTRY: {
-      points: [10, 10, 11, 14, 15],
-      dates: ["01.01.2024", "05.01.2024", "10.01.2024", "15.01.2024", "20.01.2024"],
-    },
-    ZEAL: {
-      points: [15, 18, 18, 21, 22],
-      dates: ["01.01.2024", "05.01.2024", "10.01.2024", "15.01.2024", "20.01.2024"],
-    },
-  };
+  // Retrieve the authentication token
+  let idToken = localStorage.getItem('idToken');
+  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
-  // Sample leaderboard data based on the selected filter
-  const leaderboardDataByFilter = {
-    CITY: [
-      { id: 1, name: 'Alice', points: 100, profilePictureUrl: profilePic },
-      { id: 2, name: 'Bob', points: 90, profilePictureUrl: profilePic },
-      { id: 3, name: 'Charlie', points: 80, profilePictureUrl: profilePic },
-    ],
-    COUNTRY: [
-      { id: 1, name: 'David', points: 110, profilePictureUrl: profilePic },
-      { id: 2, name: 'Eve', points: 95, profilePictureUrl: profilePic },
-      { id: 3, name: 'Frank', points: 85, profilePictureUrl: profilePic },
-    ],
-    ZEAL: [
-      { id: 1, name: 'Grace', points: 120, profilePictureUrl: profilePic },
-      { id: 2, name: 'Heidi', points: 100, profilePictureUrl: profilePic },
-      { id: 3, name: 'Ivan', points: 90, profilePictureUrl: profilePic },
-    ],
-  };
+  // Fetch user profile data
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      let idToken = localStorage.getItem('idToken');
+
+      if (!idToken) {
+        setError("No token found, please log in.");
+        setLoadingProfile(false);
+        return;
+      }
+
+      try {
+        // First attempt to fetch user profile
+        let response = await fetch(`${API_URL}/profile/user-profile`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${idToken}`,
+          },
+        });
+
+        if (response.status === 401) {
+          // Token expired, attempt to refresh
+          const tokenRefreshed = await refreshTokens();
+          if (tokenRefreshed) {
+            idToken = localStorage.getItem('idToken');
+            // Retry fetching user profile with new token
+            response = await fetch(`${API_URL}/profile/user-profile`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`,
+              },
+            });
+            if (!response.ok) {
+              throw new Error('Failed to fetch user profile after token refresh');
+            }
+          } else {
+            handleLogout(); // Logout if token refresh fails
+            return;
+          }
+        } else if (!response.ok) {
+          throw new Error('Failed to fetch user profile');
+        }
+
+        const data = await response.json();
+        setUserProfile(data);
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+        setError(error.message);
+      } finally {
+        setLoadingProfile(false);
+      }
+    };
+
+    fetchUserProfile();
+  }, [refreshTokens, handleLogout, API_URL]);
+
+  // Fetch user games data
+  useEffect(() => {
+    const fetchUserGames = async () => {
+      let idToken = localStorage.getItem('idToken');
+
+      if (!idToken) {
+        setError("No token found, please log in.");
+        setLoadingGames(false);
+        return;
+      }
+
+      try {
+        // First attempt to fetch user games
+        let response = await fetch(`${API_URL}/profile/user-games`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${idToken}`,
+          },
+        });
+
+        if (response.status === 401) {
+          // Token expired, attempt to refresh
+          const tokenRefreshed = await refreshTokens();
+          if (tokenRefreshed) {
+            idToken = localStorage.getItem('idToken');
+            // Retry fetching user games with new token
+            response = await fetch(`${API_URL}/profile/user-games`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`,
+              },
+            });
+            if (!response.ok) {
+              throw new Error('Failed to fetch user games after token refresh');
+            }
+          } else {
+            handleLogout(); // Logout if token refresh fails
+            return;
+          }
+        } else if (!response.ok) {
+          throw new Error('Failed to fetch user games');
+        }
+
+        const data = await response.json();
+        setUserGames(data);
+      } catch (error) {
+        console.error('Error fetching user games:', error);
+        setError(error.message);
+      } finally {
+        setLoadingGames(false);
+      }
+    };
+
+    fetchUserGames();
+  }, [refreshTokens, handleLogout, API_URL]);
+
+  // Calculate points progression over time
+useEffect(() => {
+  if (!loadingGames && userGames.length > 0) {
+    // Sort games by date
+    const sortedGames = [...userGames].sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    // Initialize arrays for points and dates
+    const pointsDataArray = [];
+    const datesArray = [];
+    let cumulativePoints = 0;
+
+    sortedGames.forEach((game) => {
+      const points = game.pointsEarned || game.points || 0;
+      cumulativePoints += points;
+      pointsDataArray.push(cumulativePoints);
+
+      const date = new Date(game.date);
+      if (!isNaN(date)) {
+        datesArray.push(date.toLocaleDateString());
+      } else {
+        console.error('Invalid date:', game.date);
+        datesArray.push('Invalid Date');
+      }
+    });
+
+    console.log('Points Data Array:', pointsDataArray);
+    console.log('Dates Array:', datesArray);
+
+    setPointsData(pointsDataArray);
+    setDates(datesArray);
+  } else {
+    console.log('No games to process for chart.');
+    setPointsData([]);
+    setDates([]);
+  }
+}, [loadingGames, userGames]);
+
+// Rendering the chart
+{!loadingGames && pointsData.length > 1 ? (
+  <div className="point-progress-chart">
+    <LineChart
+      dataPoints={pointsData}
+      dates={dates}
+      title="Your Points Over Time"
+    />
+  </div>
+) : (
+  <p>{pointsData.length === 1 ? 'Play more games to see your points progression.' : 'Loading point progression...'}</p>
+)}
+
+
+  // Fetch leaderboard data based on selected filter
+  useEffect(() => {
+    const fetchLeaderboardData = async () => {
+      let idToken = localStorage.getItem('idToken');
+
+      if (!idToken) {
+        setError("No token found, please log in.");
+        setLoadingLeaderboard(false);
+        return;
+      }
+
+      try {
+        // First attempt to fetch leaderboard data
+        let response = await fetch(`${API_URL}/leaderboard?filter=${selectedFilter}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${idToken}`,
+          },
+        });
+
+        if (response.status === 401) {
+          // Token expired, attempt to refresh
+          const tokenRefreshed = await refreshTokens();
+          if (tokenRefreshed) {
+            idToken = localStorage.getItem('idToken');
+            // Retry fetching leaderboard data with new token
+            response = await fetch(`${API_URL}/leaderboard?filter=${selectedFilter}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${idToken}`,
+              },
+            });
+            if (!response.ok) {
+              throw new Error('Failed to fetch leaderboard data after token refresh');
+            }
+          } else {
+            handleLogout(); // Logout if token refresh fails
+            return;
+          }
+        } else if (!response.ok) {
+          throw new Error('Failed to fetch leaderboard data');
+        }
+
+        const data = await response.json();
+        setLeaderboardData(data);
+      } catch (error) {
+        console.error('Error fetching leaderboard data:', error);
+        setError(error.message);
+      } finally {
+        setLoadingLeaderboard(false);
+      }
+    };
+
+    fetchLeaderboardData();
+  }, [selectedFilter, refreshTokens, handleLogout, API_URL]);
+
+  // Handle loading states
+  if (loadingProfile || loadingGames) {
+    return <p>Loading your stats...</p>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!userProfile) {
+    return <p>Unable to load your profile data.</p>;
+  }
 
   return (
     <div className="stats-container">
       {/* Points Display */}
-      <div className="points-display">785 POINTS</div>
+      <div className="points-display">{userProfile.points} POINTS</div>
 
       {/* Stats Grid */}
       <div className="stats-grid">
         <div className="stat-item">
-          <div className="stat-value">10</div>
+          <div className="stat-value">{userProfile.losses}</div>
           <div className="stat-label">LOST</div>
         </div>
         <div className="stat-item">
-          <div className="stat-value">7</div>
+          <div className="stat-value">{userProfile.wins}</div>
           <div className="stat-label">WON</div>
         </div>
         <div className="stat-item">
-          <div className="stat-value">2</div>
+          <div className="stat-value">{userProfile.draws}</div>
           <div className="stat-label">TIED</div>
         </div>
       </div>
 
       {/* Separator */}
       <div className="separator">
-        IN YOUR <span className="highlight">15</span> GAMES
+        IN YOUR <span className="highlight">{userProfile.games_played}</span> GAMES
       </div>
 
       {/* Goals and Assists Stats */}
       <div className="ga-stats-section">
         <div className="ga-stats-item">
           <div className="stat-label">YOU SCORED</div>
-          <div className="stat-value">29</div>
+          <div className="stat-value">{userProfile.goals}</div>
           <div className="stat-label">GOALS</div>
         </div>
         <div className="ga-stats-item">
           <div className="stat-label">YOU GAVE</div>
-          <div className="stat-value">27</div>
+          <div className="stat-value">{userProfile.assists}</div>
           <div className="stat-label">ASSISTS</div>
         </div>
       </div>
 
-      {/* First Line Chart for Point Progression */}
-      <div className="point-progress-chart">
-      <LineChart
-        dataPoints={pointsData} // Array of y-axis values (points)
-        dates={dates}           // Array of x-axis values (dates)
-        title={pointLineLabel}
-      />
-      </div>
+      {/* Line Chart for Point Progression */}
+      {!loadingGames && pointsData.length > 0 ? (
+        <div className="point-progress-chart">
+          <LineChart
+            dataPoints={pointsData}
+            dates={dates}
+            title="Your Points Over Time"
+          />
+        </div>
+      ) : (
+        <p>Loading point progression...</p>
+      )}
 
-      {/* Filter Buttons using your custom Button component */}
+      {/* Filter Buttons */}
       <div className="filter-buttons">
         {['CITY', 'COUNTRY', 'ZEAL'].map((filter) => (
           <Button
@@ -110,24 +326,14 @@ const Stats = () => {
         ))}
       </div>
 
-      {/* Second Line Chart and Leaderboard Side by Side */}
-      <div className="chart-leaderboard-container">
-        {/* Second Line Chart for Ranking Progression */}
-        <div className="progress-chart">
-          <LineChart
-            dataPoints={rankingProgressData[selectedFilter].points}
-            dates={rankingProgressData[selectedFilter].dates}
-            title={`Your Ranking Progress (${selectedFilter})`}
-          />
-        </div>
-
-        {/* Leaderboard */}
-        <div className="leaderboard">
-          <Leaderboard leaderboardData={leaderboardDataByFilter[selectedFilter]} />
-        </div>
-      </div>
+      {/* Leaderboard */}
+      {!loadingLeaderboard && leaderboardData.length > 0 ? (
+        <Leaderboard leaderboardData={leaderboardData} />
+      ) : (
+        <p>Loading leaderboard...</p>
+      )}
     </div>
   );
-};
+}
 
 export default Stats;

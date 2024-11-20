@@ -1,9 +1,7 @@
-// UpcomingGames.js
-
 import React, { useState } from 'react';
 import './UpcomingGames.css';
-import {GameCard} from '../GameCard/GameCard';
-import {Carousel} from '../Carousel/Carousel';
+import { GameCard } from '../GameCard/GameCard';
+import { Carousel } from '../Carousel/Carousel';
 import CarmenImage from "../../assets/images/carmen.png";
 
 const UpcomingGames = ({ registeredGames, waitlistGames }) => {
@@ -13,18 +11,19 @@ const UpcomingGames = ({ registeredGames, waitlistGames }) => {
     setActiveTab(tab);
   };
 
+
   // Function to transform game data
   const transformGame = (game) => ({
     gameId: game.gameId?._id || game._id || 'Unknown ID',
-    gameName: game.stadium.name || 'Unknown Game',
+    gameName: game.stadium || 'Unknown Game',
     gameSubtitle: game.gameId?.type || 'Unknown Type',
     gameDay: game.date || 'Date not available',
     imageSrc: game.imageSrc || CarmenImage,
   });
 
   // Transform games
-  const transformedRegisteredGames = registeredGames.map(transformGame);
-  const transformedWaitlistGames = waitlistGames.map(transformGame);
+  const transformedRegisteredGames = registeredGames.map(transformGame).filter(game => game.gameId?.status === 'upcoming');
+  const transformedWaitlistGames = waitlistGames.map(transformGame).filter(game => game.gameId?.status === 'upcoming');
 
   // Select games to display based on active tab
   const displayedGames =
@@ -48,12 +47,11 @@ const UpcomingGames = ({ registeredGames, waitlistGames }) => {
         </span>
       </div>
 
-
       {/* Carousel for game cards */}
       <Carousel className={displayedGames.length <= 5 ? 'centered' : ''}>
         {displayedGames.map((game) => (
           <GameCard
-            key={game.gameId}
+            key={game.gameId} // Use gameId here
             imageSrc={game.imageSrc}
             gameName={game.gameName}
             gameSubtitle={game.gameSubtitle}

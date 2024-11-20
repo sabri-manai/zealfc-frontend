@@ -3,6 +3,7 @@
     padding: 0 100px; /* Reduced padding */
     text-align: center;
     color: #1EB62D;
+
 }
 
 /* Styles for the filter type buttons (DATE, LEVEL, PLACE) */
@@ -101,6 +102,7 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr); /* 5 games per row */
     justify-items: center;
+    gap: 20px;
 }
 
 /* Center the filtered games when there are few */

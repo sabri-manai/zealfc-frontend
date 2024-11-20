@@ -1,3 +1,4 @@
+// src/components/GameFilter/GameFilter.js
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import axios from "axios"; // Import axios for API calls
 import { Carousel } from "../Carousel/Carousel";
@@ -34,8 +35,12 @@ export const GameFilter = () => {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/games`); // Adjust API endpoint
-        setGames(response.data); // Assuming the response is an array of games
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/games`);
+        // Filter games to only include upcoming ones based on status
+        const upcomingGames = response.data.filter(
+          (game) => game.status !== 'finished' // Exclude games with status 'finished'
+        );
+        setGames(upcomingGames);
       } catch (error) {
         console.error("Error fetching games:", error);
       }

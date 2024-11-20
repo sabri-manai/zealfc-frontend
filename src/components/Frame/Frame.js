@@ -18,7 +18,11 @@ export const Frame = () => {
     const fetchGames = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/games`);
-        setGames(response.data);
+        // Filter games to only include upcoming ones based on status
+        const upcomingGames = response.data.filter(
+          (game) => game.status !== 'finished' // Exclude games with status 'finished'
+        );
+        setGames(upcomingGames);
       } catch (error) {
         console.error("Error fetching games:", error);
       }
@@ -131,7 +135,6 @@ export const Frame = () => {
               gameName={game.stadium.name}
               gameSubtitle={game.type}
               gameDay={game.date}
-
               onSignup={() => handleSignup(game._id)}
               gameId={game._id}
               className="game-card-container" // Pass className
