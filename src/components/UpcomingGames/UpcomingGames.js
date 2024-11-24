@@ -1,16 +1,17 @@
+// src/components/UpcomingGames/UpcomingGames.js
+
 import React, { useState } from 'react';
 import './UpcomingGames.css';
 import { GameCard } from '../GameCard/GameCard';
 import { Carousel } from '../Carousel/Carousel';
 import CarmenImage from "../../assets/images/carmen.png";
 
-const UpcomingGames = ({ registeredGames, waitlistGames }) => {
+const UpcomingGames = ({ games }) => {
   const [activeTab, setActiveTab] = useState('registered');
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
-
 
   // Function to transform game data
   const transformGame = (game) => ({
@@ -19,15 +20,19 @@ const UpcomingGames = ({ registeredGames, waitlistGames }) => {
     gameSubtitle: game.gameId?.type || 'Unknown Type',
     gameDay: game.date || 'Date not available',
     imageSrc: game.imageSrc || CarmenImage,
+    attendance: game.attendance || 'unknown',
   });
 
-  // Transform games
-  const transformedRegisteredGames = registeredGames.map(transformGame).filter(game => game.gameId?.status === 'upcoming');
-  const transformedWaitlistGames = waitlistGames.map(transformGame).filter(game => game.gameId?.status === 'upcoming');
+  // Get upcoming games
+  const upcomingGames = games.filter(game => game.gameId?.status === 'upcoming');
+
+  // Separate registered and waitlist games
+  const registeredGames = upcomingGames.filter(game => game.attendance === 'present' || game.attendance === 'registered').map(transformGame);
+  const waitlistGames = upcomingGames.filter(game => game.attendance === 'waitlist').map(transformGame);
 
   // Select games to display based on active tab
   const displayedGames =
-    activeTab === 'registered' ? transformedRegisteredGames : transformedWaitlistGames;
+    activeTab === 'registered' ? registeredGames : waitlistGames;
 
   return (
     <div className="upcoming-games-container">
@@ -51,7 +56,7 @@ const UpcomingGames = ({ registeredGames, waitlistGames }) => {
       <Carousel className={displayedGames.length <= 5 ? 'centered' : ''}>
         {displayedGames.map((game) => (
           <GameCard
-            key={game.gameId} // Use gameId here
+            key={game.gameId}
             imageSrc={game.imageSrc}
             gameName={game.gameName}
             gameSubtitle={game.gameSubtitle}

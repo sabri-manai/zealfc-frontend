@@ -1,12 +1,13 @@
+// src/components/ProfileFilter/ProfileFilter.js
+
 import React, { useState } from 'react';
 import './ProfileFilter.css';
-import Stats from '../Stats/Stats'; // Your Stats component
-import SubscriptionInfo from '../SubscriptionInfo/SubscriptionInfo'; // The SubscriptionInfo component
-import GameHistory from '../GameHistory/GameHistory'; // Import the GameHistory component
-import UpcomingGames from '../UpcomingGames/UpcomingGames'; // Import the GameHistory component
+import Stats from '../Stats/Stats';
+import SubscriptionInfo from '../SubscriptionInfo/SubscriptionInfo';
+import GameHistory from '../GameHistory/GameHistory';
+import UpcomingGames from '../UpcomingGames/UpcomingGames';
 
 const ProfileFilter = ({ games, user }) => {
-
   const [activeTab, setActiveTab] = useState('games');
 
   const handleTabClick = (tab) => {
@@ -44,13 +45,10 @@ const ProfileFilter = ({ games, user }) => {
         {activeTab === 'games' && (
           <div>
             {/* Game History */}
-            <GameHistory 
-            games={games} 
-            />
-            <UpcomingGames
-              registeredGames={games}
-              waitlistGames={games}
-            />
+            <GameHistory games={games} />
+
+            {/* Upcoming Games */}
+            <UpcomingGames games={games} />
           </div>
         )}
       </div>

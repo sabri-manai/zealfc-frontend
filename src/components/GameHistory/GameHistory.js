@@ -1,3 +1,5 @@
+// src/components/GameHistory/GameHistory.js
+
 import React, { useState, useRef, useEffect } from "react";
 import { Carousel } from '../Carousel/Carousel';
 import { GameCard } from '../GameCard/GameCard';
@@ -14,6 +16,7 @@ const GameHistory = ({ games }) => {
     setGameFilter(prevFilter => prevFilter === filter ? "played" : filter);
   };
 
+  // Filter finished games
   const finishedGames = games.filter(game => game.gameId?.status === 'finished');
 
   // Transform the games data
@@ -33,111 +36,117 @@ const GameHistory = ({ games }) => {
     if (gameFilter === "played") return true;
     if (gameFilter === "won") return game.result === "win";
     if (gameFilter === "lost") return game.result === "loss";
+    if (gameFilter === "draw") return game.result === "draw";
     return false;
   });
 
-    const scrollRight = () => {
-        const carousel = carouselRef.current;
-        if (carousel) {
-            const cardWidth = carousel.offsetWidth / 6;
-            const maxScrollLeft = carousel.scrollWidth - carousel.offsetWidth;
+  const scrollRight = () => {
+      const carousel = carouselRef.current;
+      if (carousel) {
+          const cardWidth = carousel.offsetWidth / 6;
+          const maxScrollLeft = carousel.scrollWidth - carousel.offsetWidth;
 
-            if (carousel.scrollLeft + carousel.offsetWidth < carousel.scrollWidth - cardWidth) {
-                carousel.scrollBy({ left: cardWidth, behavior: "smooth" });
-            } else {
-                carousel.scrollTo({ left: maxScrollLeft, behavior: "smooth" });
-                setTimeout(() => {
-                    carousel.scrollTo({ left: 0, behavior: "smooth" });
-                }, 3000);
-            }
-        }
-    };
+          if (carousel.scrollLeft + carousel.offsetWidth < carousel.scrollWidth - cardWidth) {
+              carousel.scrollBy({ left: cardWidth, behavior: "smooth" });
+          } else {
+              carousel.scrollTo({ left: maxScrollLeft, behavior: "smooth" });
+              setTimeout(() => {
+                  carousel.scrollTo({ left: 0, behavior: "smooth" });
+              }, 3000);
+          }
+      }
+  };
 
-    const scrollLeft = () => {
-        const carousel = carouselRef.current;
-        if (carousel) {
-            const cardWidth = carousel.offsetWidth / 6;
-            carousel.scrollBy({ left: -cardWidth, behavior: "smooth" });
-        }
-    };
+  const scrollLeft = () => {
+      const carousel = carouselRef.current;
+      if (carousel) {
+          const cardWidth = carousel.offsetWidth / 6;
+          carousel.scrollBy({ left: -cardWidth, behavior: "smooth" });
+      }
+  };
 
-    const startAutoScroll = () => {
-        stopAutoScroll();
-        scrollIntervalRef.current = setInterval(() => {
-            scrollRight();
-        }, 3000);
-    };
+  const startAutoScroll = () => {
+      stopAutoScroll();
+      scrollIntervalRef.current = setInterval(() => {
+          scrollRight();
+      }, 3000);
+  };
 
-    const stopAutoScroll = () => {
-        if (scrollIntervalRef.current) {
-            clearInterval(scrollIntervalRef.current);
-        }
-    };
+  const stopAutoScroll = () => {
+      if (scrollIntervalRef.current) {
+          clearInterval(scrollIntervalRef.current);
+      }
+  };
 
-    useEffect(() => {
-        const carousel = carouselRef.current;
-        if (carousel) {
-            carousel.scrollLeft = 0;
-            startAutoScroll();
-        }
+  useEffect(() => {
+      const carousel = carouselRef.current;
+      if (carousel) {
+          carousel.scrollLeft = 0;
+          startAutoScroll();
+      }
 
-        return () => {
-            stopAutoScroll();
-        };
-    }, []);
+      return () => {
+          stopAutoScroll();
+      };
+  }, []);
 
-    return (
-        <div
-          className="game-history-container"
-          onMouseEnter={stopAutoScroll}
-          onMouseLeave={startAutoScroll}
+  return (
+    <div
+      className="game-history-container"
+      onMouseEnter={stopAutoScroll}
+      onMouseLeave={startAutoScroll}
+    >
+      {/* Game Filters */}
+      <div className="game-filters">
+        <Button
+          text="LOST"
+          onClick={() => handleFilterClick('lost')}
+          styleType={gameFilter === 'lost' ? 'active' : 'inactive'}
+        />
+        <Button
+          text="DRAW"
+          onClick={() => handleFilterClick('draw')}
+          styleType={gameFilter === 'draw' ? 'active' : 'inactive'}
+        />
+        <Button
+          text="PLAYED"
+          onClick={() => handleFilterClick('played')}
+          styleType={gameFilter === 'played' ? 'active' : 'inactive'}
+        />
+        <Button
+          text="WON"
+          onClick={() => handleFilterClick('won')}
+          styleType={gameFilter === 'won' ? 'active' : 'inactive'}
+        />
+      </div>
+
+      {/* Carousel Wrapper with Navigation Buttons */}
+      <div className="carousel-wrapper">
+        <button className="carousel-nav left" onClick={scrollLeft}>
+          {"<"}
+        </button>
+        <Carousel
+          ref={carouselRef}
+          className={filteredGames.length <= 5 ? "centered" : ""}
         >
-          {/* Game Filters */}
-          <div className="game-filters">
-            <Button
-              text="LOST"
-              onClick={() => handleFilterClick('lost')}
-              styleType={gameFilter === 'lost' ? 'active' : 'inactive'}
+          {filteredGames.map((game) => (
+            <GameCard
+              key={game.gameId}
+              imageSrc={game.imageSrc}
+              gameName={game.gameName}
+              gameSubtitle={game.gameSubtitle}
+              gameDay={game.gameDay}
+              gameId={game.gameId}
+              className="game-card-container"
             />
-            <Button
-              text="PLAYED"
-              onClick={() => handleFilterClick('played')}
-              styleType={gameFilter === 'played' ? 'active' : 'inactive'}
-            />
-            <Button
-              text="WON"
-              onClick={() => handleFilterClick('won')}
-              styleType={gameFilter === 'won' ? 'active' : 'inactive'}
-            />
-          </div>
-    
-          {/* Carousel Wrapper with Navigation Buttons */}
-          <div className="carousel-wrapper">
-            <button className="carousel-nav left" onClick={scrollLeft}>
-              {"<"}
-            </button>
-            <Carousel
-              ref={carouselRef}
-              className={filteredGames.length <= 5 ? "centered" : ""}
-            >
-              {filteredGames.map((game) => (
-                <GameCard
-                  key={game.gameId} // Use gameId here
-                  imageSrc={game.imageSrc}
-                  gameName={game.gameName}
-                  gameSubtitle={game.gameSubtitle}
-                  gameDay={game.gameDay}
-                  gameId={game.gameId}
-                  className="game-card-container"
-                />
-              ))}
-            </Carousel>
-            <button className="carousel-nav right" onClick={scrollRight}>
-              {">"}
-            </button>
-          </div>
-        </div>
-      );
-    };
-    
-    export default GameHistory;
+          ))}
+        </Carousel>
+        <button className="carousel-nav right" onClick={scrollRight}>
+          {">"}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default GameHistory;
