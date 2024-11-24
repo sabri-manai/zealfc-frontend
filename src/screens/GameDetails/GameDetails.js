@@ -21,9 +21,9 @@ const GameDetails = () => {
       const response = await axios.get(`${process.env.REACT_APP_API_URL}/games/${gameId}`);
       setGame(response.data);
       
-      // Check if user is signed up
+      // Check if user is signed up or on the waitlist
       const idToken = localStorage.getItem("idToken");
-
+  
       if (idToken) {
         // Fetch user profile to get user's email
         const userResponse = await axios.get(
@@ -34,15 +34,23 @@ const GameDetails = () => {
             },
           }
         );
-
+  
         const userEmail = userResponse.data.email;
-
+  
         // Check if user's email exists in any team
         const userInTeam = response.data.teams.some(team =>
           team.some(player => player && player.email === userEmail)
         );
-
+  
         setIsSignedUp(userInTeam);
+  
+        // **Check if user's email exists in the waitlist**
+        const userOnWaitlist = response.data.waitlist.some(
+          waitlistUser => waitlistUser.email === userEmail
+        );
+  
+        // **Update the `onWaitlist` state**
+        setOnWaitlist(userOnWaitlist);
       }
     } catch (error) {
       console.error("Error fetching game details:", error);
@@ -51,6 +59,7 @@ const GameDetails = () => {
       setLoading(false); // Loading complete
     }
   };
+  
 
 
   const handleJoinWaitlist = async () => {

@@ -25,22 +25,48 @@ const GameInfo = ({
           </div>
         </div>
         <div className="sign-up-button-container">
-          <Button 
-            text={isSignedUp ? "CANCEL" : isGameFull ? "FULL" : "JOIN"} 
-            onClick={isGameFull && !isSignedUp ? null : onSignUp} 
-            styleType={isSignedUp ? "cancel" : "default"} 
-            className={`sign-up-button ${isGameFull && !isSignedUp ? "disabled" : ""}`}
-            disabled={isGameFull && !isSignedUp}  // Only disable if the game is full and user is not signed up
-          />
-
-          {isGameFull && !isSignedUp && (
-            <Button
-              text={isWaitlisted ? "LEAVE WAITLIST" : "JOIN WAITLIST"}
-              onClick={onWaitlistToggle}
-              styleType={isWaitlisted ? "cancel" : "default"} 
-              className="waitlist-button"
-              disabled={isSignedUp && !isWaitlisted}  // Disable if already signed up and not waitlisted
+          {/* If user is signed up */}
+          {isSignedUp && (
+            <Button 
+              text="CANCEL" 
+              onClick={onSignUp} 
+              styleType="cancel" 
+              className="sign-up-button"
             />
+          )}
+
+          {/* If user is not signed up */}
+          {!isSignedUp && (
+            <>
+              {/* If user is on the waitlist */}
+              {isWaitlisted ? (
+                <Button
+                  text="LEAVE WAITLIST"
+                  onClick={onWaitlistToggle}
+                  styleType="cancel" 
+                  className="waitlist-button"
+                />
+              ) : (
+                <>
+                  {/* If game is full */}
+                  {isGameFull ? (
+                    <Button
+                      text="JOIN WAITLIST"
+                      onClick={onWaitlistToggle}
+                      styleType="default" 
+                      className="waitlist-button"
+                    />
+                  ) : (
+                    <Button
+                      text="JOIN"
+                      onClick={onSignUp}
+                      styleType="default"
+                      className="sign-up-button"
+                    />
+                  )}
+                </>
+              )}
+            </>
           )}
         </div>
       </div>
