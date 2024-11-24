@@ -4,7 +4,11 @@ import React, { useState, useEffect } from 'react';
 import './Stats.css';
 import LineChart from '../LineChart/LineChart';
 import Leaderboard from "../Leaderboard/Leaderboard";
-import Button from "../Button/Button"; // Import your custom Button component
+import Button from "../Button/Button";
+
+// Import CircularProgressbar components and styles
+import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 function Stats({ refreshTokens, handleLogout }) {
   // State variables
@@ -18,6 +22,14 @@ function Stats({ refreshTokens, handleLogout }) {
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [loadingLeaderboard, setLoadingLeaderboard] = useState(true);
   const [error, setError] = useState(null);
+
+  // State variables for computed stats
+  const [wins, setWins] = useState(0);
+  const [losses, setLosses] = useState(0);
+  const [draws, setDraws] = useState(0);
+  const [winPercentage, setWinPercentage] = useState(0);
+  const [lossPercentage, setLossPercentage] = useState(0);
+  const [drawPercentage, setDrawPercentage] = useState(0);
 
   // Retrieve the authentication token
   let idToken = localStorage.getItem('idToken');
@@ -139,56 +151,77 @@ function Stats({ refreshTokens, handleLogout }) {
     fetchUserGames();
   }, [refreshTokens, handleLogout, API_URL]);
 
-  // Calculate points progression over time
-useEffect(() => {
-  if (!loadingGames && userGames.length > 0) {
-    // Sort games by date
-    const sortedGames = [...userGames].sort((a, b) => new Date(a.date) - new Date(b.date));
+  // Calculate wins, losses, draws, and percentages
+  useEffect(() => {
+    if (userGames && userGames.length > 0) {
+      let winsCount = 0;
+      let lossesCount = 0;
+      let drawsCount = 0;
 
-    // Initialize arrays for points and dates
-    const pointsDataArray = [];
-    const datesArray = [];
-    let cumulativePoints = 0;
+      userGames.forEach((game) => {
+        if (game.result === 'win') {
+          winsCount++;
+        } else if (game.result === 'loss') {
+          lossesCount++;
+        } else if (game.result === 'draw') {
+          drawsCount++;
+        }
+      });
 
-    sortedGames.forEach((game) => {
-      const points = game.pointsEarned || game.points || 0;
-      cumulativePoints += points;
-      pointsDataArray.push(cumulativePoints);
+      setWins(winsCount);
+      setLosses(lossesCount);
+      setDraws(drawsCount);
 
-      const date = new Date(game.date);
-      if (!isNaN(date)) {
-        datesArray.push(date.toLocaleDateString());
+      const totalGames = winsCount + lossesCount + drawsCount;
+
+      if (totalGames > 0) {
+        setWinPercentage((winsCount / totalGames) * 100);
+        setLossPercentage((lossesCount / totalGames) * 100);
+        setDrawPercentage((drawsCount / totalGames) * 100);
       } else {
-        console.error('Invalid date:', game.date);
-        datesArray.push('Invalid Date');
+        setWinPercentage(0);
+        setLossPercentage(0);
+        setDrawPercentage(0);
       }
-    });
+    }
+  }, [userGames]);
 
-    console.log('Points Data Array:', pointsDataArray);
-    console.log('Dates Array:', datesArray);
+  // Calculate points progression over time
+  useEffect(() => {
+    if (!loadingGames && userGames.length > 0) {
+      // Sort games by date
+      const sortedGames = [...userGames].sort((a, b) => new Date(a.date) - new Date(b.date));
 
-    setPointsData(pointsDataArray);
-    setDates(datesArray);
-  } else {
-    console.log('No games to process for chart.');
-    setPointsData([]);
-    setDates([]);
-  }
-}, [loadingGames, userGames]);
+      // Initialize arrays for points and dates
+      const pointsDataArray = [];
+      const datesArray = [];
+      let cumulativePoints = 0;
 
-// Rendering the chart
-{!loadingGames && pointsData.length > 1 ? (
-  <div className="point-progress-chart">
-    <LineChart
-      dataPoints={pointsData}
-      dates={dates}
-      title="Your Points Over Time"
-    />
-  </div>
-) : (
-  <p>{pointsData.length === 1 ? 'Play more games to see your points progression.' : 'Loading point progression...'}</p>
-)}
+      sortedGames.forEach((game) => {
+        const points = game.pointsEarned || game.points || 0;
+        cumulativePoints += points;
+        pointsDataArray.push(cumulativePoints);
 
+        const date = new Date(game.date);
+        if (!isNaN(date)) {
+          datesArray.push(date.toLocaleDateString());
+        } else {
+          console.error('Invalid date:', game.date);
+          datesArray.push('Invalid Date');
+        }
+      });
+
+      console.log('Points Data Array:', pointsDataArray);
+      console.log('Dates Array:', datesArray);
+
+      setPointsData(pointsDataArray);
+      setDates(datesArray);
+    } else {
+      console.log('No games to process for chart.');
+      setPointsData([]);
+      setDates([]);
+    }
+  }, [loadingGames, userGames]);
 
   // Fetch leaderboard data based on selected filter
   useEffect(() => {
@@ -269,22 +302,64 @@ useEffect(() => {
       {/* Stats Grid */}
       <div className="stats-grid">
         <div className="stat-item">
-          <div className="stat-value">{userProfile.losses}</div>
-          <div className="stat-label">LOST</div>
+          <CircularProgressbarWithChildren
+            value={lossPercentage}
+            strokeWidth={3} // Reduce the thickness
+            styles={buildStyles({
+              textColor: '#1EB62D',
+              pathColor: '#1EB62D',
+              trailColor: '#0F5E17',
+              textSize: '16px',
+              strokeLinecap: 'butt',
+            })}
+          >
+            <div className="circle-content">
+              <div className="stat-number">{losses}</div>
+              <div className="stat-text">LOST</div>
+            </div>
+          </CircularProgressbarWithChildren>
         </div>
         <div className="stat-item">
-          <div className="stat-value">{userProfile.wins}</div>
-          <div className="stat-label">WON</div>
+          <CircularProgressbarWithChildren
+            value={winPercentage}
+            strokeWidth={3}
+            styles={buildStyles({
+              textColor: '#1EB62D',
+              pathColor: '#1EB62D',
+              trailColor: '#0F5E17',
+              textSize: '16px',
+              strokeLinecap: 'butt',
+            })}
+          >
+            <div className="circle-content">
+              <div className="stat-number">{wins}</div>
+              <div className="stat-text">WON</div>
+            </div>
+          </CircularProgressbarWithChildren>
         </div>
         <div className="stat-item">
-          <div className="stat-value">{userProfile.draws}</div>
-          <div className="stat-label">TIED</div>
+          <CircularProgressbarWithChildren
+            value={drawPercentage}
+            strokeWidth={3}
+            styles={buildStyles({
+              textColor: '#1EB62D',
+              pathColor: '#1EB62D',
+              trailColor: '#0F5E17',
+              textSize: '16px',
+              strokeLinecap: 'butt',
+            })}
+          >
+            <div className="circle-content">
+              <div className="stat-number">{draws}</div>
+              <div className="stat-text">TIED</div>
+            </div>
+          </CircularProgressbarWithChildren>
         </div>
       </div>
 
       {/* Separator */}
       <div className="separator">
-        IN YOUR <span className="highlight">{userProfile.games_played}</span> GAMES
+        IN YOUR <span className="highlight">{userGames.length}</span> GAMES
       </div>
 
       {/* Goals and Assists Stats */}
@@ -302,16 +377,16 @@ useEffect(() => {
       </div>
 
       {/* Line Chart for Point Progression */}
-      {!loadingGames && pointsData.length > 0 ? (
+      {!loadingGames && pointsData.length > 1 ? (
         <div className="point-progress-chart">
-          <LineChart
-            dataPoints={pointsData}
-            dates={dates}
-            title="Your Points Over Time"
-          />
+          <LineChart dataPoints={pointsData} dates={dates} title="Your Points Over Time" />
         </div>
       ) : (
-        <p>Loading point progression...</p>
+        <p>
+          {pointsData.length === 1
+            ? 'Play more games to see your points progression.'
+            : 'Loading point progression...'}
+        </p>
       )}
 
       {/* Filter Buttons */}
