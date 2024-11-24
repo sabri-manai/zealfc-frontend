@@ -27,6 +27,9 @@
   justify-content: center;
   gap: 50px;
   margin-top: 20px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+
 }
 
 .stat-item {
@@ -45,7 +48,9 @@
 }
 
 .stat-number {
-  font-size: 36px;
+  font-size: 64px;
+  font-family: 'Nyxerin', sans-serif;
+
 }
 
 .stat-text {

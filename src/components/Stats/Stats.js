@@ -359,7 +359,7 @@ function Stats({ refreshTokens, handleLogout }) {
 
       {/* Separator */}
       <div className="separator">
-        IN YOUR <span className="highlight">{userGames.length}</span> GAMES
+        IN YOUR <span className="stat-number">{userGames.length}</span> GAMES
       </div>
 
       {/* Goals and Assists Stats */}
@@ -403,7 +403,7 @@ function Stats({ refreshTokens, handleLogout }) {
 
       {/* Leaderboard */}
       {!loadingLeaderboard && leaderboardData.length > 0 ? (
-        <Leaderboard leaderboardData={leaderboardData} />
+        <Leaderboard leaderboardData={leaderboardData} currentUserId={userProfile._id} />
       ) : (
         <p>Loading leaderboard...</p>
       )}
