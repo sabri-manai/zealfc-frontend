@@ -1,5 +1,3 @@
-// SubscriptionInfo.js
-
 import React, { useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import './SubscriptionInfo.css';
@@ -7,16 +5,23 @@ import Button from '../Button/Button';
 import axios from 'axios';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
+const API_URL = process.env.REACT_APP_API_URL;
 
 const SubscriptionInfo = ({ user }) => {
   const [subscription, setSubscription] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const token = localStorage.getItem('idToken');
+
   useEffect(() => {
-    if (user && user._id) {
+    if (token) {
       const fetchSubscription = async () => {
         try {
-          const response = await axios.get(`http://localhost:5000/subscription/${user._id}`);
+          const response = await axios.get(`${API_URL}/subscription`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
           if (response.status === 200 && response.data.subscription) {
             setSubscription(response.data.subscription);
           } else {
@@ -37,16 +42,21 @@ const SubscriptionInfo = ({ user }) => {
     } else {
       setLoading(false);
     }
-  }, [user]);
+  }, [token]);
 
   const handleSubscribe = async () => {
     const stripe = await stripePromise;
 
     try {
-      const response = await axios.post('http://localhost:5000/subscription/create-checkout-session', {
-        userId: user._id,
-        email: user.email,
-      });
+      const response = await axios.post(
+        `${API_URL}/subscription/create-checkout-session`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const { id: sessionId } = response.data;
       const result = await stripe.redirectToCheckout({ sessionId });
@@ -62,31 +72,32 @@ const SubscriptionInfo = ({ user }) => {
   };
 
   const handleCancelSubscription = async () => {
-    if (!subscription || !subscription.id) {
-      alert('No active subscription to cancel.');
-      return;
-    }
-
     try {
-      const response = await axios.post('http://localhost:5000/subscription/cancel-subscription', {
-        subscriptionId: subscription.id,
-        userId: user._id,
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/subscription/cancel-subscription`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+  
       alert(response.data.message);
-      setSubscription(null); // Update the subscription state
+      setSubscription({
+        ...subscription,
+        status: 'canceled',
+        current_period_end: null,
+      }); // Update state
     } catch (error) {
       console.error('Error cancelling subscription:', error);
       alert('Failed to cancel subscription. Please try again.');
     }
   };
+  
 
   const handleChangeSubscription = () => {
     alert('Change Subscription Plan!');
     // Implement change plan logic
   };
 
-  if (!user) {
-    console.error('User is undefined in SubscriptionInfo component.');
+  if (!token) {
     return <div>Please log in to view subscription information.</div>;
   }
 
@@ -94,7 +105,6 @@ const SubscriptionInfo = ({ user }) => {
     return <div>Loading...</div>;
   }
 
-  // Determine if the user has an active subscription
   const isSubscribed =
     subscription && subscription.status && subscription.status !== 'canceled';
 
@@ -111,12 +121,22 @@ const SubscriptionInfo = ({ user }) => {
         </p>
       </div>
 
-      {!isSubscribed && <Button text="PAY NOW" onClick={handleSubscribe} />}
-
+      {!isSubscribed && (  
+        <div className="subscription-actions">
+          <Button text="PAY NOW" 
+            onClick={handleSubscribe}
+          />
+        </div>
+      )}
       {isSubscribed && (
         <div className="subscription-actions">
-          <Button text="CANCEL" onClick={handleCancelSubscription} />
-          <Button text="CHANGE" onClick={handleChangeSubscription} />
+          <Button 
+            text="CANCEL"
+            onClick={handleCancelSubscription}
+          />
+          <Button text="CHANGE"
+          onClick={handleChangeSubscription}
+          />
         </div>
       )}
     </div>
