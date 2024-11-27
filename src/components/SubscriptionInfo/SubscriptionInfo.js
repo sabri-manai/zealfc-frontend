@@ -134,7 +134,7 @@ const SubscriptionInfo = ({ user }) => {
       {isSubscribed && (
         <div className="subscription-actions">
           <Button text="CANCEL" onClick={handleCancelSubscription} />
-          <Button text="PAY NOW" onClick={handleSubscribe} />
+          <Button text="RENEW NOW" onClick={handleSubscribe} />
           <Button text="CHANGE" onClick={handleChangeSubscription} />
         </div>
       )}
