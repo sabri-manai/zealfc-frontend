@@ -10,6 +10,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 const SubscriptionInfo = ({ user }) => {
   const [subscription, setSubscription] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showOptions, setShowOptions] = useState(false); // New state for subscription options
 
   const token = localStorage.getItem('idToken');
 
@@ -78,23 +79,27 @@ const SubscriptionInfo = ({ user }) => {
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
-  
+
       alert(response.data.message);
       setSubscription({
         ...subscription,
         status: 'canceled',
         current_period_end: null,
-      }); // Update state
+      });
     } catch (error) {
       console.error('Error cancelling subscription:', error);
       alert('Failed to cancel subscription. Please try again.');
     }
   };
-  
 
   const handleChangeSubscription = () => {
-    alert('Change Subscription Plan!');
-    // Implement change plan logic
+    setShowOptions(true); // Show the subscription options
+  };
+
+  const handleSelectPlan = (plan) => {
+    alert(`You selected the ${plan} plan!`);
+    // Implement logic to change the plan using Stripe or your API
+    setShowOptions(false); // Hide options after selection
   };
 
   if (!token) {
@@ -121,25 +126,40 @@ const SubscriptionInfo = ({ user }) => {
         </p>
       </div>
 
-      {!isSubscribed && (  
+      {!isSubscribed && (
         <div className="subscription-actions">
-          <Button text="PAY NOW" 
-            onClick={handleSubscribe}
-          />
+          <Button text="PAY NOW" onClick={handleSubscribe} />
         </div>
       )}
       {isSubscribed && (
         <div className="subscription-actions">
-          <Button 
-            text="CANCEL"
-            onClick={handleCancelSubscription}
-          />
-          <Button text="CHANGE"
-          onClick={handleChangeSubscription}
-          />
+          <Button text="CANCEL" onClick={handleCancelSubscription} />
+          <Button text="CHANGE" onClick={handleChangeSubscription} />
+        </div>
+      )}
+
+      {showOptions && (
+        <div className="subscription-options">
+          <div className="option" onClick={() => handleSelectPlan('Basic')}>
+            <h3>BASIC</h3>
+            <p>5 credits</p>
+            <p>15€ / month</p>
+          </div>
+          
+          <div className="option" onClick={() => handleSelectPlan('Premium')}>
+            <h3>PREMIUM</h3>
+            <p>10 credits</p>
+            <p>25€ / month</p>
+          </div>
+          <div className="option" onClick={() => handleSelectPlan('Mate')}>
+            <h3>MATE</h3>
+            <p>20 credits</p>
+            <p>40€ / month</p>
+          </div>
         </div>
       )}
     </div>
+
   );
 };
 

@@ -1,38 +1,78 @@
 .subscription-info-container {
-    text-align: center;
-    color: #1EB62D;
-    margin-top: 20px;
-    
-  }
-  
-  .subscription-info-container h2 {
-    font-size: 48px;
-    font-family: 'Tomorrow', sans-serif;
-  }
-  
-  .subscription-info-container p {
-    font-size: 20px;
-    margin-bottom: 20px;
-    color: rgba(30, 182, 45, 0.8);
-  }
-  
-  .price-container {
-    margin-bottom: 20px;
-  }
-  
-  .price-container .price {
-    font-size: 48px;
-    font-family: 'Tomorrow', sans-serif;
-    color: #ffffff;
-  }
-  
-  .price-container .status {
-    font-size: 24px;
-    font-family: 'Tomorrow', sans-serif;
-    color: rgba(30, 182, 45, 0.8);
-  }
-  
-  .subscription-actions {
-    display: flex;
-  }
-  
+  text-align: center;
+  color: #1EB62D;
+  margin-top: 20px;
+}
+
+.subscription-info-container h2 {
+  font-size: 48px;
+  font-family: 'Tomorrow', sans-serif;
+  color: #1BC429;
+  font-weight: 400; /* Make header text lighter */
+}
+
+.subscription-info-container p {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: rgba(30, 182, 45, 0.8);
+  font-weight: 400; /* Ensure no bold effect */
+}
+
+.price-container {
+  margin-bottom: 20px;
+}
+
+.price-container .price {
+  font-size: 48px;
+  font-family: 'Tomorrow', sans-serif;
+  color: #ffffff;
+  font-weight: 400; /* Remove bold effect */
+}
+
+.price-container .status {
+  font-size: 24px;
+  font-family: 'Tomorrow', sans-serif;
+  color: rgba(30, 182, 45, 0.8);
+  font-weight: 400; /* Remove bold effect */
+}
+
+/* Buttons - Fix Spacing */
+.subscription-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0px; /* Adjust spacing between buttons */
+  margin-top: 20px;
+}
+
+.subscription-actions button {
+  margin: 0;
+}
+
+/* Subscription Options Styling */
+.subscription-options {
+  display: flex; /* Align options in a row */
+  justify-content: space-around; /* Distribute options evenly */
+  margin-top: 20px;
+  gap: 20px; /* Space between the options */
+}
+
+.subscription-options .option {
+  flex: 1; /* Ensure equal width for all options */
+  text-align: center;
+  padding: 15px;
+  cursor: pointer;
+  color: #0F6216;
+  font-family: 'Tomorrow', sans-serif; /* Apply correct font family */
+  font-size: 25px; /* Match the guide's typography */
+  line-height: normal;
+  font-weight: 400; /* Remove bold effect */
+}
+
+.subscription-options .option h3 {
+  font-size: 35px; /* Font size for price text */
+  font-family: 'NYXERIN', sans-serif; /* Font family for price text */
+  margin-bottom: 5px;
+  color: #1EB62D;
+  font-weight: 400; /* Remove bold effect */
+}
+
