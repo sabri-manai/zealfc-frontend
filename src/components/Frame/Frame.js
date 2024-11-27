@@ -123,6 +123,7 @@ export const Frame = () => {
           {">"}
         </button>
       </div>
+  
       {games.length > 0 ? (
         <Carousel
           ref={carouselRef}
@@ -132,16 +133,17 @@ export const Frame = () => {
             <GameCard
               key={game._id}
               imageSrc={index % 2 === 0 ? TuriaImage : CarmenImage}
-              gameName={game.stadium.name}
-              gameSubtitle={game.type}
-              gameDay={game.date}
+              gameName={game.stadium?.name || "Unknown Stadium"}
+              gameSubtitle={game.type || "Unknown Type"}
+              gameDay={game.date || "Unknown Date"}
               onSignup={() => handleSignup(game._id)}
               gameId={game._id}
-              className="game-card-container" // Pass className
+              className="game-card-container"
             />
           ))}
         </Carousel>
       ) : (
+        // Fallback message when there are no games
         <p className="no-games-message">No upcoming games available.</p>
       )}
     </div>
