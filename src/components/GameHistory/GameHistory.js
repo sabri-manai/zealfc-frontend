@@ -109,14 +109,14 @@ const GameHistory = ({ games }) => {
           styleType={gameFilter === 'draw' ? 'active' : 'inactive'}
         />
         <Button
-          text="PLAYED"
-          onClick={() => handleFilterClick('played')}
-          styleType={gameFilter === 'played' ? 'active' : 'inactive'}
-        />
-        <Button
           text="WON"
           onClick={() => handleFilterClick('won')}
           styleType={gameFilter === 'won' ? 'active' : 'inactive'}
+        />
+        <Button
+          text="ALL GAMES"
+          onClick={() => handleFilterClick('played')}
+          styleType={gameFilter === 'played' ? 'active' : 'inactive'}
         />
       </div>
 

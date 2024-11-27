@@ -14,7 +14,7 @@ function Footer() {
           <div className="address-info">
             <p className="text-i">Carrer d'Homer 3</p>
             <p className="text-i">Valencia, 12-231</p>
-            <p className="text-i">email@gmail.com</p>
+            <p className="text-i">contact@zealfc.com</p>
             <p className="text-i">+34 123 456 678</p>
           </div>
         </div>
