@@ -42,6 +42,23 @@ body {
   min-height: 100vh;
 }
 
+/* Remove default background color of input suggestions in Chrome/Edge */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  box-shadow: 0 0 0px 1000px #000d1c inset; /* Match the background color of your form */
+  -webkit-box-shadow: 0 0 0px 1000px #000d1c inset; /* For older versions of Chrome */
+  -webkit-text-fill-color: #1BC429; /* Match the text color */
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Customize the autocomplete dropdown suggestion box */
+input::-webkit-autocomplete {
+  background-color: transparent !important; /* Makes the dropdown transparent */
+  color: #1BC429 !important; /* Matches the text color */
+}
+
+
 .App {
   display: flex;
   flex-direction: column;

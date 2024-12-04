@@ -1,104 +1,172 @@
-/* Center the login form */
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .login-box {
-    padding: 40px;
-    padding-top: 150px;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-  }
-  .switch-auth {
-    margin-top: 20px;
-    font-family: 'Nyxerin', sans-serif;
-    color: #1bc429;
-  }
-  
-  .switch-auth a {
-    color: #1bc429;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  
-  .switch-auth a:hover {
-    color: #0F6216; /* Darker green on hover */
-  }
-  
-  .button-container {
-    margin: 20px auto; /* Centers the button horizontally and adds some margin */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Main layout */
+.login-layout {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  background-color: #000d1c;
+}
+
+/* Image container */
+.login-image-container {
+  flex: 0 0 50%; /* Fixed width */
+  height: 100vh; /* Fixed height */
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.login-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.login-image-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(
+      to left,
+      rgba(0, 13, 28, 1) 0%,
+      rgba(0, 0, 0, 0) 40%
+    ),
+    linear-gradient(
+      to top,
+      rgba(0, 13, 28, 1) 20%,
+      rgba(0, 0, 0, 0) 40%
+    );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.noise-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background-image: url('../../assets/images/noise_home_background.png');
+  background-size: cover;
+  opacity: 0.5;
+}
+
+/* Form container */
+.login-form-container {
+  flex: 1; /* Fill remaining width */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content to the top */
+  align-items: center;
+  background-color: #000d1c;
+  z-index: 3;
+  padding-top: 80px; /* Adjust as needed */
+}
+
+.login-title {
+  font-size: 35px;
+  color: #1BC429;
+  font-family: "Tomorrow", sans-serif;
+  text-align: center;
+}
+
+/* Form */
+.login-form {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Form Fields */
+.login-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.login-field span {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #1BC429;
+  font-family: "Tomorrow", sans-serif;
+}
+
+.login-input-line {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #1BC429;
+  color: #1BC429;
+  font-size: 1rem;
+  outline: none;
+  width: 100%;
+}
+
+.login-input-line::placeholder {
+  color: #2C5930;
+}
+
+/* Password Container */
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #1BC429;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Login Message */
+.login-message {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #ff4b4b;
+  text-align: center;
+}
+
+.login-link {
+  text-align: center;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.login-link span {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.login-link-text {
+  color: #1BC429;
+  text-decoration: none;
+}
+
+.login-link-text:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .login-layout {
+    flex-direction: column;
   }
 
-  .message-container {
-    text-align: center; /* Centers the text */
-    margin-top: 20px; /* Adds space above the text block */
+  .login-image-container {
+    width: 100%;
+    height: 40vh; /* Adjust height for mobile */
+    flex: none;
   }
-  
-  .message-container p {
-    font-family: 'Nyxerin', sans-serif; /* Use your font */
-    color: #1bc429; /* Text color */
-    font-size: 18px; /* Adjust font size */
-    margin-bottom: 10px; /* Adds space between the lines */
-    letter-spacing: 1px; /* Adjusts the space between letters */
+
+  .login-form-container {
+    width: 100%;
+    padding-top: 20px; /* Adjust as needed */
   }
-  
-  .message-container a {
-    color: #1bc429; /* Match the link color to text */
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  
-  .message-container a:hover {
-    color: #0F6216; /* Change color on hover */
-  }
-  
-  
-  h2 {
-    color: #1bc429;
-    font-family: 'Nyxerin', sans-serif;
-    margin-bottom: 20px;
-  }
-  
-  .input-container {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-  }
-  
-  .input-field {
-    padding: 10px 15px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #1bc429;
-    background-color: #0c1a2a;
-    color: #fff;
-    font-size: 16px;
-    outline: none;
-    transition: border 0.3s ease;
-  }
-  
-  .input-field:focus {
-    border-color: #4caf50;
-  }
-  
-  .message {
-    margin-top: 10px;
-    font-size: 14px;
-  }
-  
-  .success {
-    color: #4caf50;
-  }
-  
-  .error {
-    color: #f44336;
-  }
-  
+}

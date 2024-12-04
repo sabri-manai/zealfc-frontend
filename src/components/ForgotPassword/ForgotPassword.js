@@ -1,9 +1,9 @@
-// src/components/ForgotPassword/ForgotPassword.js
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
-import Button from "../../components/Button/Button";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import Button from "../../components/Button/Button3";
 import "./ForgotPassword.css";
+import homeBackground from '../../assets/images/home_background.png';
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -32,26 +32,42 @@ function ForgotPassword() {
   };
 
   return (
-    <div className="forgot-password-container">
-      <div className="forgot-password-box">
-        <h2>Forgot Password</h2>
-        <div className="input-container">
-          <input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="input-field"
+    <div className="forgot-password-layout">
+      <div className="forgot-password-image-container">
+        <img src={homeBackground} alt="Background" className="forgot-password-image" />
+        <div className="noise-effect"></div>
+      </div>
+      <div className="forgot-password-form-container">
+        <p className="forgot-password-title">FORGOT YOUR PASSWORD?</p>
+        <form className="forgot-password-form">
+          <div className="forgot-password-field">
+            <span>Email:</span>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="forgot-password-input-line"
+            />
+          </div>
+          <Button
+            onClick={handleForgotPassword}
+            variant="small"
+            primaryText={loading ? "Sending..." : "Reset Code"}
+            disabled={loading} // Disable button while loading
           />
+        </form>
+        {message && <p className="forgot-password-message">{message}</p>}
+        <div className="login-links">
+          <div className="login-link">
+            <span>Already have an account?  </span>
+            <Link to="/login" className="login-link-text"> Login</Link>
+          </div>
+          <div className="login-link">
+            <span>Don't have an account?</span>
+            <Link to="/register" className="login-link-text"> Register</Link>
+          </div>
         </div>
-        <Button
-          text={loading ? "Sending..." : "Send Reset Code"}
-          onClick={handleForgotPassword}
-          styleType="default"
-        />
-        <p className={`message ${message.includes("failed") ? "error" : "success"}`}>
-          {message}
-        </p>
       </div>
     </div>
   );

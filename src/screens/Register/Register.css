@@ -1,122 +1,204 @@
-/* Register.css */
-
-.register-container {
+/* Main layout */
+.register-layout {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 50px;
+  align-items: flex-start; /* Align items to the top */
+  background-color: #000d1c;
 }
 
-.register-box {
-  padding: 40px;
-  border-radius: 10px;
+/* Image container */
+.register-image-container {
+  flex: 0 0 50%; /* Fixed width */
+  height: 100vh; /* Fixed height */
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.register-image {
   width: 100%;
-  max-width: 400px;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.register-image-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(
+      to left,
+      rgba(0, 13, 28, 1) 0%,
+      rgba(0, 0, 0, 0) 40%
+    ),
+    linear-gradient(
+      to top,
+      rgba(0, 13, 28, 1) 20%,
+      rgba(0, 0, 0, 0) 40%
+    );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.noise-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background-image: url('../../assets/images/noise_home_background.png');
+  background-size: cover;
+  opacity: 0.5;
+}
+
+/* Form container */
+.register-form-container {
+  flex: 1; /* Fill remaining width */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #000d1c;
+  z-index: 3;
+  padding-top: 80px; /* Adjust as needed */
+}
+
+.register-title {
+  font-size: 35px;
+  color: #1BC429;
+  font-family: "Tomorrow", sans-serif;
   text-align: center;
 }
 
-.switch-auth {
-  margin-top: 20px;
-  font-family: 'Nyxerin', sans-serif;
-  color: #1bc429;
+/* Adjust Form Spacing */
+.register-form {
+  width: 100%;
+  max-width: 400px;
 }
 
-.switch-auth a {
-  color: #1bc429;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.switch-auth a:hover {
-  color: #0F6216;
-}
-
-h2 {
-  color: #1bc429;
-  font-family: 'Nyxerin', sans-serif;
+/* Adjust Field Spacing */
+.register-field {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 20px;
 }
 
-.input-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+.register-field :last-child {
+  margin: 0px;
 }
 
-.input-field {
-  padding: 10px;
+.register-field span :last-child {
+  margin: 0px;
+}
+
+.register-field span {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #1BC429;
+  font-family: "Tomorrow", sans-serif;
+}
+
+.register-input-line {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #1BC429;
+  color: #1BC429;
+  font-size: 1rem;
+  outline: none;
+  width: 100%;
+}
+
+.register-input-line::placeholder {
+  color: #2C5930;
+  font-family: "Tomorrow", sans-serif;
+}
+
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #1BC429;
+  cursor: pointer;
   font-size: 16px;
-  border: 2px solid #1bc429;
-  border-radius: 5px;
-  background-color: #0f0326;
-  color: white;
-  width: 100%; /* Ensures input field takes full width */
-  box-sizing: border-box; /* Ensures padding does not affect width */
 }
 
-.input-field::placeholder {
-  color: rgba(255, 255, 255, 0.5);
-}
-
-/* Adjusted styling for phone container */
-.phone-container {
-  display: flex;
-  gap: 5px;
-  width: 100%; /* Ensures the container takes full width */
-}
-
-.country-code {
-  padding: 10px;
-  font-size: 16px;
-  border: 2px solid #1bc429;
-  border-radius: 5px;
-  background-color: #0f0326;
-  color: white;
-  width: 30%; /* Adjust width to fit next to phone number */
-}
-
-.phone-number {
-  padding: 10px;
-  font-size: 16px;
-  border: 2px solid #1bc429;
-  border-radius: 5px;
-  background-color: #0f0326;
-  color: white;
-  width: 70%; /* Adjust width to fit with country code */
-  box-sizing: border-box;
-}
-
-.message {
-  margin-top: 10px;
-  font-family: 'Nyxerin', sans-serif;
-}
-
-.message.success {
-  color: #1bc429;
-}
-
-.message.error {
+.register-message {
+  margin-top: 20px;
+  font-size: 14px;
   color: #ff4b4b;
+  text-align: center;
+}
+
+/* Login link */
+.login-link {
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.login-link span {
+  color: #2C5930;
+}
+
+.login-link-text {
+  color: #1BC429;
+  text-decoration: none;
+}
+
+.login-link-text:hover {
+  text-decoration: underline;
+}
+
+.phone-code-select {
+  padding: 5px;
+  border: 2px solid #1BC429;
+  border-radius: 3px;
+  font-size: 1rem;
+  background-color: #000d1c;
+  color: #1BC429;
+  margin-right: 10px;
+  width: 20%;
+  font-family: "Tomorrow", sans-serif;
+}
+
+.phone-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.phone-input-container input {
+  flex: 1;
+}
+
+.button-row {
+  display: flex;
+  gap: 20px;
 }
 
 /* Responsive adjustments */
-@media (max-width: 480px) {
-  .register-box {
-    width: 300px;
-  }
-
-  .input-field,
-  .country-code,
-  .phone-number {
-    font-size: 14px;
-  }
-
-  .country-code,
-  .phone-number {
-    width: 100%;
-  }
-
-  .phone-container {
+@media (max-width: 768px) {
+  .register-layout {
     flex-direction: column;
+  }
+
+  .register-image-container {
+    width: 100%;
+    height: 40vh; /* Adjust height for mobile */
+    flex: none;
+  }
+
+  .register-form-container {
+    width: 100%;
+    padding-top: 20px; /* Adjust as needed */
   }
 }

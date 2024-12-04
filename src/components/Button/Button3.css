@@ -1,0 +1,109 @@
+/* Base Button Container */
+.button-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    box-sizing: border-box;
+    padding: 0;
+    overflow: hidden;
+    text-align: center; /* Center text horizontally */
+}
+
+/* SVG Container */
+.svg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.button-polygon {
+    width: 100%;
+    height: 100%;
+}
+
+/* Base Button Text */
+.button-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    color: #1bc429;
+    font-family: 'Nyxerin', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.button-text .primary-text {
+    font-size: 22px;
+    letter-spacing: 2px;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+}
+
+.button-text .secondary-text {
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+}
+
+/* Large Variant */
+.button-container.large {
+    width: 324.077px;
+    height: 192.62px;
+}
+
+.button-container.large .button-text .primary-text {
+    font-size: 30px;
+}
+
+.button-container.large .button-text .secondary-text {
+    font-size: 20px;
+}
+
+/* Medium Variant */
+.button-container.medium {
+    width: 306.802px;
+    height: 167.676px;
+}
+
+.button-container.medium .button-text .primary-text {
+    font-size: 35px;
+}
+
+.button-container.medium .button-text .secondary-text {
+    font-size: 14px;
+}
+
+/* Small Variant */
+.button-container.small {
+    width: 194.377px;
+    height: 108.365px;
+}
+
+.button-container.small .button-text .primary-text {
+    font-size: 15px; /* Adjusted font size */
+}
+
+.button-container.small .button-text .secondary-text {
+    font-size: 12px; /* Adjusted font size */
+}
+
+/* Adjust line spacing if needed */
+.button-text span {
+    line-height: 1.2;
+}
+
+/* Other styles remain the same... */

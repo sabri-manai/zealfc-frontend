@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import icon from "../../assets/icons/icon.png";
 import line from "../../assets/images/line.png";
@@ -8,7 +8,8 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [userData, setUserData] = useState(null);
 
-  const navigate = useNavigate(); // Use the useNavigate hook
+  const navigate = useNavigate();
+  const location = useLocation(); // Get the current path
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
 
@@ -33,6 +34,7 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
   };
 
   const handleLogoutClick = () => {
+    setIsExpanded(false);
     handleLogout(); // Clear tokens and authentication
     navigate("/"); // Redirect to the home page after logout
   };
@@ -60,7 +62,6 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
         if (response.status === 401) {
           const tokenRefreshed = await refreshTokens();
           if (tokenRefreshed) {
-            // Retry fetching user data with the new token
             idToken = localStorage.getItem("idToken");
             const retryResponse = await fetch(
               `${process.env.REACT_APP_API_URL}/profile/user-profile`,
@@ -133,12 +134,16 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
                 </div>
               ) : (
                 <>
-                  <div className="nav-item">
-                    <Link to="/login">Login</Link>
-                  </div>
-                  <div className="nav-item">
-                    <Link to="/register">Register</Link>
-                  </div>
+                  {location.pathname === "/register" && (
+                    <div className="nav-item">
+                      <Link to="/login">Login</Link>
+                    </div>
+                  )}
+                  {location.pathname === "/login" && (
+                    <div className="nav-item">
+                      <Link to="/register">Register</Link>
+                    </div>
+                  )}
                 </>
               )}
             </div>

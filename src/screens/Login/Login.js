@@ -1,16 +1,18 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; 
-import Button from "../../components/Button/Button"; 
-import "./Login.css"; 
+import Button from "../../components/Button/Button3";
+import "./Login.css";
+import homeBackground from "../../assets/images/home_background.png";
 
 function Login({ onLogin }) {
-  const [email, setEmail] = useState(""); 
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -26,23 +28,16 @@ function Login({ onLogin }) {
       });
 
       if (response.data) {
-        // Extract idToken, accessToken, refreshToken, and possibly user details
         const { idToken, accessToken, refreshToken, userId, firstName } = response.data;
 
-        // Save tokens and user info in localStorage
         localStorage.setItem("idToken", idToken);
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
-        localStorage.setItem("userId", userId);  // Save userId
-        localStorage.setItem("firstName", firstName);  // Save firstName
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("firstName", firstName);
 
-        // Set success message
         setMessage("User logged in successfully");
-
-        // Call onLogin to mark the user as authenticated in the parent component
         onLogin(idToken);
-
-        // Redirect to the home page
         navigate("/");
       } else {
         setMessage("Login failed: no data in response");
@@ -50,11 +45,11 @@ function Login({ onLogin }) {
     } catch (error) {
       if (error.response?.data?.error === "UserNotConfirmedException") {
         setMessage("Please confirm your account first.");
-        navigate("/confirm", { state: { email } }); // Redirect to confirmation page with email
+        navigate("/confirm", { state: { email } });
       } else if (error.response?.data?.message) {
         setMessage(error.response.data.message);
       } else {
-        setMessage("Login failed Please try again.");
+        setMessage("Login failed. Please try again.");
       }
     } finally {
       setLoading(false);
@@ -62,48 +57,62 @@ function Login({ onLogin }) {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-box">
-        <h2>Login</h2>
-        <div className="input-container">
-          <input
-            type="email" 
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="input-field"
-            aria-label="Email"
+    <div className="login-layout">
+      <div className="login-image-container">
+        <img src={homeBackground} alt="Background" className="login-image" />
+        <div className="noise-effect"></div>
+      </div>
+      <div className="login-form-container">
+        <p className="login-title">WELCOME BACK!</p>
+        <form className="login-form">
+          <div className="login-field">
+            <span>Email:</span>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="login-input-line"
+            />
+          </div>
+          <div className="login-field">
+            <span>Password:</span>
+            <div className="password-container">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="login-input-line"
+              />
+              <span
+                className="toggle-password"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "Hide" : "SHOW"}
+              </span>
+            </div>
+          </div>
+          <Button
+            variant="small"
+            primaryText={loading ? "Logging in..." : "Login"}
+            onClick={handleLogin}
           />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="input-field"
-            aria-label="Password"
-          />
+        </form>
+        {message && <p className="login-message">{message}</p>}
+        <div className="login-links">
+          <div className="login-link">
+            <span>Don't have an account?</span>
+            <Link to="/register" className="login-link-text"> Register</Link>
+            </div>
+          <div className="login-link">
+            <span>Forgot your password?</span>
+            <Link to="/forgot-password" className="login-link-text"> Reset Password</Link>
+          </div>
         </div>
-        <Button
-          text={loading ? "Logging in..." : "Login"} 
-          onClick={handleLogin}
-          styleType="default"
-        />
-        <p className={`message ${message.includes("failed") ? "error" : "success"}`}>
-          {message}
-        </p>
-        <div className="message-container">
-          <p>Don't have an account?</p>
-          <a href="/register">Register</a>
-        </div>
-        <div className="message-container">
-          <p>Forgot your password?</p>
-          <a href="/forgot-password">Reset Password</a>
-        </div>
-
       </div>
     </div>
   );
 }
 
 export default Login;
-  
