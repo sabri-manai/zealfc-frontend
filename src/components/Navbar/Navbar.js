@@ -131,6 +131,15 @@ function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
               {isAuthenticated ? (
                 <div className="nav-item" onClick={() => navigate("/profile")}>
                   {userData ? userData.first_name : "Loading..."}
+                  <img
+                    src={
+                      userData
+                        ? userData.profilePictureUrl
+                        : '/path/to/default/avatar.png'
+                    }
+                    alt={`${userData ? userData.first_name : "Loading..."}'s avatar`}
+                    className="avatar"
+                  />
                 </div>
               ) : (
                 <>
