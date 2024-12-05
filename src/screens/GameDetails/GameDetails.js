@@ -121,14 +121,14 @@ const GameDetails = () => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/games/signup/${gameId}`,
-        {}, // No body needed
+        {},
         {
           headers: {
             Authorization: `Bearer ${idToken}`,
           },
         }
       );
-      alert("Signed up successfully for the game!");
+      alert(response.data.message || "Signed up successfully for the game!");
       setIsSignedUp(true);
       fetchGameDetails();
     } catch (error) {

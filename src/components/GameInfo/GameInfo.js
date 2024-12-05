@@ -1,7 +1,7 @@
 import React from 'react';
 import './GameInfo.css';
 import CarmenImage from "../../assets/images/carmen.png";
-import Button from '../../components/Button/Button';
+import Button from '../../components/Button/Button3';
 
 const GameInfo = ({ 
   time, date, gameName, 
@@ -28,7 +28,8 @@ const GameInfo = ({
           {/* If user is signed up */}
           {isSignedUp && (
             <Button 
-              text="CANCEL" 
+              primaryText="CANCEL"
+              variant="medium" 
               onClick={onSignUp} 
               styleType="cancel" 
               className="sign-up-button"
@@ -41,7 +42,8 @@ const GameInfo = ({
               {/* If user is on the waitlist */}
               {isWaitlisted ? (
                 <Button
-                  text="LEAVE WAITLIST"
+                  primaryText="LEAVE WAITLIST"
+                  variant="medium"
                   onClick={onWaitlistToggle}
                   styleType="cancel" 
                   className="waitlist-button"
@@ -51,14 +53,16 @@ const GameInfo = ({
                   {/* If game is full */}
                   {isGameFull ? (
                     <Button
-                      text="JOIN WAITLIST"
+                      primaryText="JOIN WAITLIST"
+                      variant="medium"
                       onClick={onWaitlistToggle}
                       styleType="default" 
                       className="waitlist-button"
                     />
                   ) : (
                     <Button
-                      text="JOIN"
+                      primaryText="JOIN"
+                      variant="medium"
                       onClick={onSignUp}
                       styleType="default"
                       className="sign-up-button"
