@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Carousel } from '../Carousel/Carousel';
 import { GameCard } from '../GameCard/GameCard';
 import "./GameHistory.css";
-import Button from '../Button/Button';
+import Button from '../Button/Button3'; // Use the new Button component
 import CarmenImage from "../../assets/images/carmen.png";
 
 const GameHistory = ({ games }) => {
@@ -41,53 +41,53 @@ const GameHistory = ({ games }) => {
   });
 
   const scrollRight = () => {
-      const carousel = carouselRef.current;
-      if (carousel) {
-          const cardWidth = carousel.offsetWidth / 6;
-          const maxScrollLeft = carousel.scrollWidth - carousel.offsetWidth;
+    const carousel = carouselRef.current;
+    if (carousel) {
+      const cardWidth = carousel.offsetWidth / 6;
+      const maxScrollLeft = carousel.scrollWidth - carousel.offsetWidth;
 
-          if (carousel.scrollLeft + carousel.offsetWidth < carousel.scrollWidth - cardWidth) {
-              carousel.scrollBy({ left: cardWidth, behavior: "smooth" });
-          } else {
-              carousel.scrollTo({ left: maxScrollLeft, behavior: "smooth" });
-              setTimeout(() => {
-                  carousel.scrollTo({ left: 0, behavior: "smooth" });
-              }, 3000);
-          }
+      if (carousel.scrollLeft + carousel.offsetWidth < carousel.scrollWidth - cardWidth) {
+        carousel.scrollBy({ left: cardWidth, behavior: "smooth" });
+      } else {
+        carousel.scrollTo({ left: maxScrollLeft, behavior: "smooth" });
+        setTimeout(() => {
+          carousel.scrollTo({ left: 0, behavior: "smooth" });
+        }, 3000);
       }
+    }
   };
 
   const scrollLeft = () => {
-      const carousel = carouselRef.current;
-      if (carousel) {
-          const cardWidth = carousel.offsetWidth / 6;
-          carousel.scrollBy({ left: -cardWidth, behavior: "smooth" });
-      }
+    const carousel = carouselRef.current;
+    if (carousel) {
+      const cardWidth = carousel.offsetWidth / 6;
+      carousel.scrollBy({ left: -cardWidth, behavior: "smooth" });
+    }
   };
 
   const startAutoScroll = () => {
-      stopAutoScroll();
-      scrollIntervalRef.current = setInterval(() => {
-          scrollRight();
-      }, 3000);
+    stopAutoScroll();
+    scrollIntervalRef.current = setInterval(() => {
+      scrollRight();
+    }, 3000);
   };
 
   const stopAutoScroll = () => {
-      if (scrollIntervalRef.current) {
-          clearInterval(scrollIntervalRef.current);
-      }
+    if (scrollIntervalRef.current) {
+      clearInterval(scrollIntervalRef.current);
+    }
   };
 
   useEffect(() => {
-      const carousel = carouselRef.current;
-      if (carousel) {
-          carousel.scrollLeft = 0;
-          startAutoScroll();
-      }
+    const carousel = carouselRef.current;
+    if (carousel) {
+      carousel.scrollLeft = 0;
+      startAutoScroll();
+    }
 
-      return () => {
-          stopAutoScroll();
-      };
+    return () => {
+      stopAutoScroll();
+    };
   }, []);
 
   return (
@@ -99,22 +99,26 @@ const GameHistory = ({ games }) => {
       {/* Game Filters */}
       <div className="game-filters">
         <Button
-          text="LOST"
+          variant="small"
+          primaryText="LOST"
           onClick={() => handleFilterClick('lost')}
           styleType={gameFilter === 'lost' ? 'active' : 'inactive'}
         />
         <Button
-          text="DRAW"
+          variant="small"
+          primaryText="DRAW"
           onClick={() => handleFilterClick('draw')}
           styleType={gameFilter === 'draw' ? 'active' : 'inactive'}
         />
         <Button
-          text="WON"
+          variant="small"
+          primaryText="WON"
           onClick={() => handleFilterClick('won')}
           styleType={gameFilter === 'won' ? 'active' : 'inactive'}
         />
         <Button
-          text="ALL GAMES"
+          variant="small"
+          primaryText="ALL GAMES"
           onClick={() => handleFilterClick('played')}
           styleType={gameFilter === 'played' ? 'active' : 'inactive'}
         />

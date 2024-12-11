@@ -106,4 +106,66 @@
     line-height: 1.2;
 }
 
-/* Other styles remain the same... */
+/* Disabled State */
+.button-container.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.button-container.disabled .button-polygon path {
+    stroke: #999;
+    fill: transparent;
+}
+
+.button-container.disabled .button-text {
+    color: #999;
+}
+
+/* Default State */
+.button-container.default .button-polygon path {
+    stroke: #1bc429;
+    fill: transparent;
+}
+
+/* Hover State */
+.button-container:hover .button-polygon path {
+    stroke: #0F6216;
+    fill: #0F6216;
+}
+
+.button-container:hover .button-text {
+    color: #0f0326;
+}
+
+/* Active State */
+.button-container.active .button-polygon path {
+    stroke: #1bc429;
+    fill: #1bc429;
+}
+
+.button-container.active .button-text {
+    color: #0f0326;
+}
+
+/* Inactive State */
+.button-container.inactive .button-polygon path {
+    stroke: #1bc429;
+    fill: transparent;
+}
+
+.button-container.inactive .button-text {
+    color: #1bc429;
+}
+
+/* Media Queries (optional) */
+@media screen and (max-width: 768px) {
+    .button-text {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .button-text {
+        font-size: 16px;
+    }
+}

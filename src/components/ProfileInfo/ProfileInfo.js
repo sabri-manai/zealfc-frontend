@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ProfileInfo.css";
 import profilePic from "../../assets/images/profile_image.jpg";
-import Button from "../../components/Button/Button";
+import Button from "../../components/Button/Button3";
 import axios from "axios";
 
 const ProfileInfo = ({ userData }) => {
@@ -79,7 +79,7 @@ const ProfileInfo = ({ userData }) => {
   return (
     <div className="profile-info-container">
       <div className="profile-edit-btn">
-        <Button text="Edit Profile" onClick={() => console.log("Edit Profile Clicked")} />
+        <Button variant="small" primaryText="Edit Profile" styleType="default" onClick={() => console.log("Edit Profile Clicked")} />
       </div>
       <div className="profile-info">
         <div className="profile-image">

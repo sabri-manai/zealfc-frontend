@@ -1,25 +1,42 @@
-/* Container for the entire filter section */
+
+
 .game-filter-container {
-    padding: 0 100px; /* Reduced padding */
+    padding: 90px 100px; 
     text-align: center;
     color: #1EB62D;
+}
 
+/* Title "choose by..." above everything */
+.choose-by-title {
+    font-family: 'Tomorrow', sans-serif;
+    font-size: 40px;
+    margin-bottom: 30px;
+    color: #1BC429;
 }
 
 /* Styles for the filter type buttons (DATE, LEVEL, PLACE) */
 .filter-titles {
     display: flex;
     justify-content: center;
-    gap: 20px; /* Reduced gap */
-    margin-bottom: 10px; /* Reduced margin */
+    align-items: center;
+    gap: 150px; 
+    margin-bottom: 10px; 
 }
 
 .filter-titles span {
     font-family: 'Tomorrow', sans-serif;
-    font-size: 24px;
+    color: #0F6216;
+    font-size: 40px;
     cursor: pointer;
 }
 
+.filter-titles span.active {
+    color: #1BC429;
+    font-family: 'Nyxerin', sans-serif;
+    font-size: 40px;
+}
+
+/* Filter option container */
 .filter-option {
     display: flex;
     flex: 0 0 auto;
@@ -67,40 +84,10 @@
     color: #148124;
 }
 
-/* Adjust button sizes and centering */
-.filter-options button {
-    min-width: 140px; /* Reduced button width */
-    padding: 10px 20px; /* Reduced padding */
-    font-size: 18px; /* Reduced font size */
-    text-align: center;
-    display: flex; /* Changed from block to flex */
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #1EB62D; /* Added border for better visibility */
-    border-radius: 5px; /* Rounded corners */
-    background-color: transparent; /* Transparent background */
-    transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
-}
-
-.filter-options button.active {
-    background-color: #1EB62D;
-    color: #000;
-}
-
-.filter-options button:hover {
-    background-color: #1EB62D;
-    color: #000;
-}
-
-/* Remove the date under each day button */
-.filter-date {
-    display: none;
-}
-
 /* Container for the filtered games */
 .filtered-games {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 games per row */
+    grid-template-columns: repeat(5, 1fr); 
     justify-items: center;
     gap: 20px;
 }
@@ -110,21 +97,23 @@
     justify-content: center;
 }
 
-/* Mobile view adjustments for smaller screens */
+
+
+/* Responsive adjustments */
 @media (max-width: 1200px) {
     .filtered-games {
-        grid-template-columns: repeat(4, 1fr); /* 4 games per row on medium screens */
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
 @media (max-width: 768px) {
     .filtered-games {
-        grid-template-columns: repeat(2, 1fr); /* 2 games per row on smaller screens */
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 480px) {
     .filtered-games {
-        grid-template-columns: 1fr; /* 1 game per row on very small screens */
+        grid-template-columns: 1fr;
     }
 }

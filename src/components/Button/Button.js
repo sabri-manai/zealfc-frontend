@@ -1,5 +1,5 @@
 import React from 'react';
-import './Button.css';
+// import './Button.css';
 
 function Button({ text, onClick, styleType = 'default', disabled = false, onMouseEnter, onMouseLeave }) {
     const handleClick = () => {

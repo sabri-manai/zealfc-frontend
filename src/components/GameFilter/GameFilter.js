@@ -1,18 +1,18 @@
 // src/components/GameFilter/GameFilter.js
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import axios from "axios"; // Import axios for API calls
+import axios from "axios";
 import { Carousel } from "../Carousel/Carousel";
 import { GameCard } from "../GameCard/GameCard";
-import Button from "../Button/Button"; // Assuming you have a Button component
+import Button from "../Button/Button3";
 import "./GameFilter.css";
-import moment from "moment"; // Using moment.js for date manipulation
+import moment from "moment";
 import TuriaImage from "../../assets/images/turia.png";
 import CarmenImage from "../../assets/images/carmen.png";
 import BeteroImage from "../../assets/images/betero.png";
 
 export const GameFilter = () => {
   const carouselRef = useRef(null);
-  const scrollIntervalRef = useRef(null); // To store the interval for auto-scroll
+  const scrollIntervalRef = useRef(null);
 
   const [activeFilters, setActiveFilters] = useState({
     level: null,
@@ -21,14 +21,13 @@ export const GameFilter = () => {
   });
   const [filterType, setFilterType] = useState("date");
   const [currentWeek, setCurrentWeek] = useState({
-    start: moment().startOf("isoWeek"), // ISO Week starts from Monday
+    start: moment().startOf("isoWeek"),
     end: moment().endOf("isoWeek"),
   });
 
-  const [games, setGames] = useState([]); // State to hold the fetched games
+  const [games, setGames] = useState([]);
 
-  // Define level and place options
-  const levelOptions = ["Beginner", "Intermediate", "Advanced"];
+  const levelOptions = ["Beginner", "Rising", "Champion"];
   const placeOptions = ["Stadium A", "Stadium B", "Stadium C"];
 
   // Fetch games from the backend
@@ -36,20 +35,15 @@ export const GameFilter = () => {
     const fetchGames = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/games`);
-        // Filter games to only include upcoming ones based on status
-        const upcomingGames = response.data.filter(
-          (game) => game.status !== 'finished' // Exclude games with status 'finished'
-        );
+        const upcomingGames = response.data.filter((game) => game.status !== "finished");
         setGames(upcomingGames);
       } catch (error) {
         console.error("Error fetching games:", error);
       }
     };
-
     fetchGames();
   }, []);
 
-  // Function to handle week navigation
   const changeWeek = (direction) => {
     setCurrentWeek((prevWeek) => {
       const newStart = moment(prevWeek.start).add(direction, "week");
@@ -64,9 +58,9 @@ export const GameFilter = () => {
 
   while (day.isSameOrBefore(currentWeek.end)) {
     weekDays.push({
-      fullDate: day.format("dddd, DD.MM.YYYY"), // e.g., "Monday, 13.04.2024"
-      dayName: day.format("ddd"), // e.g., "Mon"
-      dateNumber: day.format("DD.MM"), // e.g., "13.04"
+      fullDate: day.format("dddd, DD.MM.YYYY"),
+      dayName: day.format("ddd"),
+      dateNumber: day.format("DD.MM"),
     });
     day.add(1, "day");
   }
@@ -91,15 +85,15 @@ export const GameFilter = () => {
 
   // Auto-scroll logic
   const startAutoScroll = useCallback(() => {
-    stopAutoScroll(); // Clear any existing intervals
+    stopAutoScroll();
     scrollIntervalRef.current = setInterval(() => {
       scrollRight();
-    }, 3000); // Scroll every 3 seconds
+    }, 3000);
   }, []);
 
   const stopAutoScroll = () => {
     if (scrollIntervalRef.current) {
-      clearInterval(scrollIntervalRef.current); // Stop auto-scroll
+      clearInterval(scrollIntervalRef.current);
     }
   };
 
@@ -115,7 +109,7 @@ export const GameFilter = () => {
         carousel.scrollTo({ left: maxScrollLeft, behavior: "smooth" });
         setTimeout(() => {
           carousel.scrollTo({ left: 0, behavior: "smooth" });
-        }, 3000); // Adjust delay as needed
+        }, 3000);
       }
     }
   };
@@ -131,7 +125,7 @@ export const GameFilter = () => {
   useEffect(() => {
     const carousel = carouselRef.current;
     if (carousel) {
-      carousel.scrollLeft = 0; // Ensure the first card is visible
+      carousel.scrollLeft = 0;
       startAutoScroll();
     }
 
@@ -140,13 +134,26 @@ export const GameFilter = () => {
     };
   }, [startAutoScroll]);
 
-  // Function to render filter options based on filter type
   const renderFilterOptions = () => {
     switch (filterType) {
       case "date":
         return (
           <>
-            {/* Week navigation */}
+            <Carousel ref={carouselRef}>
+              {weekDays.map((dayInfo, index) => (
+                <div key={index} className="filter-option">
+                    <Button
+                      variant="large"
+                      primaryText={dayInfo.dayName}
+                      secondaryText={dayInfo.dateNumber}
+                      onClick={() => handleFilterClick("date", dayInfo.fullDate)}
+                      styleType={activeFilters.date === dayInfo.fullDate ? "active" : "default"}
+                      onMouseEnter={stopAutoScroll}
+                      onMouseLeave={startAutoScroll}
+                    />
+                </div>
+              ))}
+            </Carousel>
             <div className="carousel-header">
               <button className="carousel-nav left" onClick={() => changeWeek(-1)}>
                 {"<"}
@@ -158,105 +165,99 @@ export const GameFilter = () => {
                 {">"}
               </button>
             </div>
-
-            {/* Display the days of the current week */}
-            <Carousel ref={carouselRef}>
-              {weekDays.map((dayInfo, index) => (
-                <div key={index} className="filter-option">
-                  <Button
-                    text={`${dayInfo.dayName}\n${dayInfo.dateNumber}`}
-                    onClick={() => handleFilterClick("date", dayInfo.fullDate)}
-                    styleType={activeFilters.date === dayInfo.fullDate ? "active" : "inactive"}
-                    onMouseEnter={stopAutoScroll}
-                    onMouseLeave={startAutoScroll}
-                  />
-                </div>
-              ))}
-            </Carousel>
           </>
         );
       case "level":
         return (
-          <>
-            <div className="carousel-header">
-              <h4 className="carousel-title">Select Level</h4>
-            </div>
-
-            <Carousel ref={carouselRef} centerItems>
-              {levelOptions.map((level, index) => (
-                <div key={index} className="filter-option">
-                  <Button
-                    text={level}
-                    onClick={() => handleFilterClick("level", level)}
-                    styleType={activeFilters.level === level ? "active" : "inactive"}
-                    onMouseEnter={stopAutoScroll}
-                    onMouseLeave={startAutoScroll}
-                  />
-                </div>
-              ))}
-            </Carousel>
-          </>
+          <Carousel ref={carouselRef} centerItems>
+            {levelOptions.map((level, index) => (
+              <div key={index} className="filter-option">
+                <Button
+                  variant="large"
+                  primaryText={level}
+                  onClick={() => handleFilterClick("level", level)}
+                  styleType={activeFilters.level === level ? "active" : "default"}
+                  onMouseEnter={stopAutoScroll}
+                  onMouseLeave={startAutoScroll}
+                />
+              </div>
+            ))}
+          </Carousel>
         );
       case "place":
         return (
-          <>
-            <div className="carousel-header">
-              <h4 className="carousel-title">Select Place</h4>
-            </div>
-
-            <Carousel ref={carouselRef} centerItems>
-              {placeOptions.map((place, index) => (
-                <div key={index} className="filter-option">
-                  <Button
-                    text={place}
-                    onClick={() => handleFilterClick("gameName", place)}
-                    styleType={activeFilters.gameName === place ? "active" : "inactive"}
-                    onMouseEnter={stopAutoScroll}
-                    onMouseLeave={startAutoScroll}
-                  />
-                </div>
-              ))}
-            </Carousel>
-          </>
+          <Carousel ref={carouselRef} centerItems>
+            {placeOptions.map((place, index) => (
+              <div key={index} className="filter-option">
+                <Button
+                  variant="large"
+                  primaryText={place}
+                  onClick={() => handleFilterClick("gameName", place)}
+                  styleType={activeFilters.gameName === place ? "active" : "default"}
+                  onMouseEnter={stopAutoScroll}
+                  onMouseLeave={startAutoScroll}
+                />
+              </div>
+            ))}
+          </Carousel>
         );
       default:
         return null;
     }
   };
 
+  // Reorder the filters so that the active one is always in the middle
+  let orderedFilters = [
+    { type: "date", label: "DATE" },
+    { type: "level", label: "LEVEL" },
+    { type: "place", label: "PLACE" },
+  ];
+
+  if (filterType === "date") {
+    // Put date in the middle: LEVEL, DATE, PLACE
+    orderedFilters = [
+      { type: "level", label: "LEVEL" },
+      { type: "date", label: "DATE" },
+      { type: "place", label: "PLACE" },
+    ];
+  } else if (filterType === "level") {
+    // Already in middle: DATE, LEVEL, PLACE
+    orderedFilters = [
+      { type: "date", label: "DATE" },
+      { type: "level", label: "LEVEL" },
+      { type: "place", label: "PLACE" },
+    ];
+  } else if (filterType === "place") {
+    // Put place in the middle: DATE, PLACE, LEVEL
+    orderedFilters = [
+      { type: "date", label: "DATE" },
+      { type: "place", label: "PLACE" },
+      { type: "level", label: "LEVEL" },
+    ];
+  }
+
   return (
     <div className="game-filter-container">
+      <p className="choose-by-title">CHOOSE BY...</p>
       <div className="filter-titles">
-        <span
-          className={filterType === "date" ? "active" : ""}
-          onClick={() => setFilterType("date")}
-        >
-          DATE
-        </span>
-        <span
-          className={filterType === "level" ? "active" : ""}
-          onClick={() => setFilterType("level")}
-        >
-          LEVEL
-        </span>
-        <span
-          className={filterType === "place" ? "active" : ""}
-          onClick={() => setFilterType("place")}
-        >
-          PLACE
-        </span>
+        {orderedFilters.map((f) => (
+          <span
+            key={f.type}
+            className={filterType === f.type ? "active" : ""}
+            onClick={() => setFilterType(f.type)}
+          >
+            {f.label}
+          </span>
+        ))}
       </div>
 
-      <div className="filter-options-container">
-        {renderFilterOptions()}
-      </div>
+      <div className="filter-options-container">{renderFilterOptions()}</div>
 
-      {/* Conditionally apply 'centered' class based on the number of filtered games */}
-      <div className={`filtered-games ${filteredGames.length <= 5 ? 'centered' : ''}`}>
+      <div className={`filtered-games ${filteredGames.length <= 5 ? "centered" : ""}`}>
         {filteredGames.length > 0 ? (
           filteredGames.map((game, index) => (
             <GameCard
-              key={game._id} // Ensure game._id is used here
+              key={game._id}
               imageSrc={index % 2 === 0 ? TuriaImage : CarmenImage}
               gameName={game.stadium.name}
               gameSubtitle={game.type}

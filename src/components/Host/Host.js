@@ -1,7 +1,9 @@
+// src/components/Host/Host.js
+
 import React from "react";
-import "./Host.css"; // Create a separate CSS file for styling
-import HostImage from "../../assets/images/host.png"; // Import the host image
-import Button from "../../components/Button/Button"; // Use your Button component
+import "./Host.css";
+import HostImage from "../../assets/images/host.png";
+import Button from "../../components/Button/Button3";
 
 const Host = () => {
   return (
@@ -14,16 +16,16 @@ const Host = () => {
           seeing some excellent football. Let's remember to play with respect and 
           sportsmanship, and most importantly, have fun out there!"
         </p>
-        <Button 
-          text="CONTACT"
+        <Button
+          variant="small"
+          primaryText="CONTACT"
           styleType="default"
-          onClick={() => console.log('Contact button clicked!')} // Define the action for the button
+          onClick={() => console.log('Contact button clicked!')}
         />
       </div>
       <div className="host-image">
         <img src={HostImage} alt="Host Inka" />
       </div>
-      
     </div>
   );
 };

@@ -1,7 +1,9 @@
+// src/pages/ConfirmAccount/ConfirmAccount.js
+
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Button from '../../components/Button/Button';
+import Button from '../../components/Button/Button3'; // Updated import
 import './ConfirmAccount.css';
 
 function ConfirmAccount({ onLogin }) {
@@ -67,10 +69,10 @@ function ConfirmAccount({ onLogin }) {
           className="input-field"
         />
         <Button
-          text={loading ? "..." : "Confirm"}
+          variant="small"
+          primaryText={loading ? "..." : "Confirm"}
           onClick={handleConfirm}
           styleType="default"
-          className="confirm-button"
         />
         <p className="message">{message}</p>
       </div>

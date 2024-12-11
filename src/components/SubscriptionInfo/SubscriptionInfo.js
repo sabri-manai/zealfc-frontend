@@ -1,7 +1,9 @@
+// src/components/SubscriptionInfo/SubscriptionInfo.js
+
 import React, { useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import './SubscriptionInfo.css';
-import Button from '../Button/Button';
+import Button from '../Button/Button3'; // Updated import
 import axios from 'axios';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
@@ -10,7 +12,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 const SubscriptionInfo = ({ user }) => {
   const [subscription, setSubscription] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showOptions, setShowOptions] = useState(false); // New state for subscription options
+  const [showOptions, setShowOptions] = useState(false); 
 
   const token = localStorage.getItem('idToken');
 
@@ -93,13 +95,12 @@ const SubscriptionInfo = ({ user }) => {
   };
 
   const handleChangeSubscription = () => {
-    setShowOptions(true); // Show the subscription options
+    setShowOptions(true); 
   };
 
   const handleSelectPlan = (plan) => {
     alert(`You selected the ${plan} plan!`);
-    // Implement logic to change the plan using Stripe or your API
-    setShowOptions(false); // Hide options after selection
+    setShowOptions(false);
   };
 
   if (!token) {
@@ -128,14 +129,19 @@ const SubscriptionInfo = ({ user }) => {
 
       {!isSubscribed && (
         <div className="subscription-actions">
-          <Button text="PAY NOW" onClick={handleSubscribe} />
+          <Button
+            variant="small"
+            primaryText="PAY NOW"
+            onClick={handleSubscribe}
+            styleType="default"
+          />
         </div>
       )}
       {isSubscribed && (
         <div className="subscription-actions">
-          <Button text="CANCEL" onClick={handleCancelSubscription} />
-          <Button text="RENEW NOW" onClick={handleSubscribe} />
-          <Button text="CHANGE" onClick={handleChangeSubscription} />
+          <Button variant="small" primaryText="CANCEL" onClick={handleCancelSubscription} styleType="default" />
+          <Button variant="small" primaryText="RENEW NOW" onClick={handleSubscribe} styleType="default" />
+          <Button variant="small" primaryText="CHANGE" onClick={handleChangeSubscription} styleType="default" />
         </div>
       )}
 
@@ -160,7 +166,6 @@ const SubscriptionInfo = ({ user }) => {
         </div>
       )}
     </div>
-
   );
 };
 

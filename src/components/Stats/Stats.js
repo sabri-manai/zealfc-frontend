@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import './Stats.css';
 import LineChart from '../LineChart/LineChart';
 import Leaderboard from "../Leaderboard/Leaderboard";
-import Button from "../Button/Button";
+import Button from "../Button/Button3";
 
 // Import CircularProgressbar components and styles
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
@@ -393,11 +393,12 @@ function Stats({ refreshTokens, handleLogout }) {
       <div className="filter-buttons">
         {['CITY', 'COUNTRY', 'ZEAL'].map((filter) => (
           <Button
-            key={filter}
-            text={filter}
-            onClick={() => setSelectedFilter(filter)}
-            styleType={selectedFilter === filter ? 'active' : 'default'}
-          />
+          key={filter}
+          variant="small"
+          primaryText={filter}
+          onClick={() => setSelectedFilter(filter)}
+          styleType={selectedFilter === filter ? 'active' : 'default'}
+        />
         ))}
       </div>
 
