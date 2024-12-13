@@ -13,6 +13,11 @@
     margin-bottom: 30px;
     color: #1BC429;
 }
+  
+.carousel-container {
+    justify-content: flex-start;
+  }
+  
 
 /* Styles for the filter type buttons (DATE, LEVEL, PLACE) */
 .filter-titles {
@@ -74,7 +79,7 @@
 .carousel-nav {
     background-color: transparent;
     border: none;
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
     color: #1EB62D;
     transition: color 0.3s;

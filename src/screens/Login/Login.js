@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Button from "../../components/Button/Button3";
 import "./Login.css";
-import homeBackground from "../../assets/images/home_background.png";
+import homeBackground from "../../assets/images/home_background.avif";
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState("");

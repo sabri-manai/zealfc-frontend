@@ -30,7 +30,11 @@ export const GameFilter = () => {
   const levelOptions = ["Beginner", "Rising", "Champion"];
   const placeOptions = ["Stadium A", "Stadium B", "Stadium C"];
 
-  // Fetch games from the backend
+  // Dragging state
+  const [isDown, setIsDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0); // state variable for dragging
+
   useEffect(() => {
     const fetchGames = async () => {
       try {
@@ -59,8 +63,8 @@ export const GameFilter = () => {
   while (day.isSameOrBefore(currentWeek.end)) {
     weekDays.push({
       fullDate: day.format("dddd, DD.MM.YYYY"),
-      dayName: day.format("ddd"),
-      dateNumber: day.format("DD.MM"),
+      dayName: day.format("dddd"),
+      dateNumber: day.format("DD.MM.YYYY"),
     });
     day.add(1, "day");
   }
@@ -114,13 +118,64 @@ export const GameFilter = () => {
     }
   };
 
-  const scrollLeft = () => {
+  // Renamed this function to avoid naming conflict with scrollLeft state
+  const scrollLeftButton = () => {
     const carousel = carouselRef.current;
     if (carousel) {
       const cardWidth = carousel.offsetWidth / 5;
       carousel.scrollBy({ left: -cardWidth, behavior: "smooth" });
     }
   };
+
+  // Handle mouse drag for carousel
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    const mouseDownHandler = (e) => {
+      e.preventDefault(); // Prevent default to stop text selection right away
+      setIsDown(true);
+      carousel.classList.add('active');
+      setStartX(e.pageX - carousel.offsetLeft);
+      setScrollLeft(carousel.scrollLeft);
+      stopAutoScroll();
+    };
+
+    const mouseLeaveHandler = () => {
+      setIsDown(false);
+      carousel.classList.remove('active');
+    };
+
+    const mouseUpHandler = (e) => {
+      e.preventDefault();
+      setIsDown(false);
+      carousel.classList.remove('active');
+      setTimeout(() => {
+        startAutoScroll();
+      }, 1000);
+    };
+
+    const mouseMoveHandler = (e) => {
+      if (!isDown) return;
+      e.preventDefault(); // Prevent text selection and default behavior
+      const x = e.pageX - carousel.offsetLeft;
+      const walk = (x - startX); // Try without multiplier or with 1.2, 1.5, etc.
+      carousel.scrollLeft = scrollLeft - walk;
+    };
+
+    carousel.addEventListener('mousedown', mouseDownHandler);
+    carousel.addEventListener('mouseleave', mouseLeaveHandler);
+    carousel.addEventListener('mouseup', mouseUpHandler);
+    carousel.addEventListener('mousemove', mouseMoveHandler);
+
+    return () => {
+      carousel.removeEventListener('mousedown', mouseDownHandler);
+      carousel.removeEventListener('mouseleave', mouseLeaveHandler);
+      carousel.removeEventListener('mouseup', mouseUpHandler);
+      carousel.removeEventListener('mousemove', mouseMoveHandler);
+    };
+  }, [startX, scrollLeft, isDown, startAutoScroll]);
+
 
   useEffect(() => {
     const carousel = carouselRef.current;
@@ -142,15 +197,15 @@ export const GameFilter = () => {
             <Carousel ref={carouselRef}>
               {weekDays.map((dayInfo, index) => (
                 <div key={index} className="filter-option">
-                    <Button
-                      variant="large"
-                      primaryText={dayInfo.dayName}
-                      secondaryText={dayInfo.dateNumber}
-                      onClick={() => handleFilterClick("date", dayInfo.fullDate)}
-                      styleType={activeFilters.date === dayInfo.fullDate ? "active" : "default"}
-                      onMouseEnter={stopAutoScroll}
-                      onMouseLeave={startAutoScroll}
-                    />
+                  <Button
+                    variant="large"
+                    primaryText={dayInfo.dayName}
+                    secondaryText={dayInfo.dateNumber}
+                    onClick={() => handleFilterClick("date", dayInfo.fullDate)}
+                    styleType={activeFilters.date === dayInfo.fullDate ? "active" : "default"}
+                    onMouseEnter={stopAutoScroll}
+                    onMouseLeave={startAutoScroll}
+                  />
                 </div>
               ))}
             </Carousel>
@@ -158,9 +213,9 @@ export const GameFilter = () => {
               <button className="carousel-nav left" onClick={() => changeWeek(-1)}>
                 {"<"}
               </button>
-              <h4 className="carousel-title">
+              <p className="carousel-title">
                 {currentWeek.start.format("DD.MM.YYYY")} - {currentWeek.end.format("DD.MM.YYYY")}
-              </h4>
+              </p>
               <button className="carousel-nav right" onClick={() => changeWeek(1)}>
                 {">"}
               </button>
@@ -206,35 +261,11 @@ export const GameFilter = () => {
     }
   };
 
-  // Reorder the filters so that the active one is always in the middle
   let orderedFilters = [
     { type: "date", label: "DATE" },
     { type: "level", label: "LEVEL" },
     { type: "place", label: "PLACE" },
   ];
-
-  if (filterType === "date") {
-    // Put date in the middle: LEVEL, DATE, PLACE
-    orderedFilters = [
-      { type: "level", label: "LEVEL" },
-      { type: "date", label: "DATE" },
-      { type: "place", label: "PLACE" },
-    ];
-  } else if (filterType === "level") {
-    // Already in middle: DATE, LEVEL, PLACE
-    orderedFilters = [
-      { type: "date", label: "DATE" },
-      { type: "level", label: "LEVEL" },
-      { type: "place", label: "PLACE" },
-    ];
-  } else if (filterType === "place") {
-    // Put place in the middle: DATE, PLACE, LEVEL
-    orderedFilters = [
-      { type: "date", label: "DATE" },
-      { type: "place", label: "PLACE" },
-      { type: "level", label: "LEVEL" },
-    ];
-  }
 
   return (
     <div className="game-filter-container">

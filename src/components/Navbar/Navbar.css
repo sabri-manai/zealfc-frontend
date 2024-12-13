@@ -1,8 +1,9 @@
 /* Navbar Styles */
+
 .navbar {
   position: fixed;
   top: 0;
-  width: 100%;
+  width: 100%;  /* Full width inside the adjusted viewport */
   height: 124px;
   z-index: 1000;
   display: flex;
@@ -11,6 +12,7 @@
   background: linear-gradient(180deg, #000d1c 0%, rgba(0, 13, 28, 0) 100%);
   overflow: hidden;
   transition: height 0.3s ease;
+  
 }
 
 .navbar.expanded {

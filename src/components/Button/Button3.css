@@ -52,6 +52,7 @@
 }
 
 .button-text .secondary-text {
+    font-family: 'Tomorrow', sans-serif;
     font-size: 16px;
     letter-spacing: 1.5px;
     font-weight: 400;

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import icon from "../../assets/icons/icon.png";
-import line from "../../assets/images/line.png";
+import line from "../../assets/images/line.avif";
 
 function Navbar({ isAuthenticated, handleLogout, onUserFetch, refreshTokens }) {
   const [isExpanded, setIsExpanded] = useState(false);

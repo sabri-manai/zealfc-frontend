@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button3";
 import "./ResetPassword.css";
-import homeBackground from '../../assets/images/home_background.png';
+import homeBackground from '../../assets/images/home_background.avif';
 
 function ResetPassword() {
   const [step, setStep] = useState(1); // Step 1: Enter confirmation code

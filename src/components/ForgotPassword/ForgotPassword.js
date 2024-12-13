@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for redirection
 import Button from "../../components/Button/Button3";
 import "./ForgotPassword.css";
-import homeBackground from '../../assets/images/home_background.png';
+import homeBackground from '../../assets/images/home_background.avif';
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
