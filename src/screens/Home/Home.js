@@ -2,6 +2,7 @@ import React from "react";
 import './Home.css';  // Import the CSS file
 import { Frame } from "../../components/Frame/Frame"; // Adjust if the path is different
 import { GameFilter } from "../../components/GameFilter/GameFilter";
+import { AboutUs } from '../../components/AboutUs/AboutUs';
 
 function Home() {
   return (
@@ -19,6 +20,8 @@ function Home() {
       <div className="upcoming-games">
         <Frame />
       </div>
+      <AboutUs />
+
       <GameFilter />
 
     </div>
