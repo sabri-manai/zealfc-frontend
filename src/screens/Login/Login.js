@@ -45,7 +45,7 @@ function Login({ onLogin }) {
     } catch (error) {
       if (error.response?.data?.error === "UserNotConfirmedException") {
         setMessage("Please confirm your account first.");
-        navigate("/confirm", { state: { email } });
+        navigate("/confirm", { state: { email, password } });
       } else if (error.response?.data?.message) {
         setMessage(error.response.data.message);
       } else {

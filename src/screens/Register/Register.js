@@ -50,15 +50,15 @@ function Register() {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/auth/register`,
         {
-          firstName,
-          lastName,
-          email,
-          password,
-          phoneNumber: fullPhoneNumber,
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          password: password,
+          phone_number: fullPhoneNumber,
         }
       );
       setMessage("Registration successful!");
-      navigate("/confirm");
+      navigate("/confirm", { state: { email, password } });
     } catch (error) {
       setMessage(error.response?.data?.message || "Registration failed.");
     } finally {
