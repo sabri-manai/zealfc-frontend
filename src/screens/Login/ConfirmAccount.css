@@ -17,6 +17,9 @@
     text-align: center;
 }
 
+.instruction-text{
+    color: #1bc429;
+}
 /* Styling for heading */
 h2 {
     color: #1bc429;

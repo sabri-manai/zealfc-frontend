@@ -1,5 +1,3 @@
-// src/pages/ConfirmAccount/ConfirmAccount.js
-
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -61,6 +59,10 @@ function ConfirmAccount({ onLogin }) {
     <div className="confirm-container">
       <div className="confirm-box">
         <h2>Confirm Your Account</h2>
+        <p className="instruction-text">
+          A confirmation code has been sent to your email: 
+          <strong> {email || "your email address"} </strong>. Please enter it below.
+        </p>
         <input
           type="text"
           placeholder="Enter confirmation code"
