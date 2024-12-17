@@ -1,10 +1,8 @@
-// src/components/GameHistory/GameHistory.js
-
 import React, { useState, useRef, useEffect } from "react";
-import { Carousel } from '../Carousel/Carousel';
-import { GameCard } from '../GameCard/GameCard';
+import { Carousel } from "../Carousel/Carousel";
+import { GameCard } from "../GameCard/GameCard";
 import "./GameHistory.css";
-import Button from '../Button/Button3'; // Use the new Button component
+import Button from "../Button/Button3";
 import CarmenImage from "../../assets/images/carmen.png";
 
 const GameHistory = ({ games }) => {
@@ -13,25 +11,22 @@ const GameHistory = ({ games }) => {
   const scrollIntervalRef = useRef(null);
 
   const handleFilterClick = (filter) => {
-    setGameFilter(prevFilter => prevFilter === filter ? "played" : filter);
+    setGameFilter((prevFilter) => (prevFilter === filter ? "played" : filter));
   };
 
-  // Filter finished games
-  const finishedGames = games.filter(game => game.gameId?.status === 'finished');
+  const finishedGames = games.filter((game) => game.gameId?.status === "finished");
 
-  // Transform the games data
   const transformGame = (game) => ({
-    gameId: game.gameId?._id || game._id || 'Unknown ID',
-    gameName: game.stadium || 'Unknown Game',
-    gameSubtitle: game.gameId?.type || 'Unknown Type',
-    gameDay: game.date || 'Date not available',
+    gameId: game.gameId?._id || game._id || "Unknown ID",
+    gameName: game.stadium || "Unknown Game",
+    gameSubtitle: game.gameId?.type || "Unknown Type",
+    gameDay: game.date || "Date not available",
     imageSrc: game.imageSrc || CarmenImage,
-    result: game.result || 'unknown',
+    result: game.result || "unknown",
   });
 
   const transformedGames = finishedGames.map(transformGame);
 
-  // Filter the games based on the selected filter
   const filteredGames = transformedGames.filter((game) => {
     if (gameFilter === "played") return true;
     if (gameFilter === "won") return game.result === "win";
@@ -101,54 +96,60 @@ const GameHistory = ({ games }) => {
         <Button
           variant="small"
           primaryText="LOST"
-          onClick={() => handleFilterClick('lost')}
-          styleType={gameFilter === 'lost' ? 'active' : 'inactive'}
+          onClick={() => handleFilterClick("lost")}
+          styleType={gameFilter === "lost" ? "active" : "inactive"}
         />
         <Button
           variant="small"
           primaryText="DRAW"
-          onClick={() => handleFilterClick('draw')}
-          styleType={gameFilter === 'draw' ? 'active' : 'inactive'}
+          onClick={() => handleFilterClick("draw")}
+          styleType={gameFilter === "draw" ? "active" : "inactive"}
         />
         <Button
           variant="small"
           primaryText="WON"
-          onClick={() => handleFilterClick('won')}
-          styleType={gameFilter === 'won' ? 'active' : 'inactive'}
+          onClick={() => handleFilterClick("won")}
+          styleType={gameFilter === "won" ? "active" : "inactive"}
         />
         <Button
           variant="small"
           primaryText="ALL GAMES"
-          onClick={() => handleFilterClick('played')}
-          styleType={gameFilter === 'played' ? 'active' : 'inactive'}
+          onClick={() => handleFilterClick("played")}
+          styleType={gameFilter === "played" ? "active" : "inactive"}
         />
       </div>
 
-      {/* Carousel Wrapper with Navigation Buttons */}
-      <div className="carousel-wrapper">
-        <button className="carousel-nav left" onClick={scrollLeft}>
-          {"<"}
-        </button>
-        <Carousel
-          ref={carouselRef}
-          className={filteredGames.length <= 5 ? "centered" : ""}
-        >
-          {filteredGames.map((game) => (
-            <GameCard
-              key={game.gameId}
-              imageSrc={game.imageSrc}
-              gameName={game.gameName}
-              gameSubtitle={game.gameSubtitle}
-              gameDay={game.gameDay}
-              gameId={game.gameId}
-              className="game-card-container"
-            />
-          ))}
-        </Carousel>
-        <button className="carousel-nav right" onClick={scrollRight}>
-          {">"}
-        </button>
-      </div>
+      {/* Conditional Rendering */}
+      {filteredGames.length === 0 ? (
+        <div className="no-games-message">
+          <p>No games found. Play your first game!</p>
+        </div>
+      ) : (
+        <div className="carousel-wrapper">
+          <button className="carousel-nav left" onClick={scrollLeft}>
+            {"<"}
+          </button>
+          <Carousel
+            ref={carouselRef}
+            className={filteredGames.length <= 5 ? "centered" : ""}
+          >
+            {filteredGames.map((game) => (
+              <GameCard
+                key={game.gameId}
+                imageSrc={game.imageSrc}
+                gameName={game.gameName}
+                gameSubtitle={game.gameSubtitle}
+                gameDay={game.gameDay}
+                gameId={game.gameId}
+                className="game-card-container"
+              />
+            ))}
+          </Carousel>
+          <button className="carousel-nav right" onClick={scrollRight}>
+            {">"}
+          </button>
+        </div>
+      )}
     </div>
   );
 };

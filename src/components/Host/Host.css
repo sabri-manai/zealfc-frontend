@@ -5,7 +5,7 @@
     padding: 50px 100px;
     color: #1EB62D;
     background-color: #000d1c;
-    margin:  20px 150px;
+    margin: 20px 150px;
 }
 
 .host-info {
@@ -39,9 +39,45 @@
 .host-image img {
     width: 100%;
     height: auto;
-    clip-path: url(#clip-path); /* Custom clip-path */
+    clip-path: url(#clip-path); /* Custom clip-path (if used) */
 }
 
+/* Contact Card Overlay Styles */
+.contact-card-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999; /* Make sure this is above other content */
+}
+
+.contact-card {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 8px;
+    color: #000;
+    text-align: left;
+    max-width: 300px;
+    width: 100%;
+    position: relative;
+}
+
+.contact-card h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-family: 'Tomorrow', sans-serif;
+    font-size: 24px;
+}
+
+.contact-card p {
+    margin: 10px 0;
+    font-size: 16px;
+}
 
 /* Mobile responsiveness */
 @media (max-width: 768px) {
@@ -49,6 +85,7 @@
         flex-direction: column;
         text-align: center;
         padding: 20px;
+        margin: 20px;
     }
 
     .host-info {
@@ -67,5 +104,4 @@
     .host-info h2 {
         font-size: 36px;
     }
-
 }

@@ -1,0 +1,82 @@
+.edit-profile-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    z-index: 3;
+    max-width: 600px;
+    width: 100%;
+    margin-left: 50px; 
+    color: #000D1C;
+    padding-top: 80px;
+  }
+  
+  .edit-profile-title {
+    font-size: 35px;
+    color: #1BC429;
+    font-family: "Tomorrow", sans-serif;
+    text-align: left;
+    margin-bottom: 30px;
+  }
+  
+  .edit-profile-form {
+    width: 100%;
+  }
+  
+  .edit-profile-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .edit-profile-field span {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #1BC429;
+    font-family: "Tomorrow", sans-serif;
+  }
+  
+  .edit-profile-input-line {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #1BC429;
+    color: #1BC429;
+    font-size: 1rem;
+    outline: none;
+    width: 100%;
+  }
+  
+  .edit-profile-input-line::placeholder {
+    color: #2C5930;
+    font-family: "Tomorrow", sans-serif;
+  }
+  
+  .edit-profile-message {
+    margin-top: 20px;
+    font-size: 14px;
+    text-align: center;
+    color: #1BC429;
+  }
+  
+  .edit-profile-button-container {
+    margin-top: 30px;
+    display: flex;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .edit-profile-form-container {
+      margin-left: 0;
+      align-items: center;
+      max-width: 90%;
+      margin-bottom: 50px;
+    }
+  
+    .edit-profile-title {
+      text-align: center;
+    }
+  
+    .edit-profile-input-line {
+      font-size: 1rem;
+    }
+  }
+  

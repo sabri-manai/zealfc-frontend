@@ -1,9 +1,7 @@
-// src/components/SubscriptionInfo/SubscriptionInfo.js
-
 import React, { useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import './SubscriptionInfo.css';
-import Button from '../Button/Button3'; // Updated import
+import Button from '../Button/Button3';
 import axios from 'axios';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
@@ -12,7 +10,8 @@ const API_URL = process.env.REACT_APP_API_URL;
 const SubscriptionInfo = ({ user }) => {
   const [subscription, setSubscription] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [showOptions, setShowOptions] = useState(false); 
+  const [showOptions, setShowOptions] = useState(false);
+  const [pendingPlan, setPendingPlan] = useState(null); // Plan user selected after "Change"
 
   const token = localStorage.getItem('idToken');
 
@@ -47,13 +46,29 @@ const SubscriptionInfo = ({ user }) => {
     }
   }, [token]);
 
-  const handleSubscribe = async () => {
-    const stripe = await stripePromise;
+  const handleCancelSubscription = async () => {
+    try {
+      const response = await axios.post(
+        `${API_URL}/subscription/cancel-subscription`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
 
+      alert(response.data.message);
+      // Set subscription to canceled
+      setSubscription(prev => prev ? { ...prev, status: 'canceled', current_period_end: null } : null);
+    } catch (error) {
+      console.error('Error cancelling subscription:', error);
+      alert('Failed to cancel subscription. Please try again.');
+    }
+  };
+
+  const createCheckoutSession = async (plan) => {
+    const stripe = await stripePromise;
     try {
       const response = await axios.post(
         `${API_URL}/subscription/create-checkout-session`,
-        {},
+        { plan },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -63,44 +78,45 @@ const SubscriptionInfo = ({ user }) => {
 
       const { id: sessionId } = response.data;
       const result = await stripe.redirectToCheckout({ sessionId });
-
       if (result.error) {
         console.error('Stripe error:', result.error.message);
         alert(result.error.message);
       }
     } catch (error) {
-      console.error('Error during subscription:', error);
+      console.error('Error during subscription creation:', error);
       alert('An error occurred during the subscription process. Please try again.');
     }
   };
 
-  const handleCancelSubscription = async () => {
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/subscription/cancel-subscription`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+  const handleSelectPlan = async (plan) => {
+    // If user has an active subscription and is choosing a new plan:
+    // We'll ask for confirmation, cancel current, then subscribe to new plan.
+    if (subscription && subscription.status === 'active') {
+      const confirmChange = window.confirm(`This will cancel your current subscription and subscribe you to the ${plan} plan. Continue?`);
+      if (!confirmChange) return;
 
-      alert(response.data.message);
-      setSubscription({
-        ...subscription,
-        status: 'canceled',
-        current_period_end: null,
-      });
-    } catch (error) {
-      console.error('Error cancelling subscription:', error);
-      alert('Failed to cancel subscription. Please try again.');
+      await handleCancelSubscription();
+      // After cancel, create new subscription
+      await createCheckoutSession(plan);
+    } else {
+      // No active subscription, just create new subscription
+      await createCheckoutSession(plan);
     }
   };
 
-  const handleChangeSubscription = () => {
-    setShowOptions(true); 
+  const handleRenewNow = async () => {
+    if (!subscription || subscription.status !== 'active' || !subscription.type) return;
+    const currentPlan = subscription.type;
+
+    const confirmRenew = window.confirm(`This will cancel your current subscription and renew ${currentPlan} now. Continue?`);
+    if (!confirmRenew) return;
+
+    await handleCancelSubscription();
+    await createCheckoutSession(currentPlan);
   };
 
-  const handleSelectPlan = (plan) => {
-    alert(`You selected the ${plan} plan!`);
-    setShowOptions(false);
+  const handleChangeSubscription = () => {
+    setShowOptions(true);
   };
 
   if (!token) {
@@ -111,39 +127,73 @@ const SubscriptionInfo = ({ user }) => {
     return <div>Loading...</div>;
   }
 
-  const isSubscribed =
-    subscription && subscription.status && subscription.status !== 'canceled';
+  const isActive = subscription && subscription.status === 'active';
+  const isInactive = !subscription || subscription.status === 'inactive' || subscription.status === 'canceled';
+
+  if (isInactive) {
+    return (
+      <div className="subscription-info-container">
+        <h2>CHOOSE A SUBSCRIPTION</h2>
+        <div className="subscription-options">
+          <div className="option" onClick={() => handleSelectPlan('Basic')}>
+            <h3>BASIC</h3>
+            <p>5 credits</p>
+            <p>15€ / month</p>
+          </div>
+          <div className="option" onClick={() => handleSelectPlan('Premium')}>
+            <h3>PREMIUM</h3>
+            <p>10 credits</p>
+            <p>25€ / month</p>
+          </div>
+          <div className="option" onClick={() => handleSelectPlan('Mate')}>
+            <h3>MATE</h3>
+            <p>20 credits</p>
+            <p>40€ / month</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // If subscription is active, display subscription details
+  const { type, status } = subscription;
+
+  let credits = 0;
+  let price = '';
+  switch (type) {
+    case 'Basic':
+      credits = 5;
+      price = '15€';
+      break;
+    case 'Premium':
+      credits = 10;
+      price = '25€';
+      break;
+    case 'Mate':
+      credits = 20;
+      price = '40€';
+      break;
+    default:
+      credits = 0;
+      price = '';
+  }
 
   return (
     <div className="subscription-info-container">
-      <h2>PREMIUM</h2>
-      <p>10 credits per month</p>
+      <h2>{type ? type.toUpperCase() : 'SUBSCRIPTION'}</h2>
+      <p>{credits} credits per month</p>
       <div className="price-container">
-        <p className="price">25€</p>
+        {price && <p className="price">{price}</p>}
         <p className="status">
-          {subscription && subscription.status
-            ? subscription.status.toUpperCase()
-            : 'NO SUBSCRIPTION'}
+          {status ? status.toUpperCase() : 'NO SUBSCRIPTION'}
         </p>
       </div>
 
-      {!isSubscribed && (
-        <div className="subscription-actions">
-          <Button
-            variant="small"
-            primaryText="PAY NOW"
-            onClick={handleSubscribe}
-            styleType="default"
-          />
-        </div>
-      )}
-      {isSubscribed && (
-        <div className="subscription-actions">
-          <Button variant="small" primaryText="CANCEL" onClick={handleCancelSubscription} styleType="default" />
-          <Button variant="small" primaryText="RENEW NOW" onClick={handleSubscribe} styleType="default" />
-          <Button variant="small" primaryText="CHANGE" onClick={handleChangeSubscription} styleType="default" />
-        </div>
-      )}
+      <div className="subscription-actions">
+        <Button variant="small" primaryText="CANCEL" onClick={handleCancelSubscription} styleType="default" />
+        <Button variant="small" primaryText="RENEW NOW" onClick={handleRenewNow} styleType="default" />
+        <Button variant="small" primaryText="CHANGE" onClick={handleChangeSubscription} styleType="default" />
+      </div>
 
       {showOptions && (
         <div className="subscription-options">
@@ -152,7 +202,6 @@ const SubscriptionInfo = ({ user }) => {
             <p>5 credits</p>
             <p>15€ / month</p>
           </div>
-          
           <div className="option" onClick={() => handleSelectPlan('Premium')}>
             <h3>PREMIUM</h3>
             <p>10 credits</p>

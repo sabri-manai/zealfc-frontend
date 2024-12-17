@@ -34,7 +34,7 @@
   .section-text {
     font-size: 1rem; /* Responsive font size */
     line-height: 1.8; /* Increase line spacing for readability */
-    padding: 0 10%; /* Padding relative to the width of the container */
+    padding: 0 20%; /* Padding relative to the width of the container */
   }
   
   .section-first {
@@ -69,7 +69,7 @@
   
   .section-second {
     flex-direction: column;
-    padding-bottom: 4rem; /* Add consistent spacing relative to font size */
+    padding-bottom: 3rem; /* Add consistent spacing relative to font size */
   }
   
   .section-second .section-image-container {
@@ -86,7 +86,7 @@
   }
   
   .section-second .section-text {
-    padding: 0 15%; /* Responsive padding for text */
+    padding: 0 25%; /* Responsive padding for text */
   }
   
   .section-third {

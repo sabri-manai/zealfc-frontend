@@ -213,8 +213,8 @@ const GameDetails = () => {
         isWaitlisted={onWaitlist}
         isGameFull={isGameFull}
       />
-      <Map />
-      <Host onSignUp={handleSignup} />
+      <Map address={game.stadium.address} />
+      <Host host={game.host} />
     </div>
   );
 };
