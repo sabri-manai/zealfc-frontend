@@ -127,95 +127,94 @@ const SubscriptionInfo = ({ user }) => {
     return <div>Loading...</div>;
   }
 
-  const isActive = subscription && subscription.status === 'active';
-  const isInactive = !subscription || subscription.status === 'inactive' || subscription.status === 'canceled';
+  const isSubscribed = subscription && subscription.status === 'active';
 
-  if (isInactive) {
+  if (!isSubscribed) {
+    // Not subscribed or inactive or canceled or null: Show subscription options
     return (
       <div className="subscription-info-container">
-        <h2>CHOOSE A SUBSCRIPTION</h2>
+        <h2>CHOOSE WHAT SUITS YOU BEST</h2>
         <div className="subscription-options">
           <div className="option" onClick={() => handleSelectPlan('Basic')}>
             <h3>BASIC</h3>
             <p>5 credits</p>
-            <p>15€ / month</p>
+            <p>86zł / month</p>
           </div>
           <div className="option" onClick={() => handleSelectPlan('Premium')}>
             <h3>PREMIUM</h3>
             <p>10 credits</p>
-            <p>25€ / month</p>
+            <p>164zł / month</p>
           </div>
           <div className="option" onClick={() => handleSelectPlan('Mate')}>
             <h3>MATE</h3>
             <p>20 credits</p>
-            <p>40€ / month</p>
+            <p>280zł / month</p>
           </div>
         </div>
       </div>
     );
   }
-
-  // If subscription is active, display subscription details
+  
+  // If we reach here, subscription is active
   const { type, status } = subscription;
-
+  
   let credits = 0;
   let price = '';
   switch (type) {
     case 'Basic':
       credits = 5;
-      price = '15€';
+      price = '86zł';
       break;
     case 'Premium':
       credits = 10;
-      price = '25€';
+      price = '164zł';
       break;
     case 'Mate':
       credits = 20;
-      price = '40€';
+      price = '280zł';
       break;
     default:
       credits = 0;
       price = '';
   }
-
+  
   return (
     <div className="subscription-info-container">
       <h2>{type ? type.toUpperCase() : 'SUBSCRIPTION'}</h2>
       <p>{credits} credits per month</p>
       <div className="price-container">
         {price && <p className="price">{price}</p>}
-        <p className="status">
-          {status ? status.toUpperCase() : 'NO SUBSCRIPTION'}
-        </p>
+        <p className="status">{status ? status.toUpperCase() : 'NO SUBSCRIPTION'}</p>
       </div>
-
+  
       <div className="subscription-actions">
         <Button variant="small" primaryText="CANCEL" onClick={handleCancelSubscription} styleType="default" />
         <Button variant="small" primaryText="RENEW NOW" onClick={handleRenewNow} styleType="default" />
         <Button variant="small" primaryText="CHANGE" onClick={handleChangeSubscription} styleType="default" />
       </div>
-
+  
       {showOptions && (
         <div className="subscription-options">
           <div className="option" onClick={() => handleSelectPlan('Basic')}>
             <h3>BASIC</h3>
             <p>5 credits</p>
-            <p>15€ / month</p>
+            <p>86zł / month</p>
           </div>
           <div className="option" onClick={() => handleSelectPlan('Premium')}>
             <h3>PREMIUM</h3>
             <p>10 credits</p>
-            <p>25€ / month</p>
+            <p>164zł / month</p>
           </div>
           <div className="option" onClick={() => handleSelectPlan('Mate')}>
             <h3>MATE</h3>
             <p>20 credits</p>
-            <p>40€ / month</p>
+            <p>280zł / month</p>
           </div>
         </div>
       )}
     </div>
   );
+  
 };
 
 export default SubscriptionInfo;

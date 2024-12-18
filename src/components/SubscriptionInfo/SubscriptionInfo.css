@@ -66,6 +66,8 @@
   font-size: 25px; /* Match the guide's typography */
   line-height: normal;
   font-weight: 400; /* Remove bold effect */
+  transition: color 0.3s ease;
+
 }
 
 .subscription-options .option h3 {
@@ -76,3 +78,8 @@
   font-weight: 400; /* Remove bold effect */
 }
 
+/* On hover of the parent .option, change ALL text inside it */
+.subscription-options .option:hover h3,
+.subscription-options .option:hover p {
+  color: #00ff00;
+}
